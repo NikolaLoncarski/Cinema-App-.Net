@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MovieTheater.Models.DTO
 {
     public class MovieDetailsDTO
     {
         public int Id { get; set; }
+        [JsonPropertyName("movieName")]
         public string Name { get; set; }
         public string? Director { get; set; }
         public string? LeadActor { get; set; }

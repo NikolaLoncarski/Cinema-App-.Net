@@ -72,10 +72,10 @@ namespace MovieTheater.Controllers
                         var jwtToken = tokenRepository.CreateJWTToken(user, roles.ToList());
 
                         var response = new LoginResponseDTO
-                        {
+                        {  id = Guid.Parse(user.Id),
                             JwtToken = jwtToken,
                            Username = loginRequestDto.Username,
-                            Roles= roles.ToList(),
+                            Roles= roles.FirstOrDefault(),
 
                         };
 

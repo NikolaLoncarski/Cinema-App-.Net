@@ -9,5 +9,6 @@ namespace MovieTheater.Interfaces
         Task<Projection?> GetByIdAsync(int id);
         Task<Projection?> UpdateAsync(int id, Projection projection);
         Task<Projection?> DeleteAsync(int id);
+        Task<List<Projection?>> GetByMovieIdAsync(int id);
     }
 }

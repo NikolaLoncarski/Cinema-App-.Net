@@ -1,29 +1,29 @@
 import { useState } from "react";
-import AuthService from "../utils/authServices";
-import { Navigate } from "react-router-dom";
+import { apiPost } from "../utils/axios";
 
-function LoginForm({ currentUser, login }) {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  if (currentUser) {
-    return <Navigate to="/homepage" />;
-  }
-  const handleLogin = async (e) => {
-    e.preventDefault();
+function RegisterFotm() {
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
 
-    try {
-      await AuthService.login(username, password);
-      login();
-    } catch (err) {
-      console.log(err);
+  const userData = { username, password, roles: ["user"] };
+  const Login = async () => {
+    const data = await apiPost("api/Auth/Register", userData);
+
+    if (data.jwtToken) {
+      localStorage.setItem("token", data.jwtToken);
+    } else {
+      console.log("error");
     }
   };
-
+  const submitForm = (e) => {
+    e.preventDefault();
+    Login();
+  };
   return (
     <div className="container flex h-screen mx-auto">
-      <form className="max-w-sm m-auto shadow-md " onSubmit={handleLogin}>
+      <form className="max-w-sm m-auto shadow-md ">
         <div className="bg-violet-500 font-semibold text-2xl p-2 text-center">
-          Login
+          Register
         </div>
         <div className="p-8">
           <label htmlFor="email" className="">
@@ -49,6 +49,7 @@ function LoginForm({ currentUser, login }) {
           <button
             type="submit"
             className="w-full p-2 text-white bg-violet-700 rounded-lg"
+            onClick={submitForm}
           >
             Login
           </button>
@@ -58,4 +59,4 @@ function LoginForm({ currentUser, login }) {
   );
 }
 
-export default LoginForm;
+export default RegisterFotm;

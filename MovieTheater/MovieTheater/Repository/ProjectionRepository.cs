@@ -53,6 +53,11 @@ namespace MovieTheater.Repository
             return await dbContext.Projections.Include(i => i.Movie).ThenInclude(i => i.Image).Include(p => p.ProjectionHall).Include(p => p.ProjectionType).FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<List<Projection?>> GetByMovieIdAsync(int id)
+        {
+            return await dbContext.Projections.Where(x=>x.MovieId==id).Include(i => i.Movie).ThenInclude(i => i.Image).Include(p => p.ProjectionHall).Include(p => p.ProjectionType).AsQueryable().ToListAsync();
+        }
+
         public Task<Projection?> UpdateAsync(int id, Projection projection)
         {
             throw new NotImplementedException();

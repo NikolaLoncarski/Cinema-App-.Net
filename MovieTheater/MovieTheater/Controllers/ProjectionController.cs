@@ -34,5 +34,33 @@ namespace MovieTheater.Controllers
             return Ok(mapper.Map<List<ProjectionDetailsDTO>>(projections));
 
         }
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var projections = await projectionRepository.GetByIdAsync(id);
+
+            if (projections == null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok(mapper.Map < ProjectionDetailsDTO >(projections));
+        }
+        [HttpGet]
+        [Route("GetByMovieId")]
+        public async Task<IActionResult> GetByMovieId(int id)
+        {
+            var projections = await projectionRepository.GetByMovieIdAsync(id);
+
+            if (projections == null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok(mapper.Map<List<ProjectionDetailsDTO>>(projections));
+        }
     }
 }
