@@ -27,7 +27,7 @@ namespace MovieTheater.Controllers
             this.movieTicketRepository = movieTicketRepository;
         }
 
-
+     
         [HttpPost]
         [Route("Create")]
 

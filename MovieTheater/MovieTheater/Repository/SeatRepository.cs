@@ -37,13 +37,20 @@ namespace MovieTheater.Repository
 
         public async Task<List<Seat>> GetAllAsync()
         {
-            return await dbContext.Seats.Include(p => p.ProjectionHall).OrderBy(p => p.Id).ToListAsync();
+            return await dbContext.Seats.Where(x=>x.Reserved==false).Include(p => p.ProjectionHall).OrderBy(p => p.Id).ToListAsync();
+        }
+
+        public async Task<List<Seat>> GetAllByProjectionHallIdAsync(int id)
+        {
+           return  await dbContext.Seats.Where(x => x.Reserved == false).Include(p=>p.ProjectionHall).Where(x=>x.ProjectionHallId == id)
+
+                   .AsQueryable().ToListAsync();
         }
 
         public async Task<Seat> GetByIdAsync(int id)
         {
-            return await dbContext.Seats
-     
+            return await dbContext.Seats.Include(p => p.ProjectionHall)
+
                    .FirstOrDefaultAsync(x => x.Id == id);
         }
 

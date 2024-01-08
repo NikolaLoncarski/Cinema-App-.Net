@@ -150,16 +150,16 @@ namespace MovieTheater.Data
             
 
             modelBuilder.Entity<Seat>().HasData(
-                new Seat() { Id = 1,SeatLocation="A1", ProjectionHallId = 1 },
-                new Seat() { Id = 2, SeatLocation = "B13", ProjectionHallId = 1 },
-                new Seat() { Id =3, SeatLocation = "D7", ProjectionHallId =1 },
-                new Seat() {Id = 4, SeatLocation = "F17", ProjectionHallId = 1 },
-                new Seat() { Id = 5, SeatLocation = "O8", ProjectionHallId = 1},
-                new Seat() { Id = 6, SeatLocation = "A7", ProjectionHallId = 2 },
-                new Seat() { Id = 7, SeatLocation = "B4", ProjectionHallId = 2 },
-                new Seat() { Id = 8, SeatLocation = "I5", ProjectionHallId = 2 },
-                new Seat() { Id = 9, SeatLocation = "K18", ProjectionHallId =1},
-                new Seat() {Id = 10, SeatLocation = "M3", ProjectionHallId =2 }
+                new Seat() { Id = 1,SeatLocation="A1", ProjectionHallId = 1 ,Reserved=false},
+                new Seat() { Id = 2, SeatLocation = "B13", ProjectionHallId = 1, Reserved = false },
+                new Seat() { Id =3, SeatLocation = "D7", ProjectionHallId =1, Reserved = false },
+                new Seat() {Id = 4, SeatLocation = "F17", ProjectionHallId = 1, Reserved = false },
+                new Seat() { Id = 5, SeatLocation = "O8", ProjectionHallId = 1, Reserved = false },
+                new Seat() { Id = 6, SeatLocation = "A7", ProjectionHallId = 2, Reserved = false },
+                new Seat() { Id = 7, SeatLocation = "B4", ProjectionHallId = 2, Reserved = false },
+                new Seat() { Id = 8, SeatLocation = "I5", ProjectionHallId = 2, Reserved = false },
+                new Seat() { Id = 9, SeatLocation = "K18", ProjectionHallId =1, Reserved = false },
+                new Seat() {Id = 10, SeatLocation = "M3", ProjectionHallId =2, Reserved = false }
                 );
             
             modelBuilder.Entity<Movie>().HasData(
