@@ -112,19 +112,6 @@ namespace MovieTheater.Controllers
             // Map Domain Model to DTO
             return Ok(mapper.Map<SeatDetailsDTO>(seatDomainModel));
         }
-        [HttpGet]
-        [Route("GetByProjectionHallId")]
-        public async Task<IActionResult> GetByProjectionHallId(int id)
-        {
-            var seats = await seatRepository.GetAllByProjectionHallIdAsync(id);
-
-            if (seats == null)
-            {
-                return NotFound();
-            }
-
-
-            return Ok(mapper.Map<List<SeatDetailsDTO>>(seats));
-        }
+   
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace MovieTheater.Models.DTO
 {
@@ -6,7 +7,7 @@ namespace MovieTheater.Models.DTO
     {
         public int Id { get; set; }
         public int MovieId { get; set; }
-  
+       
         public string MovieName { get; set; }
         public string? MovieDirector { get; set; }
         public string? MovieLeadActor { get; set; }
@@ -22,6 +23,7 @@ namespace MovieTheater.Models.DTO
         public string MovieImageFileName { get; set; }
         public string MovieImageFilePath { get; set; }
         public int ProjectionTypeId { get; set; }
+        [JsonPropertyName("ProjectionType")]
         public string ProjectionTypeType { get; set; }
         public int ProjectionHallId { get; set; }
         public string ProjectionHallName { get; set; }

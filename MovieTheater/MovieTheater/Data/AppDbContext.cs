@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using MovieTheater.Models;
 using System.Reflection.Metadata;
-
+using static MovieTheater.Models.AvailableSeats;
 
 namespace MovieTheater.Data
 {
@@ -19,7 +19,7 @@ namespace MovieTheater.Data
         public DbSet<ProjectionHall> ProjectionHalls { get; set; }
 
         public DbSet<Seat> Seats { get; set; }
-
+        public DbSet<AvailableSeats> AvailableSeats { get; set; }
         public DbSet<Movie> Movies { get; set; }
 
         public DbSet<Image> Images { get; set; }
@@ -103,6 +103,20 @@ namespace MovieTheater.Data
                 .WithMany()
                 .HasForeignKey(p => p.ProjectionHallId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Seat>()
+             .HasOne(p => p.AvailableSeats)
+              .WithMany()
+             .HasForeignKey(p => p.AvailableSeatsId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+             modelBuilder.Entity<Seat>()
+             .HasOne(p => p.Projection)
+             .WithMany()
+             .HasForeignKey(p => p.ProjectionId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+
             modelBuilder.Entity<ProjectionHall>().HasData(
                 new ProjectionHall() { Id = 1, Name = "Hall 14 XXL", },
                 new ProjectionHall() { Id = 2, Name = "Hall 1 Crystal" }
@@ -147,20 +161,24 @@ namespace MovieTheater.Data
   
            );
 
-            
-
-            modelBuilder.Entity<Seat>().HasData(
-                new Seat() { Id = 1,SeatLocation="A1", ProjectionHallId = 1 ,Reserved=false},
-                new Seat() { Id = 2, SeatLocation = "B13", ProjectionHallId = 1, Reserved = false },
-                new Seat() { Id =3, SeatLocation = "D7", ProjectionHallId =1, Reserved = false },
-                new Seat() {Id = 4, SeatLocation = "F17", ProjectionHallId = 1, Reserved = false },
-                new Seat() { Id = 5, SeatLocation = "O8", ProjectionHallId = 1, Reserved = false },
-                new Seat() { Id = 6, SeatLocation = "A7", ProjectionHallId = 2, Reserved = false },
-                new Seat() { Id = 7, SeatLocation = "B4", ProjectionHallId = 2, Reserved = false },
-                new Seat() { Id = 8, SeatLocation = "I5", ProjectionHallId = 2, Reserved = false },
-                new Seat() { Id = 9, SeatLocation = "K18", ProjectionHallId =1, Reserved = false },
-                new Seat() {Id = 10, SeatLocation = "M3", ProjectionHallId =2, Reserved = false }
+            var seatPositions = Enum.GetNames(typeof(SeatPosition));
+            int id = 1;
+            foreach (var position in seatPositions)
+            {
+                modelBuilder.Entity<AvailableSeats>().HasData(
+                   new AvailableSeats { Id = id++, Seat = position}
                 );
+            }
+
+      
+           
+
+
+
+      
+
+
+
             
             modelBuilder.Entity<Movie>().HasData(
                 new Movie()
@@ -272,7 +290,29 @@ namespace MovieTheater.Data
 
 
                 }
-        ); modelBuilder.Entity<Projection>().Property(o => o.Price).HasPrecision(18, 4);
+
+
+
+
+        );
+
+
+
+            modelBuilder.Entity<Seat>().HasData(
+                new Seat() { Id = 1, Reserved = true, AvailableSeatsId = 1, ProjectionId = 1 },
+                new Seat() { Id = 2, Reserved = true, AvailableSeatsId = 2, ProjectionId = 1 },
+                new Seat() { Id = 3, Reserved = false, AvailableSeatsId = 3, ProjectionId = 1 },
+                new Seat() { Id = 4, Reserved = false, AvailableSeatsId = 4, ProjectionId = 1 },
+                new Seat() { Id = 5, Reserved = false, AvailableSeatsId = 5, ProjectionId = 1 },
+                new Seat() { Id = 6, Reserved = true, AvailableSeatsId = 6, ProjectionId = 1 },
+                new Seat() { Id = 7, Reserved = true, AvailableSeatsId = 7, ProjectionId = 1 },
+                new Seat() { Id = 8, Reserved = true, AvailableSeatsId = 8, ProjectionId = 1 },
+                new Seat() { Id = 9, Reserved = false, AvailableSeatsId = 9, ProjectionId = 1 },
+                new Seat() { Id = 10, Reserved = false, AvailableSeatsId = 10, ProjectionId = 1 }
+                );
+
+
+            modelBuilder.Entity<Projection>().Property(o => o.Price).HasPrecision(18, 4);
 
           
          

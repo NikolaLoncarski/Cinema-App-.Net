@@ -236,6 +236,175 @@ namespace MovieTheater.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MovieTheater.Models.AvailableSeats", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Seat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AvailableSeats");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Seat = "A1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Seat = "A2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Seat = "A3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Seat = "A4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Seat = "A5"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Seat = "A6"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Seat = "A7"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Seat = "A8"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Seat = "A9"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Seat = "A10"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Seat = "B1"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Seat = "B2"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Seat = "B3"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Seat = "B4"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Seat = "B5"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Seat = "B6"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Seat = "B7"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Seat = "B8"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Seat = "B9"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Seat = "B10"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Seat = "C1"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Seat = "C2"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Seat = "C3"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Seat = "C4"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Seat = "C5"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Seat = "C6"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Seat = "C7"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Seat = "C8"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Seat = "C9"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Seat = "C10"
+                        });
+                });
+
             modelBuilder.Entity("MovieTheater.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -446,7 +615,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 1,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 11, 18, 26, 51, 179, DateTimeKind.Local).AddTicks(8939),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 12, 22, 22, 58, 586, DateTimeKind.Local).AddTicks(3437),
                             MovieId = 1,
                             Price = 6.63m,
                             ProjectionHallId = 1,
@@ -455,7 +624,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 2,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 13, 18, 26, 51, 179, DateTimeKind.Local).AddTicks(8994),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 14, 22, 22, 58, 586, DateTimeKind.Local).AddTicks(3481),
                             MovieId = 1,
                             Price = 7.53m,
                             ProjectionHallId = 2,
@@ -464,7 +633,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 3,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 9, 18, 26, 51, 179, DateTimeKind.Local).AddTicks(8997),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 10, 22, 22, 58, 586, DateTimeKind.Local).AddTicks(3484),
                             MovieId = 2,
                             Price = 3.53m,
                             ProjectionHallId = 2,
@@ -473,7 +642,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 4,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 12, 18, 26, 51, 179, DateTimeKind.Local).AddTicks(8999),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 13, 22, 22, 58, 586, DateTimeKind.Local).AddTicks(3487),
                             MovieId = 3,
                             Price = 13.53m,
                             ProjectionHallId = 1,
@@ -482,7 +651,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 5,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 15, 18, 26, 51, 179, DateTimeKind.Local).AddTicks(9002),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 16, 22, 22, 58, 586, DateTimeKind.Local).AddTicks(3490),
                             MovieId = 3,
                             Price = 3.53m,
                             ProjectionHallId = 2,
@@ -586,19 +755,20 @@ namespace MovieTheater.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ProjectionHallId")
+                    b.Property<int>("AvailableSeatsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectionId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Reserved")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SeatLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectionHallId");
+                    b.HasIndex("AvailableSeatsId");
+
+                    b.HasIndex("ProjectionId");
 
                     b.ToTable("Seats");
 
@@ -606,72 +776,72 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 1,
-                            ProjectionHallId = 1,
-                            Reserved = false,
-                            SeatLocation = "A1"
+                            AvailableSeatsId = 1,
+                            ProjectionId = 1,
+                            Reserved = true
                         },
                         new
                         {
                             Id = 2,
-                            ProjectionHallId = 1,
-                            Reserved = false,
-                            SeatLocation = "B13"
+                            AvailableSeatsId = 2,
+                            ProjectionId = 1,
+                            Reserved = true
                         },
                         new
                         {
                             Id = 3,
-                            ProjectionHallId = 1,
-                            Reserved = false,
-                            SeatLocation = "D7"
+                            AvailableSeatsId = 3,
+                            ProjectionId = 1,
+                            Reserved = false
                         },
                         new
                         {
                             Id = 4,
-                            ProjectionHallId = 1,
-                            Reserved = false,
-                            SeatLocation = "F17"
+                            AvailableSeatsId = 4,
+                            ProjectionId = 1,
+                            Reserved = false
                         },
                         new
                         {
                             Id = 5,
-                            ProjectionHallId = 1,
-                            Reserved = false,
-                            SeatLocation = "O8"
+                            AvailableSeatsId = 5,
+                            ProjectionId = 1,
+                            Reserved = false
                         },
                         new
                         {
                             Id = 6,
-                            ProjectionHallId = 2,
-                            Reserved = false,
-                            SeatLocation = "A7"
+                            AvailableSeatsId = 6,
+                            ProjectionId = 1,
+                            Reserved = true
                         },
                         new
                         {
                             Id = 7,
-                            ProjectionHallId = 2,
-                            Reserved = false,
-                            SeatLocation = "B4"
+                            AvailableSeatsId = 7,
+                            ProjectionId = 1,
+                            Reserved = true
                         },
                         new
                         {
                             Id = 8,
-                            ProjectionHallId = 2,
-                            Reserved = false,
-                            SeatLocation = "I5"
+                            AvailableSeatsId = 8,
+                            ProjectionId = 1,
+                            Reserved = true
                         },
                         new
                         {
                             Id = 9,
-                            ProjectionHallId = 1,
-                            Reserved = false,
-                            SeatLocation = "K18"
+                            AvailableSeatsId = 9,
+                            ProjectionId = 1,
+                            Reserved = false
                         },
                         new
                         {
                             Id = 10,
-                            ProjectionHallId = 2,
-                            Reserved = false,
-                            SeatLocation = "M3"
+                            AvailableSeatsId = 10,
+                            ProjectionId = 1,
+                            Reserved = false
                         });
                 });
 
@@ -852,13 +1022,21 @@ namespace MovieTheater.Migrations
 
             modelBuilder.Entity("MovieTheater.Models.Seat", b =>
                 {
-                    b.HasOne("MovieTheater.Models.ProjectionHall", "ProjectionHall")
+                    b.HasOne("MovieTheater.Models.AvailableSeats", "AvailableSeats")
                         .WithMany()
-                        .HasForeignKey("ProjectionHallId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("AvailableSeatsId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("ProjectionHall");
+                    b.HasOne("MovieTheater.Models.Projection", "Projection")
+                        .WithMany()
+                        .HasForeignKey("ProjectionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AvailableSeats");
+
+                    b.Navigation("Projection");
                 });
 
             modelBuilder.Entity("MovieTheater.Models.UserRole", b =>

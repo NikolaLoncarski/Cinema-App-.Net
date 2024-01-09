@@ -50,6 +50,7 @@ builder.Services.AddScoped<ISeatRepository, SeatRepository>();
 builder.Services.AddScoped<IImageRepository, LocalImageRepository>();
 builder.Services.AddScoped<IMovieTicketRepository,MovieTicketRepository>();
 builder.Services.AddScoped<IProjectionRepository, ProjectionRepository>();
+builder.Services.AddScoped<ISeatPositionRepository, SeatPositionRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);

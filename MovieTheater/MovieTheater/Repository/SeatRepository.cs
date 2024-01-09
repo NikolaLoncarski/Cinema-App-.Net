@@ -37,19 +37,22 @@ namespace MovieTheater.Repository
 
         public async Task<List<Seat>> GetAllAsync()
         {
-            return await dbContext.Seats.Where(x=>x.Reserved==false).Include(p => p.ProjectionHall).OrderBy(p => p.Id).ToListAsync();
+            return await dbContext.Seats.Include(s => s.AvailableSeats)
+                .Include(s => s.Projection).ThenInclude(m=>m.Movie)
+                .Include(p=>p.Projection).ThenInclude(ph=>ph.ProjectionHall)
+                .Include(p => p.Projection).ThenInclude(pt => pt.ProjectionType)
+                .OrderBy(p => p.Id).ToListAsync();
         }
 
-        public async Task<List<Seat>> GetAllByProjectionHallIdAsync(int id)
-        {
-           return  await dbContext.Seats.Where(x => x.Reserved == false).Include(p=>p.ProjectionHall).Where(x=>x.ProjectionHallId == id)
-
-                   .AsQueryable().ToListAsync();
-        }
+      
 
         public async Task<Seat> GetByIdAsync(int id)
         {
-            return await dbContext.Seats.Include(p => p.ProjectionHall)
+            return await dbContext.Seats.Include(s => s.AvailableSeats)
+                .Include(s => s.Projection).ThenInclude(m => m.Movie)
+                .Include(p => p.Projection).ThenInclude(ph => ph.ProjectionHall)
+                 .Include(p => p.Projection).ThenInclude(pt => pt.ProjectionType)
+                .OrderBy(p => p.Id)
 
                    .FirstOrDefaultAsync(x => x.Id == id);
         }
