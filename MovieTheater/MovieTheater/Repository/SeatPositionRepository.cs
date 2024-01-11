@@ -18,5 +18,7 @@ namespace MovieTheater.Repository
         {
             return await dbContext.AvailableSeats.OrderBy(p => p.Id).ToListAsync();
         }
+
+    
     }
 }

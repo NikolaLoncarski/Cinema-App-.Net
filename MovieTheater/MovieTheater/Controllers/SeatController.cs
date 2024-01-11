@@ -50,6 +50,16 @@ namespace MovieTheater.Controllers
             return Ok(mapper.Map<List<SeatDetailsDTO>>(seatModels));
         }
 
+        [HttpGet]
+        [Route("GetSeatsByProjectionId")]
+        public async Task<IActionResult> GetSeatsByProjectionId(int id)
+        {
+            var seatModels = await seatRepository.GetSeatsByProjectionId(id);
+
+
+            return Ok(mapper.Map<List<SeatDetailsDTO>>(seatModels));
+        }
+
 
 
         [HttpGet]

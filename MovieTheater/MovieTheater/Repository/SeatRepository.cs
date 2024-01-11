@@ -57,6 +57,17 @@ namespace MovieTheater.Repository
                    .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<List<Seat>> GetSeatsByProjectionId(int id)
+        {
+            return await dbContext.Seats.Where(p => p.ProjectionId == id).Include(s => s.AvailableSeats)
+              .Include(s => s.Projection).ThenInclude(m => m.Movie)
+              .Include(p => p.Projection).ThenInclude(ph => ph.ProjectionHall)
+               .Include(p => p.Projection).ThenInclude(pt => pt.ProjectionType)
+              .OrderBy(p => p.Id).ToListAsync();
+
+               
+        }
+
         public async Task<Seat> UpdateAsync(int id, Seat seat)
         {
             var seats = await dbContext.Seats.FirstOrDefaultAsync(x => x.Id == id);

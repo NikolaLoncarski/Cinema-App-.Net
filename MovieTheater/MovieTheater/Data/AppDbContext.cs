@@ -301,14 +301,14 @@ namespace MovieTheater.Data
             modelBuilder.Entity<Seat>().HasData(
                 new Seat() { Id = 1, Reserved = true, AvailableSeatsId = 1, ProjectionId = 1 },
                 new Seat() { Id = 2, Reserved = true, AvailableSeatsId = 2, ProjectionId = 1 },
-                new Seat() { Id = 3, Reserved = false, AvailableSeatsId = 3, ProjectionId = 1 },
-                new Seat() { Id = 4, Reserved = false, AvailableSeatsId = 4, ProjectionId = 1 },
-                new Seat() { Id = 5, Reserved = false, AvailableSeatsId = 5, ProjectionId = 1 },
+                new Seat() { Id = 3, Reserved = true, AvailableSeatsId = 3, ProjectionId = 1 },
+                new Seat() { Id = 4, Reserved =true, AvailableSeatsId = 4, ProjectionId = 1 },
+                new Seat() { Id = 5, Reserved = true, AvailableSeatsId = 5, ProjectionId = 1 },
                 new Seat() { Id = 6, Reserved = true, AvailableSeatsId = 6, ProjectionId = 1 },
                 new Seat() { Id = 7, Reserved = true, AvailableSeatsId = 7, ProjectionId = 1 },
                 new Seat() { Id = 8, Reserved = true, AvailableSeatsId = 8, ProjectionId = 1 },
-                new Seat() { Id = 9, Reserved = false, AvailableSeatsId = 9, ProjectionId = 1 },
-                new Seat() { Id = 10, Reserved = false, AvailableSeatsId = 10, ProjectionId = 1 }
+                new Seat() { Id = 9, Reserved = true, AvailableSeatsId = 9, ProjectionId = 1 },
+                new Seat() { Id = 10, Reserved = true, AvailableSeatsId = 10, ProjectionId = 1 }
                 );
 
 
