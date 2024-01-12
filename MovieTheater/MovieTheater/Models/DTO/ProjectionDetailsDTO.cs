@@ -27,6 +27,7 @@ namespace MovieTheater.Models.DTO
         public string ProjectionTypeType { get; set; }
         public int ProjectionHallId { get; set; }
         public string ProjectionHallName { get; set; }
+        public int ProjectionHallCapacity { get; set; }
         public DateTime DateAndTimeOfProjecton { get; set; }
         public decimal Price { get; set; }
     }

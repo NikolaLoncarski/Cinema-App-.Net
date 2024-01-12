@@ -39,7 +39,24 @@ namespace MovieTheater.Controllers
             return CreatedAtAction("GetById", new { id = seat.Id }, mapper.Map<SeatDetailsDTO>(seat));
         }
 
+        [HttpPost]
+        [Route("CreateSeatsByHallCapacity")]
+        public async Task<IActionResult> CreateSeatsByHallCapacity([FromQuery] int hallId)
 
+
+
+        {
+            var existingSeats = await seatRepository.GetSeatsByProjectionId(hallId);
+            if (existingSeats == null)
+            {
+
+            await seatRepository.CreateSeatByProjectionCapacity(hallId);
+
+            return RedirectToAction("GetAll");
+
+            }
+            return BadRequest("This projection allready has seats");
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -53,18 +70,21 @@ namespace MovieTheater.Controllers
         [HttpGet]
         [Route("GetSeatsByProjectionId")]
         public async Task<IActionResult> GetSeatsByProjectionId(int id)
+
+
         {
-            var seatModels = await seatRepository.GetSeatsByProjectionId(id);
+      
+                var seatModels = await seatRepository.GetSeatsByProjectionId(id);
 
 
-            return Ok(mapper.Map<List<SeatDetailsDTO>>(seatModels));
+                return Ok(mapper.Map<List<SeatDetailsDTO>>(seatModels)); 
         }
 
 
 
         [HttpGet]
-        [Route("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var seat = await seatRepository.GetByIdAsync(id);
 
@@ -81,7 +101,7 @@ namespace MovieTheater.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
    
-        public async Task<IActionResult> Update([FromRoute] int id, Seat seat)
+        public async Task<IActionResult> Update([FromRoute] Guid id, Seat seat)
         {
 
             if (!ModelState.IsValid)
@@ -110,7 +130,7 @@ namespace MovieTheater.Controllers
   
         [HttpDelete]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var seatDomainModel = await seatRepository.DeleteAsync(id);
 

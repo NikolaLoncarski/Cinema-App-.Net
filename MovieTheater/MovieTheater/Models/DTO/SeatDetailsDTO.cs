@@ -4,15 +4,12 @@ namespace MovieTheater.Models.DTO
 {
     public class SeatDetailsDTO
     {
-        public int Id { get; set; }
+        public  Guid Id { get; set; }
 
 
         public bool Reserved { get; set; }
-  
-        public  int AvailableSeatsId { get; set; }
-        [JsonPropertyName("Seat")]
-        public  string AvailableSeatsSeat { get; set; }
 
+        public int Location { get; set; }
         public int ProjectionId { get; set; }
         [JsonPropertyName("MovieId")]
         public int ProjectionMovieId { get; set; }
@@ -28,6 +25,9 @@ namespace MovieTheater.Models.DTO
         public int ProjectionProjectionHallId { get; set; }
         [JsonPropertyName("ProjectionHall")]
         public string ProjectionProjectionHallName { get; set; }
+
+        public int ProjectionHallCapacity { get; set; }
+
         [JsonPropertyName("DateAndTimeOfProjecton")]
         public DateTime ProjectionDateAndTimeOfProjecton { get; set; }
         [JsonPropertyName("Price")]

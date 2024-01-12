@@ -19,27 +19,31 @@ namespace MovieTheater.Controllers
     {
         private readonly IMapper mapper;
         private readonly IMovieTicketRepository movieTicketRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
-
-        public MovieTicketController(IMapper mapper,  IMovieTicketRepository movieTicketRepository)
+        public MovieTicketController(IMapper mapper,  IMovieTicketRepository movieTicketRepository, UserManager<IdentityUser> _userManager)
         {
             this.mapper = mapper;
             this.movieTicketRepository = movieTicketRepository;
+            this._userManager = _userManager;
         }
 
      
         [HttpPost]
         [Route("Create")]
-
+        [Authorize(Roles ="User")]
         public async Task<IActionResult> Create( [FromBody] MovieTicketRequestDTO movieTicketRequestDTO)
         {
-  
-            var ticketRequest = mapper.Map<MovieTicket>(movieTicketRequestDTO);
 
 
-            var ticket =  await movieTicketRepository.CreateAsync(ticketRequest);
-            return RedirectToAction("GetById", new { id = ticket.Id });
-          
+         
+             movieTicketRequestDTO.DateAndTimeOfPurchase = DateTime.UtcNow;
+             var ticketRequest = mapper.Map<MovieTicket>(movieTicketRequestDTO);
+
+
+             var ticket =  await movieTicketRepository.CreateAsync(ticketRequest);
+             return RedirectToAction("GetById", new { id = ticket.Id });
+    
         }
 
      

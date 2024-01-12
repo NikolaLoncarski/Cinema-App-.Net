@@ -5,10 +5,10 @@
 
         public int ProjectionId { get; set; }
 
-        public int SeatId { get; set; }
+        public Guid SeatId { get; set; }
 
-        public DateTime DateAndTimeOfPurchase { get; set; }
+        public DateTime? DateAndTimeOfPurchase { get; set; }
 
-
+        public Guid? UserId { get; set; }
     }
 }

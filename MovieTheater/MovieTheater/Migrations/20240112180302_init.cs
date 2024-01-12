@@ -53,19 +53,6 @@ namespace MovieTheater.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AvailableSeats",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Seat = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AvailableSeats", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
@@ -87,7 +74,8 @@ namespace MovieTheater.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Capacity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -340,28 +328,14 @@ namespace MovieTheater.Migrations
                 name: "Seats",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Reserved = table.Column<bool>(type: "bit", nullable: false),
-                    ProjectionHallId = table.Column<int>(type: "int", nullable: false),
-                    ProjectionId = table.Column<int>(type: "int", nullable: false),
-                    AvailableSeatsId = table.Column<int>(type: "int", nullable: false)
+                    Location = table.Column<int>(type: "int", nullable: false),
+                    ProjectionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Seats", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Seats_AvailableSeats_AvailableSeatsId",
-                        column: x => x.AvailableSeatsId,
-                        principalTable: "AvailableSeats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Seats_ProjectionHalls_ProjectionHallId",
-                        column: x => x.ProjectionHallId,
-                        principalTable: "ProjectionHalls",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Seats_Projections_ProjectionId",
                         column: x => x.ProjectionId,
@@ -378,6 +352,7 @@ namespace MovieTheater.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProjectionId = table.Column<int>(type: "int", nullable: false),
                     SeatId = table.Column<int>(type: "int", nullable: false),
+                    SeatId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateAndTimeOfPurchase = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -390,8 +365,8 @@ namespace MovieTheater.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieTickets_Seats_SeatId",
-                        column: x => x.SeatId,
+                        name: "FK_MovieTickets_Seats_SeatId1",
+                        column: x => x.SeatId1,
                         principalTable: "Seats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -407,43 +382,6 @@ namespace MovieTheater.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AvailableSeats",
-                columns: new[] { "Id", "Seat" },
-                values: new object[,]
-                {
-                    { 1, "A1" },
-                    { 2, "A2" },
-                    { 3, "A3" },
-                    { 4, "A4" },
-                    { 5, "A5" },
-                    { 6, "A6" },
-                    { 7, "A7" },
-                    { 8, "A8" },
-                    { 9, "A9" },
-                    { 10, "A10" },
-                    { 11, "B1" },
-                    { 12, "B2" },
-                    { 13, "B3" },
-                    { 14, "B4" },
-                    { 15, "B5" },
-                    { 16, "B6" },
-                    { 17, "B7" },
-                    { 18, "B8" },
-                    { 19, "B9" },
-                    { 20, "B10" },
-                    { 21, "C1" },
-                    { 22, "C2" },
-                    { 23, "C3" },
-                    { 24, "C4" },
-                    { 25, "C5" },
-                    { 26, "C6" },
-                    { 27, "C7" },
-                    { 28, "C8" },
-                    { 29, "C9" },
-                    { 30, "C10" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Images",
                 columns: new[] { "Id", "FileExtension", "FileName", "FilePath", "FileSizeInBytes" },
                 values: new object[,]
@@ -455,11 +393,11 @@ namespace MovieTheater.Migrations
 
             migrationBuilder.InsertData(
                 table: "ProjectionHalls",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "Capacity", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Hall 14 XXL" },
-                    { 2, "Hall 1 Crystal" }
+                    { 1, 30, "Hall 14 XXL" },
+                    { 2, 40, "Hall 1 Crystal" }
                 });
 
             migrationBuilder.InsertData(
@@ -487,28 +425,11 @@ namespace MovieTheater.Migrations
                 columns: new[] { "Id", "DateAndTimeOfProjecton", "MovieId", "Price", "ProjectionHallId", "ProjectionTypeId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 12, 22, 0, 21, 616, DateTimeKind.Local).AddTicks(3817), 1, 6.63m, 1, 1 },
-                    { 2, new DateTime(2024, 1, 14, 22, 0, 21, 616, DateTimeKind.Local).AddTicks(3864), 1, 7.53m, 2, 2 },
-                    { 3, new DateTime(2024, 1, 10, 22, 0, 21, 616, DateTimeKind.Local).AddTicks(3867), 2, 3.53m, 2, 3 },
-                    { 4, new DateTime(2024, 1, 13, 22, 0, 21, 616, DateTimeKind.Local).AddTicks(3870), 3, 13.53m, 1, 2 },
-                    { 5, new DateTime(2024, 1, 16, 22, 0, 21, 616, DateTimeKind.Local).AddTicks(3873), 3, 3.53m, 2, 3 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Seats",
-                columns: new[] { "Id", "AvailableSeatsId", "ProjectionHallId", "ProjectionId", "Reserved" },
-                values: new object[,]
-                {
-                    { 1, 1, 1, 1, true },
-                    { 2, 2, 1, 1, true },
-                    { 3, 3, 1, 1, false },
-                    { 4, 4, 1, 1, false },
-                    { 5, 5, 1, 1, false },
-                    { 6, 6, 2, 1, true },
-                    { 7, 7, 2, 1, true },
-                    { 8, 8, 2, 1, true },
-                    { 9, 9, 1, 1, false },
-                    { 10, 10, 2, 1, false }
+                    { 1, new DateTime(2024, 1, 15, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8372), 1, 6.63m, 1, 1 },
+                    { 2, new DateTime(2024, 1, 17, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8420), 1, 7.53m, 2, 2 },
+                    { 3, new DateTime(2024, 1, 13, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8424), 2, 3.53m, 2, 3 },
+                    { 4, new DateTime(2024, 1, 16, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8427), 3, 13.53m, 1, 2 },
+                    { 5, new DateTime(2024, 1, 19, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8429), 3, 3.53m, 2, 3 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -561,9 +482,9 @@ namespace MovieTheater.Migrations
                 column: "ProjectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieTickets_SeatId",
+                name: "IX_MovieTickets_SeatId1",
                 table: "MovieTickets",
-                column: "SeatId");
+                column: "SeatId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projections_MovieId",
@@ -583,16 +504,6 @@ namespace MovieTheater.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectionTypes_ProjectionHallId",
                 table: "ProjectionTypes",
-                column: "ProjectionHallId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Seats_AvailableSeatsId",
-                table: "Seats",
-                column: "AvailableSeatsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Seats_ProjectionHallId",
-                table: "Seats",
                 column: "ProjectionHallId");
 
             migrationBuilder.CreateIndex(
@@ -649,9 +560,6 @@ namespace MovieTheater.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "AvailableSeats");
 
             migrationBuilder.DropTable(
                 name: "Projections");

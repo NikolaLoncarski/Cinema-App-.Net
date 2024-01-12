@@ -36,7 +36,7 @@ namespace MovieTheater.Models.DTO
         [JsonPropertyName("price")]
         public decimal ProjectionPrice { get; set; }
         [JsonPropertyName("seat_Id")]
-        public int SeatId { get; set; }
+        public Guid SeatId { get; set; }
         [JsonPropertyName("seat_Location")]
         public string SeatSeatLocation { get; set; }
         [JsonPropertyName("Purchase_Date")]

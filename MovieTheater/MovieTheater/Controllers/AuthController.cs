@@ -29,8 +29,10 @@ namespace MovieTheater.Controllers
             {
                 UserName = registerRequestDto.UserName,
                 Email = registerRequestDto.UserName
-            };
 
+            };
+            string[] userRole = { "User" };
+            registerRequestDto.Roles = userRole;
             var identityResult = await userManager.CreateAsync(identityUser, registerRequestDto.Password);
 
             if (identityResult.Succeeded)

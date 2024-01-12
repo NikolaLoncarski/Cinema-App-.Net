@@ -7,5 +7,6 @@
 
         public int ProjectionHallId { get; set; }
         public string ProjectionHallName { get; set; }
+        public int ProjectionHallCapacity { get; set; }
     }
 }

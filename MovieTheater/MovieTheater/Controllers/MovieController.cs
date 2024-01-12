@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
 using MovieTheater.Models.DTO;
@@ -14,11 +16,13 @@ namespace MovieTheater.Controllers
     {
         private readonly IMapper mapper;
         private readonly IMovieRepository movieRepository;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public MovieController(IMapper mapper, IMovieRepository movieRepository)
+        public MovieController(IMapper mapper, IMovieRepository movieRepository, UserManager<IdentityUser> userManager)
         {
             this.mapper = mapper;
             this.movieRepository = movieRepository;
+            this.userManager = userManager;
         }
 
 
@@ -67,7 +71,20 @@ namespace MovieTheater.Controllers
             return Ok(mapper.Map<MovieDetailsDTO>(movie));
         }
 
- 
+        [HttpGet]
+        [Route("users")]
+        public async Task<IActionResult> YourAction()
+        {
+            // Access the AspNetUsers table using UserManager
+            var users = await userManager.Users.ToListAsync();
+
+            // Your logic here using the users
+
+            return Ok(users);
+        }
+
+
+
         [HttpPut]
         [Route("{id:int}")]
   

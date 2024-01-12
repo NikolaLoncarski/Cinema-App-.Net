@@ -6,10 +6,11 @@ namespace MovieTheater.Interfaces
     {
         Task<Seat> CreateAsync(Seat seat);
         Task<List<Seat>> GetAllAsync();
-        Task<Seat> GetByIdAsync(int id);
-        Task<Seat> UpdateAsync(int id, Seat seat);
-        Task<Seat> DeleteAsync(int id);
+        Task<Seat> GetByIdAsync(Guid id);
+        Task<Seat> UpdateAsync(Guid id, Seat seat);
+        Task<Seat> DeleteAsync(Guid id);
         Task<List<Seat>> GetSeatsByProjectionId(int id);
+        Task<List<Seat>> CreateSeatByProjectionCapacity(int hallId);
 
     }
 }

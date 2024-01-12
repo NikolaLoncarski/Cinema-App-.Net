@@ -5,9 +5,11 @@
         public  int Id { get; set; }
         public int ProjectionId  { get; set; }
         public Projection Projection { get; set; }
-        public int SeatId { get; set; }
+        public Guid SeatId { get; set; }
         public Seat Seat { get; set; }
         public DateTime DateAndTimeOfPurchase    { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; }
 
     }
 }
