@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System;
+using System.Text.Json;
 
 namespace MovieTheater.Controllers
 {
@@ -21,13 +22,16 @@ namespace MovieTheater.Controllers
         private readonly IMovieTicketRepository movieTicketRepository;
         private readonly ISeatRepository seatRepository;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger<MovieTicketController> _logger;
 
-        public MovieTicketController(IMapper mapper,  IMovieTicketRepository movieTicketRepository, UserManager<IdentityUser> _userManager,ISeatRepository seatRepository)
+        public MovieTicketController(IMapper mapper,  IMovieTicketRepository movieTicketRepository, UserManager<IdentityUser> _userManager
+            ,ISeatRepository seatRepository,ILogger<MovieTicketController> logger)
         {
             this.mapper = mapper;
             this.movieTicketRepository = movieTicketRepository;
             this._userManager = _userManager;
             this.seatRepository = seatRepository;
+            _logger = logger;
         }
 
      
@@ -36,7 +40,7 @@ namespace MovieTheater.Controllers
         [Authorize(Roles ="User")]
         public async Task<IActionResult> Create( [FromBody] MovieTicketRequestDTO movieTicketRequestDTO)
         {
-
+            
             var checkSeatReservastion = seatRepository.CheckIfSeatIsReserved(movieTicketRequestDTO.SeatId);
             if (checkSeatReservastion == null)
             {
@@ -45,7 +49,7 @@ namespace MovieTheater.Controllers
 
           
             var updateSeat = await seatRepository.UpdateAsync(movieTicketRequestDTO.SeatId, await checkSeatReservastion );
-
+          //  _logger.LogInformation(JsonSerializer.Serialize(checkSeatReservastion));
             
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             movieTicketRequestDTO.UserId = Guid.Parse(userId);
