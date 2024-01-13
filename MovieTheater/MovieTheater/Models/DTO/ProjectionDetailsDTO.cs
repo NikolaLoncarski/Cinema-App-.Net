@@ -23,7 +23,7 @@ namespace MovieTheater.Models.DTO
         public string MovieImageFileName { get; set; }
         public string MovieImageFilePath { get; set; }
         public int ProjectionTypeId { get; set; }
-        [JsonPropertyName("ProjectionType")]
+        [JsonPropertyName("projectionType")]
         public string ProjectionTypeType { get; set; }
         public int ProjectionHallId { get; set; }
         public string ProjectionHallName { get; set; }

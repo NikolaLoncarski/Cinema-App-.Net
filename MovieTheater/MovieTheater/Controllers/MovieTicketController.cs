@@ -41,17 +41,11 @@ namespace MovieTheater.Controllers
         public async Task<IActionResult> Create( [FromBody] MovieTicketRequestDTO movieTicketRequestDTO)
         {
             
-            var checkSeatReservastion = seatRepository.CheckIfSeatIsReserved(movieTicketRequestDTO.SeatId);
-            if (checkSeatReservastion == null)
+            var checkSeatReservastion = await seatRepository.CheckIfSeatIsReserved(movieTicketRequestDTO.SeatId);
+            if (checkSeatReservastion != null)
             {
-                return BadRequest();
-            }
+            var userId =  User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-          
-            var updateSeat = await seatRepository.UpdateAsync(movieTicketRequestDTO.SeatId, await checkSeatReservastion );
-          //  _logger.LogInformation(JsonSerializer.Serialize(checkSeatReservastion));
-            
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             movieTicketRequestDTO.UserId = Guid.Parse(userId);
 
             movieTicketRequestDTO.DateAndTimeOfPurchase = DateTime.UtcNow;
@@ -60,6 +54,15 @@ namespace MovieTheater.Controllers
 
              var ticket =  await movieTicketRepository.CreateAsync(ticketRequest);
             return RedirectToAction("GetById", new { id = ticket.Id });
+            } 
+                return BadRequest();
+          
+          //  var updateSeat = await seatRepository.UpdateAsync(movieTicketRequestDTO.SeatId, await checkSeatReservastion );
+          //  _logger.LogInformation(JsonSerializer.Serialize(checkSeatReservastion));
+            
+
+            
+
  
         }
 
@@ -68,6 +71,23 @@ namespace MovieTheater.Controllers
         public async Task<IActionResult> GetAll()
         {
             var tickets= await movieTicketRepository.GetAllAsync();
+
+
+            return Ok(mapper.Map<List<MovieTicketDetailsDTO>>(tickets));
+
+        }
+
+        [HttpGet]
+        [Route("GetTicketByUserId")]
+        [Authorize]
+        public async Task<IActionResult> GetTicketByUserId()
+
+
+        {
+
+            var id= User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = Guid.Parse(id);
+            var tickets = await movieTicketRepository.GetTicketByUserId(userId);
 
 
             return Ok(mapper.Map<List<MovieTicketDetailsDTO>>(tickets));

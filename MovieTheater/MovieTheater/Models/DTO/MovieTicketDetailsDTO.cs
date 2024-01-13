@@ -31,7 +31,7 @@ namespace MovieTheater.Models.DTO
         [JsonPropertyName("projectionHall_Name")]
         public string ProjectionProjectionHallName { get; set; }
         [JsonPropertyName("starts")]
-        public string ProjectionDateAndTimeOfProjecton { get; set; }
+        public DateTime ProjectionDateAndTimeOfProjecton { get; set; }
 
         [JsonPropertyName("price")]
         public decimal ProjectionPrice { get; set; }

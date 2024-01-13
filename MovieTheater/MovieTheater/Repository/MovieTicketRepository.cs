@@ -63,6 +63,16 @@ namespace MovieTheater.Repository
             
         }
 
+        public async Task<List<MovieTicket>> GetTicketByUserId(Guid userId)
+        {
+            return await dbContext.MovieTickets.Where(u=>u.UserId==userId)
+                    .Include(i => i.Projection).ThenInclude(p => p.ProjectionHall)
+                    .Include(i => i.Projection).ThenInclude(p => p.ProjectionType)
+                    .Include(i => i.Projection).ThenInclude(p => p.Movie).ThenInclude(p => p.Image)
+
+                    .Include(s => s.Seat).AsQueryable().ToListAsync();
+        }
+
         public async Task<MovieTicket?> UpdateAsync(int id, MovieTicket movieTicket)
         {
             throw new NotImplementedException();
