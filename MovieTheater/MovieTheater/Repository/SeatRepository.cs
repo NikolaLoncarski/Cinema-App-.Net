@@ -15,6 +15,14 @@ namespace MovieTheater.Repository
             
         }
 
+        public async Task<Seat> CheckIfSeatIsReserved(Guid seatId)
+        {
+            var seat = await dbContext.Seats.Where(s => s.Reserved == false).FirstOrDefaultAsync(x => x.Id == seatId);
+            seat.Reserved = true;
+
+            return seat;
+        }
+
         public async Task<Seat> CreateAsync(Seat seat)
         {
             await dbContext.Seats.AddAsync(seat);
@@ -111,6 +119,8 @@ namespace MovieTheater.Repository
 
             return seat;
         }
+
+
 
 
     }

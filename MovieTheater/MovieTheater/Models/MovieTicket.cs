@@ -9,7 +9,7 @@
         public Seat Seat { get; set; }
         public DateTime DateAndTimeOfPurchase    { get; set; }
         public Guid UserId { get; set; }
-        public User User { get; set; }
+
 
     }
 }

@@ -38,7 +38,9 @@ namespace MovieTheater.Models.DTO
         [JsonPropertyName("seat_Id")]
         public Guid SeatId { get; set; }
         [JsonPropertyName("seat_Location")]
-        public string SeatSeatLocation { get; set; }
+        public string SeatLocation { get; set; }
+        [JsonPropertyName("Reserved")]
+        public bool SeatReserved { get; set; }
         [JsonPropertyName("Purchase_Date")]
         public DateTime DateAndTimeOfPurchase { get; set; }
 

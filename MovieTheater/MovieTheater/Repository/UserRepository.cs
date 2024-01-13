@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
+using System.Security.Claims;
 
 namespace MovieTheater.Repository
 {
@@ -15,7 +17,7 @@ namespace MovieTheater.Repository
         }
 
 
-        public async Task<Models.User> AuthenticateAsync(string username, string password)
+        public async Task<User> AuthenticateAsync(string username, string password)
         {
             var user = await appDbContext.Users
                 .FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower() && x.Password == password);
@@ -43,5 +45,7 @@ namespace MovieTheater.Repository
             user.Password = null;
             return user;
         }
+
+    
     }
 }

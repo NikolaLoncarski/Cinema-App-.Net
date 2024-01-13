@@ -13,6 +13,10 @@ namespace MovieTheater.Repository
         {
             this.dbContext = dbContext;
         }
+       
+
+      
+
         public async Task<MovieTicket> CreateAsync(MovieTicket movieTicket)
         {
             await dbContext.MovieTickets.AddAsync(movieTicket);
@@ -54,11 +58,12 @@ namespace MovieTheater.Repository
                 .Include(i => i.Projection).ThenInclude(p => p.ProjectionHall)
                 .Include(i => i.Projection).ThenInclude(p => p.ProjectionType)
                 .Include(i => i.Projection).ThenInclude(p => p.Movie).ThenInclude(p => p.Image)
+      
                 .Include(s=>s.Seat).FirstOrDefaultAsync(x => x.Id == id);
             
         }
 
-        public Task<MovieTicket?> UpdateAsync(int id, MovieTicket movieTicket)
+        public async Task<MovieTicket?> UpdateAsync(int id, MovieTicket movieTicket)
         {
             throw new NotImplementedException();
         }

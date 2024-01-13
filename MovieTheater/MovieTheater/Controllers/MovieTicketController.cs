@@ -19,13 +19,15 @@ namespace MovieTheater.Controllers
     {
         private readonly IMapper mapper;
         private readonly IMovieTicketRepository movieTicketRepository;
+        private readonly ISeatRepository seatRepository;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public MovieTicketController(IMapper mapper,  IMovieTicketRepository movieTicketRepository, UserManager<IdentityUser> _userManager)
+        public MovieTicketController(IMapper mapper,  IMovieTicketRepository movieTicketRepository, UserManager<IdentityUser> _userManager,ISeatRepository seatRepository)
         {
             this.mapper = mapper;
             this.movieTicketRepository = movieTicketRepository;
             this._userManager = _userManager;
+            this.seatRepository = seatRepository;
         }
 
      
@@ -35,15 +37,26 @@ namespace MovieTheater.Controllers
         public async Task<IActionResult> Create( [FromBody] MovieTicketRequestDTO movieTicketRequestDTO)
         {
 
+            var checkSeatReservastion = seatRepository.CheckIfSeatIsReserved(movieTicketRequestDTO.SeatId);
+            if (checkSeatReservastion == null)
+            {
+                return BadRequest();
+            }
 
-         
-             movieTicketRequestDTO.DateAndTimeOfPurchase = DateTime.UtcNow;
+          
+            var updateSeat = await seatRepository.UpdateAsync(movieTicketRequestDTO.SeatId, await checkSeatReservastion );
+
+            
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            movieTicketRequestDTO.UserId = Guid.Parse(userId);
+
+            movieTicketRequestDTO.DateAndTimeOfPurchase = DateTime.UtcNow;
              var ticketRequest = mapper.Map<MovieTicket>(movieTicketRequestDTO);
 
 
              var ticket =  await movieTicketRepository.CreateAsync(ticketRequest);
-             return RedirectToAction("GetById", new { id = ticket.Id });
-    
+            return RedirectToAction("GetById", new { id = ticket.Id });
+ 
         }
 
      

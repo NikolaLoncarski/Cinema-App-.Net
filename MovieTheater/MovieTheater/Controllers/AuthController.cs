@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
+using MovieTheater.Models;
 using MovieTheater.Models.DTO;
+using MovieTheater.Models.DTO.RequestDTOs;
+using MovieTheater.Repository;
 using System.Security.Claims;
 
 namespace MovieTheater.Controllers
@@ -90,23 +94,18 @@ namespace MovieTheater.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles ="User")]
         [Route("GetCurrentUserId")]
         public async Task<IActionResult> GetCurrentUserId() {
 
-            var idClaim = HttpContext.User.FindFirst("Id");
+    
 
-            if (idClaim == null)
-            {
-                return BadRequest("User ID claim not found");
-            }
 
-            if (!int.TryParse(idClaim.Value, out int id))
-            {
-                return BadRequest("User ID claim is not in the correct format");
-            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return Ok(new { userId = id });
+
+
+            return Ok(userId);
         }
     }
 }

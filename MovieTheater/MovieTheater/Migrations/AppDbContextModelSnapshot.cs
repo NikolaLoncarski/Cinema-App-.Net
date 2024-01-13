@@ -396,17 +396,17 @@ namespace MovieTheater.Migrations
                     b.Property<int>("ProjectionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeatId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SeatId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SeatId1")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectionId");
 
-                    b.HasIndex("SeatId1");
+                    b.HasIndex("SeatId");
 
                     b.ToTable("MovieTickets");
                 });
@@ -449,7 +449,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 1,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 15, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8372),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 16, 9, 19, 40, 791, DateTimeKind.Local).AddTicks(9952),
                             MovieId = 1,
                             Price = 6.63m,
                             ProjectionHallId = 1,
@@ -458,7 +458,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 2,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 17, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8420),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 18, 9, 19, 40, 791, DateTimeKind.Local).AddTicks(9995),
                             MovieId = 1,
                             Price = 7.53m,
                             ProjectionHallId = 2,
@@ -467,7 +467,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 3,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 13, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8424),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 14, 9, 19, 40, 791, DateTimeKind.Local).AddTicks(9998),
                             MovieId = 2,
                             Price = 3.53m,
                             ProjectionHallId = 2,
@@ -476,7 +476,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 4,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 16, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8427),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 17, 9, 19, 40, 792, DateTimeKind.Local).AddTicks(1),
                             MovieId = 3,
                             Price = 13.53m,
                             ProjectionHallId = 1,
@@ -485,7 +485,7 @@ namespace MovieTheater.Migrations
                         new
                         {
                             Id = 5,
-                            DateAndTimeOfProjecton = new DateTime(2024, 1, 19, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8429),
+                            DateAndTimeOfProjecton = new DateTime(2024, 1, 20, 9, 19, 40, 792, DateTimeKind.Local).AddTicks(4),
                             MovieId = 3,
                             Price = 3.53m,
                             ProjectionHallId = 2,
@@ -736,7 +736,7 @@ namespace MovieTheater.Migrations
 
                     b.HasOne("MovieTheater.Models.Seat", "Seat")
                         .WithMany()
-                        .HasForeignKey("SeatId1")
+                        .HasForeignKey("SeatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

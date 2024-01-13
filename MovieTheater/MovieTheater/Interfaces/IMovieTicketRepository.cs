@@ -9,5 +9,6 @@ namespace MovieTheater.Interfaces
         Task<MovieTicket?> GetByIdAsync(int id);
         Task<MovieTicket?> UpdateAsync(int id, MovieTicket movieTicket);
         Task<MovieTicket?> DeleteAsync(int id);
+
     }
 }

@@ -351,9 +351,9 @@ namespace MovieTheater.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProjectionId = table.Column<int>(type: "int", nullable: false),
-                    SeatId = table.Column<int>(type: "int", nullable: false),
-                    SeatId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateAndTimeOfPurchase = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    SeatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateAndTimeOfPurchase = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -365,8 +365,8 @@ namespace MovieTheater.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieTickets_Seats_SeatId1",
-                        column: x => x.SeatId1,
+                        name: "FK_MovieTickets_Seats_SeatId",
+                        column: x => x.SeatId,
                         principalTable: "Seats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -425,11 +425,11 @@ namespace MovieTheater.Migrations
                 columns: new[] { "Id", "DateAndTimeOfProjecton", "MovieId", "Price", "ProjectionHallId", "ProjectionTypeId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 15, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8372), 1, 6.63m, 1, 1 },
-                    { 2, new DateTime(2024, 1, 17, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8420), 1, 7.53m, 2, 2 },
-                    { 3, new DateTime(2024, 1, 13, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8424), 2, 3.53m, 2, 3 },
-                    { 4, new DateTime(2024, 1, 16, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8427), 3, 13.53m, 1, 2 },
-                    { 5, new DateTime(2024, 1, 19, 19, 3, 2, 177, DateTimeKind.Local).AddTicks(8429), 3, 3.53m, 2, 3 }
+                    { 1, new DateTime(2024, 1, 16, 9, 19, 40, 791, DateTimeKind.Local).AddTicks(9952), 1, 6.63m, 1, 1 },
+                    { 2, new DateTime(2024, 1, 18, 9, 19, 40, 791, DateTimeKind.Local).AddTicks(9995), 1, 7.53m, 2, 2 },
+                    { 3, new DateTime(2024, 1, 14, 9, 19, 40, 791, DateTimeKind.Local).AddTicks(9998), 2, 3.53m, 2, 3 },
+                    { 4, new DateTime(2024, 1, 17, 9, 19, 40, 792, DateTimeKind.Local).AddTicks(1), 3, 13.53m, 1, 2 },
+                    { 5, new DateTime(2024, 1, 20, 9, 19, 40, 792, DateTimeKind.Local).AddTicks(4), 3, 3.53m, 2, 3 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -482,9 +482,9 @@ namespace MovieTheater.Migrations
                 column: "ProjectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieTickets_SeatId1",
+                name: "IX_MovieTickets_SeatId",
                 table: "MovieTickets",
-                column: "SeatId1");
+                column: "SeatId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projections_MovieId",
