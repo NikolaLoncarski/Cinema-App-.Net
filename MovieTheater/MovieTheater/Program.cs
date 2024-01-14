@@ -44,7 +44,8 @@ builder.Services.AddCors(options =>
         {
             builder.AllowAnyOrigin()
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                ;
         });
 });
 builder.Services.AddAutoMapper(typeof(Profiles));

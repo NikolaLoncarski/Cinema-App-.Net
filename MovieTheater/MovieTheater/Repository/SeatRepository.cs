@@ -16,14 +16,16 @@ namespace MovieTheater.Repository
 
         }
 
-        public async Task<Seat> CheckIfSeatIsReserved(Guid seatId)
+        public async Task<Seat> CheckIfSeatIsReserved(Guid seatId , bool action)
         {
+
+
             var seat = await dbContext.Seats.Where(s => s.Id == seatId && !s.Reserved)
                     .FirstOrDefaultAsync();
 
             if (seat != null)
             {
-                seat.Reserved = true;
+                seat.Reserved = action;
                 dbContext.Entry(seat).State = EntityState.Modified;
                 await dbContext.SaveChangesAsync();
 
@@ -33,9 +35,25 @@ namespace MovieTheater.Repository
             return null;
 
         }
-    
 
-    public async Task<Seat> CreateAsync(Seat seat)
+        public async Task<Seat> ClearSeatReservation(Guid seatId, bool action)
+        {
+            var seat = await dbContext.Seats.Where(s => s.Id == seatId && s.Reserved)
+                      .FirstOrDefaultAsync();
+
+            if (seat != null)
+            {
+                seat.Reserved = action;
+                dbContext.Entry(seat).State = EntityState.Modified;
+                await dbContext.SaveChangesAsync();
+
+                return seat;
+            }
+
+            return null;
+        }
+
+        public async Task<Seat> CreateAsync(Seat seat)
     {
         await dbContext.Seats.AddAsync(seat);
         await dbContext.SaveChangesAsync();
