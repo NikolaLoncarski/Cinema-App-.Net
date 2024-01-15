@@ -1,19 +1,28 @@
 import { useState } from "react";
-import AuthService from "../utils/authServices";
-import { Navigate } from "react-router-dom";
+import AuthService from "../../utils/authServices";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
-function LoginForm({ currentUser, login }) {
+function LoginForm({ currentUser, login, notify }) {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
   if (currentUser) {
-    return <Navigate to="/homepage" />;
+    return <Navigate to="/" />;
   }
+
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    const userData = { username, password };
     try {
-      await AuthService.login(username, password);
-      login();
+      const resp = await AuthService.login(username, password);
+
+      notify("successful login");
+      setTimeout(() => {
+        navigate("/movies");
+      }, 3000);
+      console.log(currentUser);
     } catch (err) {
       console.log(err);
     }
@@ -22,7 +31,7 @@ function LoginForm({ currentUser, login }) {
   return (
     <div className="container flex h-screen mx-auto">
       <form className="max-w-sm m-auto shadow-md " onSubmit={handleLogin}>
-        <div className="bg-violet-500 font-semibold text-2xl p-2 text-center">
+        <div className="bg-yellow-500 font-semibold text-2xl p-2 text-center">
           Login
         </div>
         <div className="p-8">
@@ -48,12 +57,19 @@ function LoginForm({ currentUser, login }) {
           />
           <button
             type="submit"
-            className="w-full p-2 text-white bg-violet-700 rounded-lg"
+            className="w-full p-2 text-white bg-yellow-500 rounded-lg"
           >
             Login
           </button>
+          <span className="self-end mt-1">
+            Don't have an Account{" "}
+            <NavLink className="underline" to="/register">
+              Register here
+            </NavLink>
+          </span>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }

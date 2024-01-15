@@ -20,7 +20,7 @@ function Sidebar() {
             </li>
             <li className="rounded-sm">
               <NavLink
-                to="/projections"
+                to="/projection"
                 className="flex items-center p-2 space-x-3 rounded-md"
               >
                 <span className="text-gray-100">Projections</span>

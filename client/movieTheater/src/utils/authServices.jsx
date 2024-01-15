@@ -9,7 +9,7 @@ const login = async (username, password) => {
   try {
     const response = await apiPost("api/Auth/Login", userData);
 
-    localStorage.setItem("token", JSON.stringify(response.jwtToken));
+    localStorage.setItem("token", JSON.stringify(response.data.jwtToken));
   } catch (err) {
     console.log(err);
   }
