@@ -4,30 +4,27 @@ import ReservationTicket from "./ReservationTicket";
 function Reservations() {
   const [reservations, setReservations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [resedApi, setResendApi] = useState(false);
-  const getProjectionById = async () => {
-    setIsLoading(true);
-    try {
-      const response = await apiGet(`api/MovieTicket/GetTicketByUserId`);
-      console.log(response);
-      setReservations(response);
 
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching projections:", error);
-    }
-  };
   useEffect(() => {
+    const getProjectionById = async () => {
+      setIsLoading(true);
+      try {
+        const response = await apiGet(`api/MovieTicket/GetTicketByUserId`);
+        console.log(response);
+        setReservations(response);
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching projections:", error);
+      }
+    };
+
     getProjectionById();
   }, []);
   // <ReservationTicket reservations={reservations} isLoading={isLoading} />
   return (
     <div>
-      <ReservationTicket
-        setResendApi={setResendApi}
-        reservations={reservations}
-        getProjectionById={getProjectionById}
-      />
+      <ReservationTicket reservations={reservations} isLoading={isLoading} />
     </div>
   );
 }

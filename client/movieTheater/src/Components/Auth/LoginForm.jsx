@@ -2,13 +2,10 @@ import { useState } from "react";
 import AuthService from "../../utils/authServices";
 import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useGlobalContext } from "../../context/Context";
 
 function LoginForm({ currentUser, login, notify }) {
-  const { setAuth } = useGlobalContext();
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState("");
 
   const navigate = useNavigate();
   if (currentUser) {
@@ -20,12 +17,6 @@ function LoginForm({ currentUser, login, notify }) {
     const userData = { username, password };
     try {
       const resp = await AuthService.login(username, password);
-      localStorage.setItem("roles", JSON.stringify(resp?.data?.roles));
-
-      const roles = resp?.data?.roles;
-
-      const user = resp?.data?.username;
-      setAuth({ roles: [roles], user });
       notify("successful login");
       setTimeout(() => {
         navigate("/movies");
