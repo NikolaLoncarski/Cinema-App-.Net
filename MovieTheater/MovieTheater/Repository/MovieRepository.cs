@@ -37,20 +37,20 @@ namespace MovieTheater.Repository
             return existingMovie;
         }
 
-        public async Task<List<Movie>> GetAllAsync(string? filterOn = null, string? filterQuery = null, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 1000)
+        public async Task<List<Movie>> GetAllAsync(string? name = null,  string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 10)
         {
             var movies = dbContext.Movies.Include(i=>i.Image).AsQueryable();
 
        
-            if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+            if ( string.IsNullOrWhiteSpace(name) == false)
             {
-                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
-                {
-                    movies = movies.Where(x => x.Name.Contains(filterQuery));
-                }
+     
+               
+                    movies = movies.Where(x => x.Name.Contains(name));
+            
             }
 
-        
+  
             if (string.IsNullOrWhiteSpace(sortBy) == false)
             {
                 if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
@@ -61,8 +61,13 @@ namespace MovieTheater.Repository
                 {
                     movies = isAscending ? movies.OrderBy(x => x.Duration) : movies.OrderByDescending(x => x.Duration);
                 }
-            }
+                else if (sortBy.Equals("YearOfRelease", StringComparison.OrdinalIgnoreCase))
+                {
+                    movies = isAscending ? movies.OrderBy(x => x.YearOfRelease) : movies.OrderByDescending(x => x.YearOfRelease);
+                }
 
+            }
+   
       
             var skipResults = (pageNumber - 1) * pageSize;
 

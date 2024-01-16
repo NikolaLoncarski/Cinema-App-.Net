@@ -5,6 +5,7 @@ import Projections from "../Projection/Projection";
 import { format } from "date-fns";
 import { TailSpin } from "react-loader-spinner";
 import AuthService from "../../utils/authServices";
+import Search from "../../Components/Search";
 function Movie({ movies, isLoading }) {
   const [movieProjections, setMovieProjections] = useState([]);
   const [isLoadingProjection, setIsLoadingProjeciton] = useState(false);
@@ -35,6 +36,7 @@ function Movie({ movies, isLoading }) {
 
   return (
     <section className="pt-24 grid  place-items-center">
+      <Search />
       {isLoading && <TailSpin className="p-4 border" />}
 
       {!isLoading &&

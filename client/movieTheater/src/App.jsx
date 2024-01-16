@@ -1,6 +1,6 @@
 import "./App.css";
-import LoginForm from "./Components/Auth/LoginForm";
-import RegisterForm from "./Components/Auth/RegisterForm";
+import LoginForm from "./Pages/Auth/LoginForm";
+import RegisterForm from "./Pages/Auth/RegisterForm";
 import { useState, useCallback, useEffect } from "react";
 import AuthService from "./utils/authServices";
 import {
@@ -12,14 +12,14 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Movies from "./Components/Movie/Movies";
-import RootLayout from "./Components/Home/RootLayout";
-import Projections from "./Components/Projection/Projection";
-import RequireAuth from "./Components/Auth/RequireAuth";
-import Ticket from "./Components/Ticket/Ticket";
-import Checkout from "./Components/Ticket/Checkout";
+import Movies from "./Pages/Movie/Movies";
+import RootLayout from "./Pages/Home/RootLayout";
+import Projections from "./Pages/Projection/Projection";
+import RequireAuth from "./Pages/Auth/RequireAuth";
+import Ticket from "./Pages/Ticket/Ticket";
+import Checkout from "./Pages/Ticket/Checkout";
 import { toast } from "react-toastify";
-import Reservations from "./Components/Cart/Reservations";
+import Reservations from "./Pages/Cart/Reservations";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -39,14 +39,14 @@ function App() {
     const user = AuthService.getCurrentUser();
 
     if (user) {
-      setCurrentUser(user);
+      setCurrentUser((prevUser) => user);
     }
-    console.log(currentUser);
+    console.log(user);
   }, [currentUser]);
 
   useEffect(() => {
     checkUser();
-  }, [checkUser, currentUser]);
+  }, [checkUser]);
 
   const notify = (messsage) => {
     toast.error(`${messsage}`, {

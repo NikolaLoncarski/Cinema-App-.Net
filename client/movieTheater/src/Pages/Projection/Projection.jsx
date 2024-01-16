@@ -11,22 +11,21 @@ function Projection() {
   console.log(projectionId);
 
   const navigate = useNavigate();
+  const getProjectionById = async (id) => {
+    setIsLoading(true);
+    try {
+      const response = await apiGet(`api/Projection/GetById?id=${id}`);
+      setMovieProjection(response);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.error("Error fetching movies:", error);
+    }
+  };
 
   useEffect(() => {
-    setIsLoading(true);
-    const getProjectionById = async (id) => {
-      try {
-        const response = await apiGet(`api/Projection/GetById?id=${id}`);
-        setMovieProjection(response);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        console.error("Error fetching movies:", error);
-      }
-    };
-
     getProjectionById(projectionId);
-  }, [projectionId]);
+  }, []);
   const ProjectionCard = () => {
     const {
       dateAndTimeOfProjecton,

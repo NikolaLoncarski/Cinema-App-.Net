@@ -6,13 +6,16 @@ function Movies({ currentUser, checkUser }) {
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
 
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
   useEffect(() => {
     checkUser();
-  }, [checkUser, checkUser]);
+  }, []);
 
   useEffect(() => {
-    setIsLoading(true);
     const getMovies = async () => {
+      setIsLoading(true);
       try {
         const response = await apiGet("api/Movie?pageNumber=1&pageSize=1000");
 
@@ -23,7 +26,6 @@ function Movies({ currentUser, checkUser }) {
         setIsLoading(false);
       }
     };
-
     getMovies();
   }, []);
 

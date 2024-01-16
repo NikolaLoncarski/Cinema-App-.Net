@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { apiGet } from "../../utils/axios";
 import ReservationTicket from "./ReservationTicket";
+import { current } from "@reduxjs/toolkit";
 function Reservations() {
   const [reservations, setReservations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [resedApi, setResendApi] = useState(false);
+
   const getProjectionById = async () => {
     setIsLoading(true);
     try {

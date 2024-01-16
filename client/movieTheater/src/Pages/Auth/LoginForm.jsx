@@ -8,16 +8,15 @@ function LoginForm({ currentUser, login, notify }) {
   const { setAuth } = useGlobalContext();
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState("");
-
   const navigate = useNavigate();
+  /*
   if (currentUser) {
-    return <Navigate to="/" />;
+    return <Navigate to="/movies" />;
   }
-
+*/
   const handleLogin = async (e) => {
     e.preventDefault();
-    const userData = { username, password };
+
     try {
       const resp = await AuthService.login(username, password);
       localStorage.setItem("roles", JSON.stringify(resp?.data?.roles));
@@ -31,6 +30,7 @@ function LoginForm({ currentUser, login, notify }) {
         navigate("/movies");
       }, 3000);
       console.log(currentUser);
+      return resp.data.jwtToken;
     } catch (err) {
       console.log(err);
     }

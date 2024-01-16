@@ -1,30 +1,25 @@
-import { Outlet ,useNavigate} from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../Admin/Sidebar";
 import Navbar from "./Navbar";
 import { useEffect } from "react";
 
-
-function RootLayout({ currentUser,setCurrentUser }) {
+function RootLayout({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
-
-useEffect(() => {
-  return () => {
- if (currentUser) {
-
-   navigate("/movies");
- }
-  };
-}, [currentUser])
- 
+  /*
+  useEffect(() => {
+    return () => {
+      if (currentUser) {
+        navigate("/movies");
+      }
+    };
+  }, []);*/
 
   return (
-    <div >
+    <div>
       <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} />
 
-
       <main className="overflow-auto h-screen w-screen w-svw">
-        <Outlet  />
-
+        <Outlet />
       </main>
     </div>
   );

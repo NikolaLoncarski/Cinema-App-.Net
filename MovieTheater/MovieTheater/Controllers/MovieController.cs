@@ -43,11 +43,11 @@ namespace MovieTheater.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
+        public async Task<IActionResult> GetAll([FromQuery] string? name,
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
-            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
+            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var movies = await movieRepository.GetAllAsync(filterOn, filterQuery, sortBy,
+            var movies = await movieRepository.GetAllAsync(name, sortBy,
                     isAscending ?? true, pageNumber, pageSize);
 
    

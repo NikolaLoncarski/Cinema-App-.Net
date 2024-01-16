@@ -30,8 +30,9 @@ function Navbar({ currentUser, setCurrentUser }) {
               <NavLink
                 to="/"
                 onClick={() => {
-                  setCurrentUser();
+                  setCurrentUser(null);
                   localStorage.removeItem("token");
+                  localStorage.removeItem("roles");
                 }}
                 className=" text-gray-700  border-solid border-2 hover:bg-white  border-gray-300 bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yello-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-yello-600 dark:hover:bg-yello-700 dark:focus:ring-yello-800"
               >
