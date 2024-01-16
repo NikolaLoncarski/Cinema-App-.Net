@@ -5,12 +5,11 @@ import Projections from "../Projection/Projection";
 import { format } from "date-fns";
 import { TailSpin } from "react-loader-spinner";
 import AuthService from "../../utils/authServices";
-import { useGlobalContext } from "../../context/Context";
 function Movie({ movies, isLoading }) {
   const [movieProjections, setMovieProjections] = useState([]);
   const [isLoadingProjection, setIsLoadingProjeciton] = useState(false);
   const [showDropdown, setShowDropdown] = useState([]);
-  const { getCurrentUser } = f;
+
   const navigate = useNavigate();
 
   const handleDropdownClick = (itemId) => {
