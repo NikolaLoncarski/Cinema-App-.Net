@@ -15,7 +15,7 @@ import {
 import Movies from "./Components/Movie/Movies";
 import RootLayout from "./Components/Home/RootLayout";
 import Projections from "./Components/Projection/Projection";
-
+import RequireAuth from "./Components/Auth/RequireAuth";
 import Ticket from "./Components/Ticket/Ticket";
 import Checkout from "./Components/Ticket/Checkout";
 import { toast } from "react-toastify";
@@ -31,8 +31,8 @@ function App() {
   };
 
   const ROLES = {
-    User: 1234,
-    Admin: 6653,
+    User: "User",
+    Admin: "Admin",
   };
 
   const checkUser = useCallback(() => {
@@ -118,25 +118,30 @@ function App() {
             path="/login"
             element={<LoginForm currentUser={currentUser} notify={notify} />}
           />
-          <Route
-            path="/movies"
-            element={
-              <Movies
-                currentUser={currentUser}
-                notify={notify}
-                checkUser={checkUser}
-              />
-            }
-          />
           <Route path="/register" element={<RegisterForm notify={notify} />} />
-          <Route path="/projection" element={<Projections notify={notify} />} />
-          <Route path="/ticket" element={<Ticket notify={notify} />} />
-          <Route path="/checkout" element={<Checkout notify={notify} />} />
-          <Route path="/ticket" element={<Ticket notify={notify} />} />
-          <Route
-            path="/reservations"
-            element={<Reservations notify={notify} />}
-          />
+          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+            <Route
+              path="/movies"
+              element={
+                <Movies
+                  currentUser={currentUser}
+                  notify={notify}
+                  checkUser={checkUser}
+                />
+              }
+            />
+            <Route
+              path="/projection"
+              element={<Projections notify={notify} />}
+            />
+            <Route path="/ticket" element={<Ticket notify={notify} />} />
+            <Route path="/checkout" element={<Checkout notify={notify} />} />
+
+            <Route
+              path="/reservations"
+              element={<Reservations notify={notify} />}
+            />
+          </Route>
         </Route>
       </Routes>
     </div>

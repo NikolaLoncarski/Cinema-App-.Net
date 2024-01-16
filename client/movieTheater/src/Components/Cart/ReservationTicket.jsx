@@ -1,36 +1,35 @@
-import React, { useState,useEffect } from 'react'
-import {format} from "date-fns"
-import {  apiDeleteTicket } from '../../utils/axios';
-function ReservationTicket({reservations, isLoading}) {
+import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
+import { apiDeleteTicket } from "../../utils/axios";
+import { useNavigate } from "react-router-dom";
+function ReservationTicket({ reservations, isLoading, getProjectionById }) {
+  const currentDate = new Date();
 
- const currentDate = new Date()
+  const initialDate = new Date(currentDate);
 
- const initialDate = new Date(currentDate);
+  const formattedDate = format(initialDate, "yyyy-MM-dd'T'HH:mm:ss.SSS");
 
- const formattedDate = format(initialDate, "yyyy-MM-dd'T'HH:mm:ss.SSS");
-
- const deleteReservation = async (movieTicketId, action, seatId) => {
-   const data = { movieTicketId, action, seatId };
-console.log(data)
-   try {
-     const response = await apiDeleteTicket('api/MovieTicket/DeleteTicket', JSON.stringify(data));
-     console.log(response);
-   } catch (error) {
-     console.error("Error fetching projections:", error);
-   }
- };
-
-
-
+  const deleteReservation = async (movieTicketId, action, seatId) => {
+    const data = { movieTicketId, action, seatId };
+    console.log(data);
+    try {
+      const response = await apiDeleteTicket(
+        "api/MovieTicket/DeleteTicket",
+        JSON.stringify(data)
+      );
+      getProjectionById();
+      console.log(response.status);
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching projections:", error);
+    }
+  };
 
   return (
-   
     <div>
       {!isLoading &&
         reservations.length > 0 &&
         reservations.map((item, index) => (
-        
-
           <div
             key={item.id}
             className="h-fit mt-32 grid place-items-center font-mono "
@@ -63,15 +62,16 @@ console.log(data)
                     Seat : {item.seat_Location}
                   </p>
 
-                  {item.starts > formattedDate && <button onClick={()=>{
-
-                  deleteReservation(item.id,false,item.seat_Id)
-
-                  }}
-                  className="bg-yellow-500 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow h-fit self-center">
-                    Cancel Reservation
-                  </button>  }
-                 
+                  {item.starts > formattedDate && (
+                    <button
+                      onClick={() => {
+                        deleteReservation(item.id, false, item.seat_Id);
+                      }}
+                      className="bg-yellow-500 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow h-fit self-center"
+                    >
+                      Cancel Reservation
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -81,4 +81,4 @@ console.log(data)
   );
 }
 
-export default ReservationTicket
+export default ReservationTicket;
