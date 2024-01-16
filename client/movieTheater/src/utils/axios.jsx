@@ -91,7 +91,7 @@ export const apiDelete = async (api) => {
   const res = await axiosInstance.delete(`${serverURL}${api}`, {
     headers,
   });
-  return res.data;
+  return res;
 };
 export const apiDeleteTicket = async (api, body) => {
   const headers = {
@@ -103,5 +103,6 @@ export const apiDeleteTicket = async (api, body) => {
   });
   return res.data;
 };
+
 
 export default axiosInstance;

@@ -17,7 +17,6 @@ function LoginForm({ currentUser, login, notify }) {
     const userData = { username, password };
     try {
       const resp = await AuthService.login(username, password);
-
       notify("successful login");
       setTimeout(() => {
         navigate("/movies");

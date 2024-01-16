@@ -1,6 +1,6 @@
-import React, { useEffect,useState } from 'react'
-import { apiGet } from '../../utils/axios';
-import ReservationTicket from './ReservationTicket';
+import React, { useEffect, useState } from "react";
+import { apiGet } from "../../utils/axios";
+import ReservationTicket from "./ReservationTicket";
 function Reservations() {
   const [reservations, setReservations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +20,7 @@ function Reservations() {
     };
 
     getProjectionById();
-  },[]);
+  }, []);
   // <ReservationTicket reservations={reservations} isLoading={isLoading} />
   return (
     <div>
@@ -29,4 +29,4 @@ function Reservations() {
   );
 }
 
-export default Reservations
+export default Reservations;

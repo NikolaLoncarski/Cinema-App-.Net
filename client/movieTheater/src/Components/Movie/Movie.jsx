@@ -10,7 +10,6 @@ function Movie({ movies, isLoading }) {
   const [isLoadingProjection, setIsLoadingProjeciton] = useState(false);
   const [showDropdown, setShowDropdown] = useState([]);
 
-
   const navigate = useNavigate();
 
   const handleDropdownClick = (itemId) => {
@@ -23,8 +22,6 @@ function Movie({ movies, isLoading }) {
 
   const getProjectionById = async (id) => {
     setIsLoadingProjeciton(true);
-   
-    
     try {
       const response = await apiGet(`api/Projection/GetByMovieId?id=${id}`);
       setMovieProjections(response);
@@ -34,8 +31,6 @@ function Movie({ movies, isLoading }) {
       setIsLoadingProjeciton(false);
     }
   };
-
-
 
   return (
     <section className="pt-24 grid  place-items-center">
@@ -48,7 +43,7 @@ function Movie({ movies, isLoading }) {
             <div className="relative flex flex-row mt-6 text-gray-700 bg-white shadow-2xl bg-clip-border rounded-xl m-16 max-w-screen-xl  h-96 ">
               <div className="w-72 h-96 ">
                 <img
-                  className="max-w-full max-h-full  rounded-md shadow-2xl transform -translate-y-4 border-4 border-gray-300 shadow-lg"
+                  className="max-w-full max-h-full  rounded-md shadow-2xl transform -translate-y-4 border-4 border-gray-300 gi"
                   src={ele.imageFilePath}
                   alt={ele.imageFileName}
                 />
