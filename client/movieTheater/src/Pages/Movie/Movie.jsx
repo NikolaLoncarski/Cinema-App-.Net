@@ -5,8 +5,8 @@ import Projections from "../Projection/Projection";
 import { format } from "date-fns";
 import { TailSpin } from "react-loader-spinner";
 import AuthService from "../../utils/authServices";
-import Search from "../../Components/Search";
-function Movie({ movies, isLoading }) {
+
+function Movie({ movies, isLoading, getMovies }) {
   const [movieProjections, setMovieProjections] = useState([]);
   const [isLoadingProjection, setIsLoadingProjeciton] = useState(false);
   const [showDropdown, setShowDropdown] = useState([]);
@@ -34,8 +34,7 @@ function Movie({ movies, isLoading }) {
   };
 
   return (
-    <section className="pt-24 grid  place-items-center">
-      <Search />
+    <section className=" grid  place-items-center">
       {isLoading && <TailSpin className="p-4 border" />}
 
       {!isLoading &&
@@ -84,7 +83,7 @@ function Movie({ movies, isLoading }) {
               </div>
             </div>
             {showDropdown[index] && movieProjections.length > 0 && (
-              <div className="relative flex flex-row mt-1 bg-neutral-400 shadow-md bg-clip-border   max-w-full h-36 m-16 gap-3 items-center ">
+              <div className="relative flex flex-row mt-1 dark:bg-yellow-700 shadow-md bg-clip-border   max-w-full h-36 m-16 gap-3 items-center ">
                 {movieProjections.map((ele, index) => {
                   let projecitonDate = format(
                     ele.dateAndTimeOfProjecton,

@@ -9,7 +9,9 @@ export const AppProvider = ({ children }) => {
   const [movieProjection, setMovieProjection] = useState([]);
   const [ticketData, setTicketData] = useState();
   const [userId, setUserId] = useState("");
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useState({
+    roles: [JSON.parse(localStorage.getItem("roles"))],
+  });
 
   const notifyLoginExpired = () => {
     toast.error("Login expired!", {

@@ -9,11 +9,7 @@ function LoginForm({ currentUser, login, notify }) {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  /*
-  if (currentUser) {
-    return <Navigate to="/movies" />;
-  }
-*/
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -29,7 +25,7 @@ function LoginForm({ currentUser, login, notify }) {
       setTimeout(() => {
         navigate("/movies");
       }, 3000);
-      console.log(currentUser);
+
       return resp.data.jwtToken;
     } catch (err) {
       console.log(err);

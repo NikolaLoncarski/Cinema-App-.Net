@@ -20,9 +20,12 @@ import Ticket from "./Pages/Ticket/Ticket";
 import Checkout from "./Pages/Ticket/Checkout";
 import { toast } from "react-toastify";
 import Reservations from "./Pages/Cart/Reservations";
+import Navbar from "./Pages/Home/Navbar";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("token"))
+  );
 
   const notifyAuthFail = () => {
     toast.error("Authorization failed you will be redirected!", {
@@ -34,20 +37,21 @@ function App() {
     User: "User",
     Admin: "Admin",
   };
-
+  /*
   const checkUser = useCallback(() => {
     const user = AuthService.getCurrentUser();
 
     if (user) {
-      setCurrentUser((prevUser) => user);
+      setCurrentUser(user);
     }
     console.log(user);
   }, [currentUser]);
 
   useEffect(() => {
     checkUser();
-  }, [checkUser]);
-
+    console.log("current");
+  }, [currentUser]);
+  */
   const notify = (messsage) => {
     toast.error(`${messsage}`, {
       position: toast.POSITION.TOP_RIGHT,
@@ -99,6 +103,7 @@ function App() {
 */
   return (
     <div className="App">
+      <Navbar />
       <Routes>
         <Route
           element={
@@ -109,26 +114,21 @@ function App() {
           }
         >
           <Route
-            index
-            element={
-              currentUser ? <Navigate to="/movies" /> : <Navigate to="/login" />
-            }
-          />
-          <Route
             path="/login"
             element={<LoginForm currentUser={currentUser} notify={notify} />}
           />
           <Route path="/register" element={<RegisterForm notify={notify} />} />
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+          <Route
+            element={
+              <RequireAuth
+                currentUser={currentUser}
+                allowedRoles={[ROLES.User]}
+              />
+            }
+          >
             <Route
               path="/movies"
-              element={
-                <Movies
-                  currentUser={currentUser}
-                  notify={notify}
-                  checkUser={checkUser}
-                />
-              }
+              element={<Movies currentUser={currentUser} notify={notify} />}
             />
             <Route
               path="/projection"

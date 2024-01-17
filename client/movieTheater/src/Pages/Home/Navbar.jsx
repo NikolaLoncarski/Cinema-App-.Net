@@ -1,7 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Navbar({ currentUser, setCurrentUser }) {
+  const navigate = useNavigate();
   return (
     <>
       <nav className="bg-yellow-500 dark:bg-yellow-500 fixed w-full z-20 top-0 start-0 border-b border-gray-200  dark:border-gray-600">
@@ -10,7 +11,7 @@ function Navbar({ currentUser, setCurrentUser }) {
             <NavLink to="/"> Cinema</NavLink>
           </h1>
           <div className="flex gap-3 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            {!currentUser ? (
+            {!localStorage.getItem("token") ? (
               <>
                 {" "}
                 <NavLink
@@ -28,9 +29,8 @@ function Navbar({ currentUser, setCurrentUser }) {
               </>
             ) : (
               <NavLink
-                to="/"
+                to="/login"
                 onClick={() => {
-                  setCurrentUser(null);
                   localStorage.removeItem("token");
                   localStorage.removeItem("roles");
                 }}

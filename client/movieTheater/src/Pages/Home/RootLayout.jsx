@@ -5,19 +5,9 @@ import { useEffect } from "react";
 
 function RootLayout({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
-  /*
-  useEffect(() => {
-    return () => {
-      if (currentUser) {
-        navigate("/movies");
-      }
-    };
-  }, []);*/
 
   return (
     <div>
-      <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} />
-
       <main className="overflow-auto h-screen w-screen w-svw">
         <Outlet />
       </main>
