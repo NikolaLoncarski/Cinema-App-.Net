@@ -1,8 +1,10 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import { useGlobalContext } from "../../context/Context";
 function Navbar({ currentUser, setCurrentUser }) {
+  const {setUser} = useGlobalContext();
   const navigate = useNavigate();
+
   return (
     <>
       <nav className="bg-yellow-500 dark:bg-yellow-500 fixed w-full z-20 top-0 start-0 border-b border-gray-200  dark:border-gray-600">
@@ -33,6 +35,7 @@ function Navbar({ currentUser, setCurrentUser }) {
                 onClick={() => {
                   localStorage.removeItem("token");
                   localStorage.removeItem("roles");
+                  setUser({});
                 }}
                 className=" text-gray-700  border-solid border-2 hover:bg-white  border-gray-300 bg-yellow-500 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yello-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-yello-600 dark:hover:bg-yello-700 dark:focus:ring-yello-800"
               >

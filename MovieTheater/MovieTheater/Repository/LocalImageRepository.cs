@@ -51,7 +51,7 @@ namespace MovieTheater.Repository
             image.FilePath = urlFilePath;
 
 
-            // Add Image to the Images table
+    
             await dbContext.Images.AddAsync(image);
             await dbContext.SaveChangesAsync();
 

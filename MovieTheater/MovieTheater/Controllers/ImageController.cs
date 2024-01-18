@@ -28,7 +28,7 @@ namespace MovieTheater.Controllers
 
             if (ModelState.IsValid)
             {
-                // convert DTO to Domain model
+          
                 var imageDomainModel = new Image
                 {
                     File = request.File,
@@ -41,6 +41,8 @@ namespace MovieTheater.Controllers
 
         
                 await imageRepository.Upload(imageDomainModel);
+
+               // return Ok(imageDomainModel);
              
                 return RedirectToAction("GetById", new { id = imageDomainModel.Id});
  
@@ -72,9 +74,9 @@ namespace MovieTheater.Controllers
             return Ok( await imageRepository.GetImage(name));
         }
         [HttpGet]
-        [Route("{id:int}")]
+        [Route("GetById")]
 
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById( int id)
         {
     
             var Image = await imageRepository.GetByIdAsync(id);

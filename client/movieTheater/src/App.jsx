@@ -21,7 +21,7 @@ import Checkout from "./Pages/Ticket/Checkout";
 import { toast } from "react-toastify";
 import Reservations from "./Pages/Cart/Reservations";
 import Navbar from "./Pages/Home/Navbar";
-
+import UploadMovieImage from "./Pages/Admin/UploadMovieImage";
 function App() {
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("token"))
@@ -113,6 +113,7 @@ function App() {
             />
           }
         >
+     
           <Route
             path="/login"
             element={<LoginForm currentUser={currentUser} notify={notify} />}
@@ -122,7 +123,7 @@ function App() {
             element={
               <RequireAuth
                 currentUser={currentUser}
-                allowedRoles={[ROLES.User]}
+                allowedRoles={[ROLES.User, ROLES.Admin]}
               />
             }
           >
@@ -143,6 +144,15 @@ function App() {
             />
           </Route>
         </Route>
+        <Route
+            element={
+              <RequireAuth
+                currentUser={currentUser}
+                allowedRoles={[ROLES.Admin]}
+              />
+            }
+          >   <Route     path="/image-upload"
+          element={<UploadMovieImage  />}/></Route>
       </Routes>
     </div>
   );

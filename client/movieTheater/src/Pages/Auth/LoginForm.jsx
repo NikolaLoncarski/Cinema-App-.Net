@@ -20,6 +20,7 @@ function LoginForm({ currentUser, login, notify }) {
       const roles = resp?.data?.roles;
 
       const user = resp?.data?.username;
+      
       setAuth({ roles: [roles], user });
       notify("successful login");
       setTimeout(() => {

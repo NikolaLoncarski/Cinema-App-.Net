@@ -7,7 +7,7 @@ namespace MovieTheater.Models.DTO
         [Required]
         public IFormFile File { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="bad req")]
         public string FileName { get; set; }
 
 
