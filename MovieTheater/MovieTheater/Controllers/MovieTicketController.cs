@@ -129,5 +129,22 @@ namespace MovieTheater.Controllers
             return NoContent();
         }
 
+        [HttpGet]
+        [Route("Statistics")]
+
+        public async Task<IActionResult> MovieTicketStatistics()
+        {
+
+
+            var statistics = await movieTicketRepository.GetMovieStatistics();
+
+            if (statistics== null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok(statistics) ;
+        }
     }
 }

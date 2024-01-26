@@ -1,4 +1,5 @@
 ﻿using MovieTheater.Models;
+using MovieTheater.Models.DTO;
 
 namespace MovieTheater.Interfaces
 {
@@ -10,5 +11,6 @@ namespace MovieTheater.Interfaces
         Task<Movie?> GetByIdAsync( int id);
         Task<Movie?> UpdateAsync( int id, Movie movie);
         Task<Movie?> DeleteAsync(int id);
+  
     }
 }

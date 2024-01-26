@@ -2,6 +2,7 @@
 using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
+using MovieTheater.Models.DTO;
 
 namespace MovieTheater.Repository
 {
@@ -61,6 +62,22 @@ namespace MovieTheater.Repository
       
                 .Include(s=>s.Seat).FirstOrDefaultAsync(x => x.Id == id);
             
+        }
+
+        public async Task<MovieStatisticsDTO> GetMovieStatistics()
+        {
+            return await dbContext.Movies.Select(s =>
+                   new MovieStatisticsDTO()
+                   {
+
+                       AverageTicketPrice = dbContext.Projections.Average(p => p.Price),
+                       NumberOfTicketsSold = dbContext.Seats.Where(s => s.Reserved == true).Count(),
+
+                       Income = dbContext.Seats.Where(r => r.Reserved == true).Sum(p => p.Projection.Price),
+                       PercentageOfSeatsOcupied = Math.Round( dbContext.Seats.Count(s => s.Reserved == true) * 100.0 / dbContext.Seats.Count(),2)
+
+                   }).FirstOrDefaultAsync();
+              
         }
 
         public async Task<List<MovieTicket>> GetTicketByUserId(Guid userId)

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
+using MovieTheater.Models.DTO;
 
 namespace MovieTheater.Repository
 {
@@ -82,6 +83,8 @@ namespace MovieTheater.Repository
 
 
         }
+
+    
 
         public async Task<Movie?> UpdateAsync(int id, Movie movie)
         {

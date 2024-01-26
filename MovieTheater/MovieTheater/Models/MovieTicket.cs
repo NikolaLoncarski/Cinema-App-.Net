@@ -6,7 +6,7 @@
         public int ProjectionId  { get; set; }
         public Projection Projection { get; set; }
         public Guid SeatId { get; set; }
-        public Seat Seat { get; set; }
+        public Seat? Seat { get; set; }
         public DateTime DateAndTimeOfPurchase    { get; set; }
         public Guid UserId { get; set; }
 
