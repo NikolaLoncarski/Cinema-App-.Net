@@ -40,9 +40,9 @@ function Movie({ movies, isLoading, getMovies }) {
       {!isLoading &&
         movies.length > 0 &&
         movies.map((ele, index) => (
-          <div key={index}>
-            <div className="relative flex flex-row mt-6 text-gray-700 bg-white shadow-2xl bg-clip-border rounded-xl m-16 max-w-screen-xl  h-96 ">
-              <div className="w-72 h-96 ">
+          <div className="w-full   " key={index}>
+            <div className="relative gap-12 md:gap-0 flex md:flex-row flex-col mt-6 w-11/12  text-gray-700 bg-white shadow-2xl bg-clip-border  rounded-xl m-16   min-h-96 ">
+              <div className="max-w-72 max-h-96 ">
                 <img
                   className="max-w-full max-h-full  rounded-md shadow-2xl transform -translate-y-4 border-4 border-gray-300 gi"
                   src={ele.imageFilePath}
@@ -50,7 +50,7 @@ function Movie({ movies, isLoading, getMovies }) {
                 />
               </div>
 
-              <div className="flex flex-col justify-around w-1/2">
+              <div className="flex flex-col md:justify-around w-1/2  justify-center">
                 <h2 className="text-2xl">{ele.movieName}</h2>
 
                 <p className="text-xl">
@@ -66,7 +66,7 @@ function Movie({ movies, isLoading, getMovies }) {
                   <b>Duraiton:</b> {ele.duration} min
                 </p>
 
-                <p className="text-xl text-justify">
+                <p className="text-xl text-justify max-w-full">
                   <b>Desription:</b> {ele.description}{" "}
                 </p>
 

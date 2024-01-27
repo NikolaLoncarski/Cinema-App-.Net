@@ -5,6 +5,9 @@ using MovieTheater.Interfaces;
 using MovieTheater.Models.DTO;
 using MovieTheater.Models;
 using MovieTheater.Repository;
+using Microsoft.AspNetCore.Authorization;
+using MovieTheater.Models.DTO.RequestDTOs;
+using System.Security.Claims;
 
 namespace MovieTheater.Controllers
 {
@@ -21,8 +24,21 @@ namespace MovieTheater.Controllers
             this.projectionRepository= projectionRepository;
         }
 
+        [HttpPost]
+        [Route("Create")]
+       
+        public async Task<IActionResult> Create([FromBody] CreateProjectionDTO createProjectionDTO)
+        {
 
-   
+            var proj = mapper.Map<Projection>(createProjectionDTO);
+            proj.DateAndTimeOfProjecton = DateTime.Now;
+
+                var newProjection = await projectionRepository.CreateAsync(proj);
+                return RedirectToAction("GetById", new { id = newProjection.Id });
+  
+
+        }
+
 
 
         [HttpGet]

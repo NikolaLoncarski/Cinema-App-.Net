@@ -42,9 +42,10 @@ namespace MovieTheater.Controllers
         
                 await imageRepository.Upload(imageDomainModel);
 
-               // return Ok(imageDomainModel);
+         
+                return RedirectToAction("GetById", new { id = imageDomainModel.Id });
              
-                return RedirectToAction("GetById", new { id = imageDomainModel.Id});
+       
  
 
             }
@@ -68,10 +69,17 @@ namespace MovieTheater.Controllers
         }
 
         [HttpGet]
-        [Route("/api/GetImage")]
-        public async Task<IActionResult> GetImage([FromQuery] string name)
+        [Route("/api/GetImageByName")]
+        public async Task<IActionResult> GetImageByName([FromQuery] string name)
         {
             return Ok( await imageRepository.GetImage(name));
+        }
+
+        [HttpGet]
+        [Route("/api/GetImages")]
+        public async Task<IActionResult> GetImages()
+        {
+            return Ok(await imageRepository.GetAll());
         }
         [HttpGet]
         [Route("GetById")]

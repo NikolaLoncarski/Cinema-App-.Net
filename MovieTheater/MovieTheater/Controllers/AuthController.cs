@@ -56,7 +56,10 @@ namespace MovieTheater.Controllers
             return BadRequest("Something went wrong");
         }
 
+      
+
         [HttpPost]
+
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
         {

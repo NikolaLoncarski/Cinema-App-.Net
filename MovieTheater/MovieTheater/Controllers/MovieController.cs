@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
 using MovieTheater.Models.DTO;
+using MovieTheater.Models.DTO.RequestDTOs;
 
 namespace MovieTheater.Controllers
 {
@@ -28,15 +29,15 @@ namespace MovieTheater.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> Create(int ImageId,[FromBody] Movie movie)
+        public async Task<IActionResult> Create([FromBody] CreateMovieDTO movieDTO)
         {
 
+            var movie =   mapper.Map<Movie>(movieDTO);
             
-            ImageId = ImageId;
-            //await movieRepository.CreateAsync(movie);
+          var newMovie =   await movieRepository.CreateAsync(movie);
 
 
-            return Ok(ImageId);
+            return Ok(mapper.Map<MovieDetailsDTO>(newMovie));
         }
 
 
@@ -75,10 +76,10 @@ namespace MovieTheater.Controllers
         [Route("users")]
         public async Task<IActionResult> YourAction()
         {
-            // Access the AspNetUsers table using UserManager
+        
             var users = await userManager.Users.ToListAsync();
 
-            // Your logic here using the users
+   
 
             return Ok(users);
         }

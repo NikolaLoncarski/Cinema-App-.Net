@@ -37,7 +37,7 @@ const UploadMovieImage = () => {
  };
 
  return (
-   <div className='mt-48 w-96 relative flex flex-col w-6/12 text-gray-700 bg-white shadow-2xl bg-clip-border rounded-xl m-16 max-w-screen-xl  h-96   mx-auto px-4  gap-8'>
+   <div className='mt-48  relative flex flex-col w-6/12 text-gray-700 bg-white shadow-2xl bg-clip-border rounded-xl m-16 max-w-screen-xl  h-96   mx-auto px-4  gap-8'>
      <input type="file"    className=" block p-2.5 w-11/12 z-20 text-sm text-yellow-900 bg-yellow-50 rounded-lg  border-s-yellow-50 border-s-2 border border-yellow-300 focus:ring-yellow-500 focus:border-yellow-500 dark:bg-yellow-700 dark:border-s-yellow-700  dark:border-yellow-600 dark:placeholder-yellow-400 dark:text-white dark:focus:border-yellow-500" placeholder="File" required onChange={handleFileChange} />
 
      <input type='text'   className="block p-2.5 w-11/12 z-20 text-sm text-yellow-900 bg-yellow-50 rounded-lg border-s-yellow-50 border-s-2 border border-yellow-300 focus:ring-yellow-500 focus:border-yellow-500 dark:bg-yellow-700 dark:border-s-yellow-700  dark:border-yellow-600 dark:placeholder-yellow-400 dark:text-white dark:focus:border-yellow-500" placeholder="File Name" required onChange={(e)=>setFileName(e.target.value)} />

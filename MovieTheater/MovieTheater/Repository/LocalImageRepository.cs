@@ -21,6 +21,11 @@ namespace MovieTheater.Repository
             this.dbContext = dbContext;
         }
 
+        public async Task<List<Image>> GetAll()
+        {
+            return await dbContext.Images.ToListAsync();
+        }
+
         public async Task<Image> GetByIdAsync(int id)
         {
             return await dbContext.Images.FirstOrDefaultAsync(x => x.Id == id);

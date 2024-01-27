@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MovieTheater.Models
+namespace MovieTheater.Models.DTO.RequestDTOs
 {
-    public class Movie
+    public class CreateMovieDTO
     {
-        public int Id { get; set; }
+
         public string Name { get; set; }
         public string? Director { get; set; }
         public string? LeadActor { get; set; }
@@ -16,6 +16,7 @@ namespace MovieTheater.Models
         public int YearOfRelease { get; set; }
         public string? Description { get; set; }
         public int ImageId { get; set; }
-        public Image Image { get; set; }
+     
+
     }
 }

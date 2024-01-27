@@ -12,11 +12,11 @@ function LoginForm({ currentUser, login, notify }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+   
     try {
       const resp = await AuthService.login(username, password);
+      localStorage.removeItem('roles');
       localStorage.setItem("roles", JSON.stringify(resp?.data?.roles));
-
       const roles = resp?.data?.roles;
 
       const user = resp?.data?.username;

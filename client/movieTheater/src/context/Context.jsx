@@ -29,8 +29,8 @@ export const AppProvider = ({ children }) => {
         setUserId,
         notifyLoginExpired,
 
-        auth,
-        setAuth,
+      auth,
+      setAuth,
       }}
     >
       {children}
