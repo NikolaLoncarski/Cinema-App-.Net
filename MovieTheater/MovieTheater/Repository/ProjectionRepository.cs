@@ -17,6 +17,13 @@ namespace MovieTheater.Repository
             this.dbContext = dbContext;
             _mapper = mapper;
         }
+
+        public async Task<Projection?> CheckProjectionForDateAndHall(int projectionHallId, DateTime dateTime)
+        {
+            var projection = await dbContext.Projections.Where(p=>p.ProjectionHallId == projectionHallId && p.DateAndTimeOfProjecton == dateTime).FirstOrDefaultAsync();
+            return projection;
+        }
+
         public async Task<Projection> CreateAsync(Projection projection)
         {
             await dbContext.Projections.AddAsync(projection);

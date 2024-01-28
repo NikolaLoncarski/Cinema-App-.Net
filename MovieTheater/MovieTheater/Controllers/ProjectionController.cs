@@ -30,12 +30,20 @@ namespace MovieTheater.Controllers
         public async Task<IActionResult> Create([FromBody] CreateProjectionDTO createProjectionDTO)
         {
 
+            var existingProje = await projectionRepository.CheckProjectionForDateAndHall(createProjectionDTO.ProjectionHallId, createProjectionDTO.DateAndTimeOfProjecton);
+
+            if(existingProje == null )
+            {
+
             var proj = mapper.Map<Projection>(createProjectionDTO);
          
-
+                
                 var newProjection = await projectionRepository.CreateAsync(proj);
+       
                 return RedirectToAction("GetById", new { id = newProjection.Id });
-  
+            }
+
+            return BadRequest("This Projection allReady exists");
 
         }
 

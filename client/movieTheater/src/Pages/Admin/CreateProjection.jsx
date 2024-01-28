@@ -12,7 +12,7 @@ function CreateProjection() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const moviesUrl = "api/Movie";
+        const moviesUrl = "api/Movie/?pageSize=60";
         const projectionsUrl = "api/ProjectionHall";
 
         const [response1, response2] = await Promise.all([

@@ -46,20 +46,18 @@ namespace MovieTheater.Controllers
 
 
         {
-            /*
+            
            var existingSeats = await seatRepository.GetSeatsByProjectionId(hallId);
-            if (existingSeats != null )
+            if (existingSeats == null )
             {
 
-            await seatRepository.CreateSeatByProjectionCapacity(hallId);
-
-            return RedirectToAction("GetAll");
+            return BadRequest("This projection allready has seats");
 
             }
-            return BadRequest("This projection allready has seats");
-            */
             await seatRepository.CreateSeatByProjectionCapacity(hallId);
+
             return RedirectToAction("GetAll");
+          
         }
 
         [HttpGet]

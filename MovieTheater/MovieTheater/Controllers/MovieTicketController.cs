@@ -37,7 +37,7 @@ namespace MovieTheater.Controllers
 
         [HttpPost]
         [Route("Create")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Create([FromBody] MovieTicketRequestDTO movieTicketRequestDTO)
         {
 

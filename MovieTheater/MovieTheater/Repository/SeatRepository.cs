@@ -66,7 +66,7 @@ namespace MovieTheater.Repository
 
         int hallCapacity = projection.ProjectionHall.Capacity;
 
-
+          
 
         for (var i = 0; i < hallCapacity; i++)
         {
