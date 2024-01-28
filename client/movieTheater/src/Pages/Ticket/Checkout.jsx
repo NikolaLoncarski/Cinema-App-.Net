@@ -75,9 +75,6 @@ function Checkout({ seatLocation, notify }) {
        navigate('/login')*/
       }
     }
-
-    console.log(movieProjection);
-    console.log("asd");
   };
 
   return (

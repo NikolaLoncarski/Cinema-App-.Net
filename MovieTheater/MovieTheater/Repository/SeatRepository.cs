@@ -62,7 +62,7 @@ namespace MovieTheater.Repository
 
     public async Task<List<Seat>> CreateSeatByProjectionCapacity(int hallId)
     {
-        var projection = await dbContext.Projections.Include(i => i.Movie).ThenInclude(i => i.Image).Include(p => p.ProjectionHall).Include(p => p.ProjectionType).FirstOrDefaultAsync(x => x.Id == hallId);
+        var projection = await dbContext.Projections.Where(p=>p.Id==hallId).Include(i => i.Movie).ThenInclude(i => i.Image).Include(p => p.ProjectionHall).Include(p => p.ProjectionType).FirstOrDefaultAsync(x => x.Id == hallId);
 
         int hallCapacity = projection.ProjectionHall.Capacity;
 

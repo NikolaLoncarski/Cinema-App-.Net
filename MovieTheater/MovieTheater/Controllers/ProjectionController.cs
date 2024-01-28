@@ -31,7 +31,7 @@ namespace MovieTheater.Controllers
         {
 
             var proj = mapper.Map<Projection>(createProjectionDTO);
-            proj.DateAndTimeOfProjecton = DateTime.Now;
+         
 
                 var newProjection = await projectionRepository.CreateAsync(proj);
                 return RedirectToAction("GetById", new { id = newProjection.Id });

@@ -14,5 +14,7 @@ namespace MovieTheater.Models.DTO.RequestDTOs
        
    
         public decimal Price { get; set; }
+
+        public DateTime DateAndTimeOfProjecton { get; set; }
     }
 }
