@@ -12,6 +12,6 @@ namespace MovieTheater.Interfaces
         Task<MovieTicket?> DeleteAsync(int id);
         Task<List<MovieTicket>> GetTicketByUserId(Guid userId);
 
-        Task<MovieStatisticsDTO> GetMovieStatistics();
+
     }
 }

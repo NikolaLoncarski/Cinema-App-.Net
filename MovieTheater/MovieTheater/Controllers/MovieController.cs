@@ -84,6 +84,22 @@ namespace MovieTheater.Controllers
             return Ok(users);
         }
 
+        [HttpGet]
+        [Route("Statistics")]
+
+        public async Task<IActionResult> GetMovieStatistics([FromQuery] string? name,
+            [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+
+            var stats = await movieRepository.GetAllStatisticsAsync(name, sortBy,
+                    isAscending ?? true, pageNumber, pageSize);
+
+
+
+            return Ok(stats);
+        }
+
 
 
         [HttpPut]

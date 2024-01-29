@@ -25,6 +25,7 @@ import UploadMovieImage from "./Pages/Admin/UploadMovieImage";
 import CreateMovie from "./Pages/Admin/CreateMovie";
 import AdminMenu from "./Pages/Admin/AdminMenu";
 import CreateProjection from "./Pages/Admin/CreateProjection";
+import Statistics from "./Pages/Admin/Statistics";
 function App() {
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("token"))
@@ -118,6 +119,7 @@ function App() {
             path="/create-projection"
             element={<CreateProjection />}
           ></Route>
+          <Route path="/statistics" element={<Statistics />}></Route>
         </Route>
       </Routes>
     </div>

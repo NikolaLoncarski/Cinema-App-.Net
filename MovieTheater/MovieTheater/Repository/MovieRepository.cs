@@ -4,6 +4,7 @@ using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
 using MovieTheater.Models.DTO;
+using System.Globalization;
 
 namespace MovieTheater.Repository
 {
@@ -76,6 +77,70 @@ namespace MovieTheater.Repository
         
         }
 
+        public async Task<List<MovieStatisticsDTO>> GetAllStatisticsAsync(string? name = null, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 10)
+
+
+
+        {
+
+            var stats = dbContext.Movies
+                .Select(s =>
+                    new MovieStatisticsDTO
+                    {
+                        MovieId = s.Id,
+                        MovieName = s.Name,
+                        TotalNumberOfSeats = dbContext.Seats.Where(m => m.Projection.MovieId == s.Id && m.Reserved == false).Count(),
+                        NumberOfTicketsSold = dbContext.Seats.Where(m => m.Projection.MovieId == s.Id && m.Reserved).Count(),
+
+                        PercentageOfSeatsOcupied = Math.Round(dbContext.Seats
+                       .Where(m => m.Projection.MovieId == s.Id && m.Reserved == false)
+                       .Count() > 0
+                       ? 100 / (double)dbContext.Seats
+                       .Where(m => m.Projection.MovieId == s.Id && m.Reserved == false)
+                       .Count() * dbContext.Seats
+                       .Where(m => m.Projection.MovieId == s.Id && m.Reserved)
+                       .Count()
+                        : 0, 2),
+
+                        NumberOfProjections = dbContext.Projections.Where(p => p.MovieId == s.Id).Count(),
+                        AverageTicketPrice = Math.Round(dbContext.Projections.Where(pr => pr.MovieId == s.Id).Select(price => price.Price).Average() > 0 ?
+                       dbContext.Projections.Where(pr => pr.MovieId == s.Id).Select(price => price.Price).Average() : 0, 2),
+                        TotalEarned = dbContext.Projections.Where(pr => pr.MovieId == s.Id).Select(price => price.Price).Sum()
+                    }
+                ).AsQueryable();
+
+
+                if (string.IsNullOrWhiteSpace(name) == false)
+            {
+
+
+                stats = stats.Where(x => x.MovieName.Contains(name));
+            }
+
+
+            if (string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                   stats = isAscending ? stats.OrderBy(x => x.MovieName) : stats.OrderByDescending(x => x.MovieName);
+                }
+                else if (sortBy.Equals("TotalEarned", StringComparison.OrdinalIgnoreCase))
+                {
+                    stats = isAscending ? stats.OrderBy(x => x.TotalEarned) : stats.OrderByDescending(x => x.TotalEarned);
+                }
+                else if (sortBy.Equals("NumberOdProjections", StringComparison.OrdinalIgnoreCase))
+                {
+                   stats = isAscending ? stats.OrderBy(x => x.NumberOfProjections) : stats.OrderByDescending(x => x.NumberOfProjections);
+                }
+
+            }
+
+
+            var skipResults = (pageNumber - 1) * pageSize;
+
+            return await stats.Skip(skipResults).Take(pageSize).ToListAsync();
+        }
+
         public async Task<Movie?> GetByIdAsync(int id)
         {
             return await dbContext.Movies.FirstOrDefaultAsync(x => x.Id == id);
@@ -84,7 +149,10 @@ namespace MovieTheater.Repository
 
         }
 
-    
+        public async Task<int> OcupiedSeatsById(int id)
+        {
+            return await dbContext.Seats.CountAsync(m=>m.Projection.MovieId == id && m.Reserved ==false );
+        }
 
         public async Task<Movie?> UpdateAsync(int id, Movie movie)
         {

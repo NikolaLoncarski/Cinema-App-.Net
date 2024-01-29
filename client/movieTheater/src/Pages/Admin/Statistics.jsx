@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { apiGet } from "../../utils/axios";
-import { Navigate } from "react-router-dom";
-import Movie from "./Movie";
-import Search from "../../Components/Search";
-function Movies({ currentUser }) {
+function Statistics() {
   const [isLoading, setIsLoading] = useState(false);
-  const [movies, setMovies] = useState([]);
+  const [movieStats, setMovieStats] = useState([]);
   const [searchMovie, setSearchMovie] = useState("");
   const [sortBy, setSortBy] = useState("name");
   const [pageSize, setPageSize] = useState(5);
@@ -18,10 +15,10 @@ function Movies({ currentUser }) {
       setIsLoading(true);
       try {
         const response = await apiGet(
-          `api/movie${moviesQuery ? `?pageSize=${pageSize}${moviesQuery}` : ""}`
+          `api/Movie/Statistics${moviesQuery ? `?${moviesQuery}` : ""}`
         );
 
-        setMovies(response);
+        setMovieStats(response);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -34,7 +31,7 @@ function Movies({ currentUser }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setMoviesQuery(
-      `&name=${searchMovie}&isAscending=${isAscending}&sortBy=${sortBy}&pageNumber=${pageNumber}`
+      `name=${searchMovie}&isAscending=${isAscending}&sortBy=${sortBy}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   };
   return (
@@ -94,8 +91,68 @@ function Movies({ currentUser }) {
           </div>
         </div>
       </form>
+      <table className="w-full text-sm text-left rtl:text-right text-gray-100 dark:text-gray-200">
+        <thead className="text-xs text-yellow-700 uppercase bg-gray-50 dark:bg-yellow-500 dark:text-gray-900">
+          <tr>
+            <th scope="col" className="px-6 py-3">
+              Movie Id
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Name
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Total Earned{" "}
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Number Of Projections{" "}
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Total Tickets Sold{" "}
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Total Seats{" "}
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Average Ticket Price{" "}
+            </th>
+            <th scope="col" className="px-6 py-3">
+              %Seats Occupied{" "}
+            </th>
+          </tr>
+        </thead>
+        <tbody className="odd:bg-white odd:dark:bg-yellow-900 even:bg-yellow-50 even:dark:bg-yellow-800 border-b dark:border-gray-700">
+          {!isLoading &&
+            movieStats.length > 0 &&
+            movieStats.map((e, i) => {
+              const {
+                movieId,
+                movieName,
+                totalEarned,
+                numberOfProjections,
+                numberOfTicketsSold,
+                totalNumberOfSeats,
+                averageTicketPrice,
+                percentageOfSeatsOcupied,
+              } = e;
 
-      <Movie isLoading={isLoading} movies={movies} />
+              return (
+                <tr
+                  className="odd:bg-white odd:dark:bg-yellow-900 even:bg-gray-50 even:dark:bg-yellow-800 border-b dark:border-yellow-700"
+                  key={i}
+                >
+                  <td className="px-6 py-4">{movieId}</td>
+                  <td className="px-6 py-4">{movieName}</td>
+                  <td className="px-6 py-4">{totalEarned}</td>
+                  <td className="px-6 py-4">{numberOfProjections}</td>
+                  <td className="px-6 py-4">{numberOfTicketsSold}</td>
+                  <td className="px-6 py-4">{totalNumberOfSeats}</td>
+                  <td className="px-6 py-4">{averageTicketPrice}</td>
+                  <td className="px-6 py-4">% {percentageOfSeatsOcupied}</td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
       <div className="flex mt-4 mb-24 ">
         {pageNumber > 1 ? (
           <button
@@ -108,7 +165,7 @@ function Movies({ currentUser }) {
             Previous
           </button>
         ) : null}
-        {movies.length < pageSize ? null : (
+        {movieStats.length < pageSize ? null : (
           <button
             onClick={(e) => {
               setPageNumber(pageNumber + 1);
@@ -124,4 +181,4 @@ function Movies({ currentUser }) {
   );
 }
 
-export default Movies;
+export default Statistics;
