@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
@@ -35,12 +36,13 @@ namespace MovieTheater.Controllers
                 return BadRequest(ModelState);
             }
 
-            seatRepository.CreateAsync(seat);
+           await  seatRepository.CreateAsync(seat);
             return CreatedAtAction("GetById", new { id = seat.Id }, mapper.Map<SeatDetailsDTO>(seat));
         }
 
         [HttpPost]
         [Route("CreateSeatsByHallCapacity")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateSeatsByHallCapacity([FromQuery] int hallId)
 
 
@@ -118,7 +120,7 @@ namespace MovieTheater.Controllers
 
             try
             {
-                seatRepository.UpdateAsync(id, seat);
+              await  seatRepository.UpdateAsync(id, seat);
             }
             catch
             {

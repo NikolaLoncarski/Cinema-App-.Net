@@ -14,6 +14,7 @@ namespace MovieTheater.Models.DTO
             CreateMap<MovieTicketRequestDTO, MovieTicket>().ReverseMap();
             CreateMap<CreateMovieDTO, Movie>().ReverseMap();
             CreateMap<CreateProjectionDTO, Projection>().ReverseMap();
+            CreateMap<CreateProjectionTypeDTO, ProjectionType>().ReverseMap();
         }
     }
 }

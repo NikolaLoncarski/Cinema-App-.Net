@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
@@ -19,9 +20,10 @@ namespace MovieTheater.Controllers
         }
 
 
-        // POST: /api/Images/Upload
+
         [HttpPost]
         [Route("Upload")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDTO request)
         {
             ValidateFileUpload(request);
@@ -70,6 +72,7 @@ namespace MovieTheater.Controllers
 
         [HttpGet]
         [Route("/api/GetImageByName")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetImageByName([FromQuery] string name)
         {
             return Ok( await imageRepository.GetImage(name));
@@ -77,12 +80,14 @@ namespace MovieTheater.Controllers
 
         [HttpGet]
         [Route("/api/GetImages")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetImages()
         {
             return Ok(await imageRepository.GetAll());
         }
         [HttpGet]
         [Route("GetById")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> GetById( int id)
         {

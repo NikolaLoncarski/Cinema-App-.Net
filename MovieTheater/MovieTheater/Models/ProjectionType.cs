@@ -16,6 +16,6 @@ namespace MovieTheater.Models
         public string Type { get; set; }
         [Required(ErrorMessage = "projecitonHall id Required!")]
         public int ProjectionHallId { get; set; }
-        public ProjectionHall ProjectionHall { get; set; } = null!;
+        public ProjectionHall ProjectionHall { get; set; }
     }
 }

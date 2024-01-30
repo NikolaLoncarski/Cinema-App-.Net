@@ -78,7 +78,7 @@ namespace MovieTheater.Controllers
 
         [HttpGet]
         [Route("GetTicketByUserId")]
-        [Authorize]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> GetTicketByUserId()
 
 
@@ -96,6 +96,7 @@ namespace MovieTheater.Controllers
 
         [HttpGet]
         [Route("GetById")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> GetById(int id)
         {
             var movieTicket = await movieTicketRepository.GetByIdAsync(id);
@@ -111,7 +112,8 @@ namespace MovieTheater.Controllers
 
         [HttpPut]
         [Route("DeleteTicket")]
-   
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteTicket([FromBody] DeleteMovieTicketDTO deleteMovieTicketDTO)
         {
 

@@ -26,7 +26,7 @@ namespace MovieTheater.Controllers
 
         [HttpPost]
         [Route("Create")]
-       
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] CreateProjectionDTO createProjectionDTO)
         {
 
