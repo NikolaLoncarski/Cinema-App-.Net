@@ -32,7 +32,7 @@ namespace MovieTheater.Controllers
             var identityUser = new IdentityUser
             {
                 UserName = registerRequestDto.UserName,
-                Email = registerRequestDto.UserName
+                Email = registerRequestDto.EmailAdress
 
             };
             string[] userRole = { "User" };
@@ -41,7 +41,7 @@ namespace MovieTheater.Controllers
 
             if (identityResult.Succeeded)
             {
-                // Add roles to this User
+             
                 if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
                 {
                     identityResult = await userManager.AddToRolesAsync(identityUser, registerRequestDto.Roles);
@@ -63,20 +63,21 @@ namespace MovieTheater.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
         {
-            var user = await userManager.FindByEmailAsync(loginRequestDto.Username);
+          
+            var user = await userManager.FindByNameAsync(loginRequestDto.Username);
 
-            if (user != null)
+            if (user != null  )
             {
                 var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
 
                 if (checkPasswordResult)
                 {
-                    // Get Roles for this user
+         
                     var roles = await userManager.GetRolesAsync(user);
 
                     if (roles != null)
                     {
-                        // Create Token
+                
 
                         var jwtToken = tokenRepository.CreateJWTToken(user, roles.ToList());
 
