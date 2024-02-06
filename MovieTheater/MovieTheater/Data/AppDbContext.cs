@@ -8,7 +8,7 @@ using System.Reflection.Metadata;
 
 namespace MovieTheater.Data
 {
-    public class AppDbContext:IdentityDbContext
+    public class AppDbContext : IdentityDbContext<User>
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
@@ -27,9 +27,7 @@ namespace MovieTheater.Data
          public DbSet<MovieTicket> MovieTickets { get; set; }
 
 
-        public DbSet<User> Users { get; set; }
-          public DbSet<Role> Roles { get; set; }
-          public DbSet<UserRole> UsersRoles { get; set; }
+     
           public DbSet<Projection>Projections { get; set; }
 
 
@@ -42,42 +40,7 @@ namespace MovieTheater.Data
 
 
 
-            var userRoleId = "1";
-            var adminRoleId = "2";
-
-            var roles = new List<IdentityRole>
-            {
-                new IdentityRole
-                {
-                    Id=userRoleId,
-                    ConcurrencyStamp=userRoleId,
-                    Name="User",
-                    NormalizedName="User".ToUpper()
-                },
-                     new IdentityRole
-                {
-                    Id=adminRoleId,
-                    ConcurrencyStamp=adminRoleId,
-                    Name="Admin",
-                    NormalizedName="Admin".ToUpper()
-                }
-
-            };
-
-
-            modelBuilder.Entity<IdentityRole>().HasData(roles);
-
        
-
-            modelBuilder.Entity<UserRole>()
-                  .HasOne(x => x.Role)
-                  .WithMany(y => y.UserRoles)
-                  .HasForeignKey(x => x.RoleId);
-
-            modelBuilder.Entity<UserRole>()
-                .HasOne(x => x.User)
-                .WithMany(y => y.UserRoles)
-                .HasForeignKey(x => x.UserId);
 
             modelBuilder.Entity<ProjectionHall>()
                   .HasMany(e => e.ProjectionTypes)

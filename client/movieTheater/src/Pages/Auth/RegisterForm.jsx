@@ -1,37 +1,33 @@
 import { useState } from "react";
 import { apiPost } from "../../utils/axios";
- import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
- import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 
-function RegisterForm({notify}) {
+function RegisterForm({ notify }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-    const [passwordRepeat, setPasswordRepeat] = useState();
+  const [passwordRepeat, setPasswordRepeat] = useState();
 
   const userData = { username, password, roles: ["user"] };
 
-   
-
-    const checkPasswordMatch= (pass,repeatPass)=>{
-   if (pass !== repeatPass) {
-notify("Password and ConfirmPassword do not match please try again!")
-   }
-   return
+  const checkPasswordMatch = (pass, repeatPass) => {
+    if (pass !== repeatPass) {
+      notify("Password and ConfirmPassword do not match please try again!");
     }
+    return;
+  };
 
   const Login = async () => {
-    checkPasswordMatch(password,passwordRepeat)
+    checkPasswordMatch(password, passwordRepeat);
     try {
-    const data = await apiPost("api/Auth/Register", userData);
+      const data = await apiPost("api/Auth/Register", userData);
 
-    if (data.status === 200 ) {
-console.log('successful reg')
-notify("User was sucessfuly resitered")
-
-    }    }catch(err) {
-      
-    }
+      if (data.status === 200) {
+        console.log("successful reg");
+        notify("User was sucessfuly resitered");
+      }
+    } catch (err) {}
   };
   const submitForm = (e) => {
     e.preventDefault();
@@ -84,9 +80,9 @@ notify("User was sucessfuly resitered")
           </button>
         </div>
       </form>
- <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
 
-export default RegisterForm
+export default RegisterForm;

@@ -1,9 +1,13 @@
-﻿namespace MovieTheater.Models.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MovieTheater.Models.DTO
 {
     public class LoginRequestDTO
     {
+        [Required(ErrorMessage = "User Name is required")]
         public string Username { get; set; }
-         
+
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
     }
 }

@@ -16,85 +16,61 @@ namespace MovieTheater.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly IUserRepository _userRepository;
+        private readonly ILogger<AuthController> _logger;
+        private readonly IConfiguration _configuration;
+        private readonly UserManager<User> _userManager;
 
-        private readonly ITokenRepository tokenRepository;
-        public AuthController(UserManager<IdentityUser> _userManager, ITokenRepository tokenRepository) {
-            userManager = _userManager;
-            this.tokenRepository = tokenRepository;
+        public AuthController(IUserRepository userRepository, ILogger<AuthController> logger, IConfiguration configuration, UserManager<User> userManager)
+        {
+            _userRepository = userRepository;
+            _logger = logger;
+            _configuration = configuration;
+            _userManager = userManager;
+        }
 
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login(LoginRequestDTO model)
+        {
+         //   try
+          //  {
+                if (!ModelState.IsValid)
+                    return BadRequest("Invalid payload");
+                var result = await _userRepository.Login(model);
+                if (result.StatusCode == 0)
+                    return BadRequest(result.StatusMessage);
+                return Ok(result);
+       /*     }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }*/
         }
 
         [HttpPost]
-        [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDTO registerRequestDto)
+        [Route("registration")]
+        public async Task<IActionResult> Register(RegisterRequestDTO model)
         {
-            var identityUser = new IdentityUser
+            try
             {
-                UserName = registerRequestDto.UserName,
-                Email = registerRequestDto.EmailAdress
-
-            };
-            string[] userRole = { "User" };
-            registerRequestDto.Roles = userRole;
-            var identityResult = await userManager.CreateAsync(identityUser, registerRequestDto.Password);
-
-            if (identityResult.Succeeded)
-            {
-             
-                if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
+                if (!ModelState.IsValid)
+                    return BadRequest("Invalid payload");
+                var (status, message) = await _userRepository.Registration(model, Role.Admin);
+                if (status == 0)
                 {
-                    identityResult = await userManager.AddToRolesAsync(identityUser, registerRequestDto.Roles);
-
-                    if (identityResult.Succeeded)
-                    {
-                        return Ok("User was registered! Please login.");
-                    }
+                    return BadRequest(message);
                 }
+                return CreatedAtAction(nameof(Register), model);
+
             }
-
-            return BadRequest("Something went wrong");
-        }
-
-      
-
-        [HttpPost]
-
-        [Route("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
-        {
-          
-            var user = await userManager.FindByNameAsync(loginRequestDto.Username);
-
-            if (user != null  )
+            catch (Exception ex)
             {
-                var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
-
-                if (checkPasswordResult)
-                {
-         
-                    var roles = await userManager.GetRolesAsync(user);
-
-                    if (roles != null)
-                    {
-                
-
-                        var jwtToken = tokenRepository.CreateJWTToken(user, roles.ToList());
-
-                        var response = new LoginResponseDTO
-                        {  id = Guid.Parse(user.Id),
-                            JwtToken = jwtToken,
-                           Username = loginRequestDto.Username,
-                            Roles= roles.FirstOrDefault(),
-
-                        };
-
-                        return Ok(response);
-                    }
-                }
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-
-            return BadRequest("Username or password incorrect");
         }
 
         [HttpGet]
@@ -110,6 +86,57 @@ namespace MovieTheater.Controllers
 
 
             return Ok(userId);
+        }
+
+        [HttpPost]
+        [Route("refresh-token")]
+        public async Task<IActionResult> RefreshToken(GetRefreshTokenViewModel model)
+        {
+            try
+            {
+                if (model is null)
+                {
+                    return BadRequest("Invalid client request");
+                }
+
+                var result = await _userRepository.GetRefreshToken(model);
+                if (result.StatusCode == 0)
+                    return BadRequest(result.StatusMessage);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("revoke/{username}")]
+        public async Task<IActionResult> Revoke(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null) return BadRequest("Invalid user name");
+
+            user.RefreshToken = null;
+            await _userManager.UpdateAsync(user);
+
+            return Ok("Success");
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("revoke-all")]
+        public async Task<IActionResult> RevokeAll()
+        {
+            var users = _userManager.Users.ToList();
+            foreach (var user in users)
+            {
+                user.RefreshToken = null;
+                await _userManager.UpdateAsync(user);
+            }
+            return Ok("Success");
         }
     }
 }

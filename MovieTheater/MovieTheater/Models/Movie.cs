@@ -7,15 +7,15 @@ namespace MovieTheater.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(30,MinimumLength =2,ErrorMessage ="A movie must have a name!")]
+        [StringLength(100,MinimumLength =2,ErrorMessage ="A movie must have a name!")]
         public string Name { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 2, ErrorMessage = "A movie must have a director!")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "A movie must have a director!")]
         public string Director { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 2, ErrorMessage = "A movie must have a lead actor!")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "A movie must have a lead actor!")]
         public string LeadActor { get; set; }
 
         [Required]
@@ -27,11 +27,11 @@ namespace MovieTheater.Models
         public int Duration { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 2, ErrorMessage = "A movie must have a lead distributer!")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "A movie must have a lead distributer!")]
         public string Distributer { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 2, ErrorMessage = "A movie must have a lead country of origin!")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "A movie must have a lead country of origin!")]
         public string CountryOfOrigin { get; set; }
 
         [Required]

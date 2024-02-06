@@ -1,9 +1,12 @@
 ﻿using MovieTheater.Models;
+using MovieTheater.Models.DTO;
 
 namespace MovieTheater.Interfaces
 {
     public interface IUserRepository
     {
-        Task<Models.User> AuthenticateAsync(string username, string password);
+        Task<(int, string)> Registration(RegisterRequestDTO model, string role);
+        Task<TokenViewModel> Login(LoginRequestDTO model);
+        Task<TokenViewModel> GetRefreshToken(GetRefreshTokenViewModel model);
     }
 }

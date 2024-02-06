@@ -32,6 +32,10 @@ namespace MovieTheater.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -74,42 +78,12 @@ namespace MovieTheater.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProjectionHalls", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,15 +198,15 @@ namespace MovieTheater.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Director = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LeadActor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Director = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    LeadActor = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Genre = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
-                    Distributer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryOfOrigin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Distributer = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CountryOfOrigin = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     YearOfRelease = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     ImageId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -252,7 +226,7 @@ namespace MovieTheater.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ProjectionHallId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -262,32 +236,6 @@ namespace MovieTheater.Migrations
                         name: "FK_ProjectionTypes_ProjectionHalls_ProjectionHallId",
                         column: x => x.ProjectionHallId,
                         principalTable: "ProjectionHalls",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UsersRoles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsersRoles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UsersRoles_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UsersRoles_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -373,15 +321,6 @@ namespace MovieTheater.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "1", "1", "User", "USER" },
-                    { "2", "2", "Admin", "ADMIN" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Images",
                 columns: new[] { "Id", "FileExtension", "FileName", "FilePath", "FileSizeInBytes" },
                 values: new object[,]
@@ -425,11 +364,11 @@ namespace MovieTheater.Migrations
                 columns: new[] { "Id", "DateAndTimeOfProjecton", "MovieId", "Price", "ProjectionHallId", "ProjectionTypeId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 16, 9, 19, 40, 791, DateTimeKind.Local).AddTicks(9952), 1, 6.63m, 1, 1 },
-                    { 2, new DateTime(2024, 1, 18, 9, 19, 40, 791, DateTimeKind.Local).AddTicks(9995), 1, 7.53m, 2, 2 },
-                    { 3, new DateTime(2024, 1, 14, 9, 19, 40, 791, DateTimeKind.Local).AddTicks(9998), 2, 3.53m, 2, 3 },
-                    { 4, new DateTime(2024, 1, 17, 9, 19, 40, 792, DateTimeKind.Local).AddTicks(1), 3, 13.53m, 1, 2 },
-                    { 5, new DateTime(2024, 1, 20, 9, 19, 40, 792, DateTimeKind.Local).AddTicks(4), 3, 3.53m, 2, 3 }
+                    { 1, new DateTime(2024, 2, 9, 22, 13, 58, 590, DateTimeKind.Local).AddTicks(7563), 1, 6.63m, 1, 1 },
+                    { 2, new DateTime(2024, 2, 11, 22, 13, 58, 590, DateTimeKind.Local).AddTicks(7618), 1, 7.53m, 2, 2 },
+                    { 3, new DateTime(2024, 2, 7, 22, 13, 58, 590, DateTimeKind.Local).AddTicks(7621), 2, 3.53m, 2, 3 },
+                    { 4, new DateTime(2024, 2, 10, 22, 13, 58, 590, DateTimeKind.Local).AddTicks(7624), 3, 13.53m, 1, 2 },
+                    { 5, new DateTime(2024, 2, 13, 22, 13, 58, 590, DateTimeKind.Local).AddTicks(7627), 3, 3.53m, 2, 3 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -510,16 +449,6 @@ namespace MovieTheater.Migrations
                 name: "IX_Seats_ProjectionId",
                 table: "Seats",
                 column: "ProjectionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersRoles_RoleId",
-                table: "UsersRoles",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersRoles_UserId",
-                table: "UsersRoles",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -544,9 +473,6 @@ namespace MovieTheater.Migrations
                 name: "MovieTickets");
 
             migrationBuilder.DropTable(
-                name: "UsersRoles");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -554,12 +480,6 @@ namespace MovieTheater.Migrations
 
             migrationBuilder.DropTable(
                 name: "Seats");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Projections");
