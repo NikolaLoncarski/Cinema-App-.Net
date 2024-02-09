@@ -41,21 +41,19 @@ function App() {
     User: "User",
     Admin: "Admin",
   };
-  /*
+
   const checkUser = useCallback(() => {
     const user = AuthService.getCurrentUser();
 
     if (user) {
       setCurrentUser(user);
     }
-    console.log(user);
   }, [currentUser]);
 
   useEffect(() => {
     checkUser();
-    console.log("current");
   }, [currentUser]);
-  */
+
   const notify = (messsage) => {
     toast.error(`${messsage}`, {
       position: toast.POSITION.TOP_RIGHT,
@@ -74,6 +72,12 @@ function App() {
             />
           }
         >
+          <Route
+            index
+            element={
+              currentUser ? <Navigate to="/movies" /> : <Navigate to="/login" />
+            }
+          />
           <Route
             path="/login"
             element={<LoginForm currentUser={currentUser} notify={notify} />}
