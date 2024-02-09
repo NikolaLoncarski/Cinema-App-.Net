@@ -32,7 +32,7 @@ namespace MovieTheater.Controllers
             var identityUser = new IdentityUser
             {
                 UserName = registerRequestDto.UserName,
-                Email = registerRequestDto.EmailAdress
+                Email = registerRequestDto.UserName
 
             };
             string[] userRole = { "User" };

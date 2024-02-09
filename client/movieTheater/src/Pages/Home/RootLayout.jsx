@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import Sidebar from "../Admin/Sidebar";
+
 import Navbar from "./Navbar";
 import { useEffect } from "react";
 

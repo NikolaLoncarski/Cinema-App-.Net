@@ -9,7 +9,7 @@ namespace MovieTheater.Models.DTO
         public string UserName { get; set; }
 
  
-        public string EmailAdress { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
