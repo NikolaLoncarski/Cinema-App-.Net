@@ -112,7 +112,7 @@ namespace MovieTheater.Controllers
 
         [HttpPut]
         [Route("DeleteTicket")]
-        [Authorize(Roles = "Admin")]
+
 
         public async Task<IActionResult> DeleteTicket([FromBody] DeleteMovieTicketDTO deleteMovieTicketDTO)
         {
