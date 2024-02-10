@@ -96,7 +96,7 @@ namespace MovieTheater.Controllers
 
 
         /// <summary>
-        /// Searches for Movie Tickets that contain the user id that is searching for it. 
+        /// Searches for Movie Tickets that contain the user id that is using the URL. 
         /// </summary>
         /// <returns>MovieTickets</returns>
         /// <response code="200">Returns Movie Tickets</response>

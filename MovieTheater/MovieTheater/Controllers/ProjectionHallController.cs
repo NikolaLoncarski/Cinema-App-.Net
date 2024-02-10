@@ -21,7 +21,19 @@ namespace MovieTheater.Controllers
 
 
 
+        /// <summary>
+        /// Searches for existing projection halls. 
+        /// </summary>
+        /// <returns>Projection Halls</returns>
+        /// <remarks>
+        /// Sample request:
+        ///     Get /GetAll
+        ///     
+        /// </remarks>
+        /// <response code="200">Returns Ok Projection Hall List</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+    
         public async Task<IActionResult> GetAll()
         {
             var projectionHalls = await _projectionHallRepository.GetAllAsync();

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
 using MovieTheater.Models.DTO;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieTheater.Controllers
 {
@@ -22,8 +23,26 @@ namespace MovieTheater.Controllers
 
 
 
-        [HttpPost]
 
+        /// <summary>
+        /// Create a Seat. 
+        /// </summary>
+        /// <param name="seat"></param>
+        /// <returns>Seat/</returns>
+        /// <remarks>
+        /// Sample request:
+        ///     POST /Create
+        ///     {
+        ///      "Reserverd":false,
+        ///      "Location":int,
+        ///      "ProjectionId":int
+        ///     }
+        /// </remarks>
+        /// <response code="201">Returns Created Seat</response>
+        /// <response code="400">If Request is Bad</response>
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] Seat seat)
         {
 
@@ -36,9 +55,25 @@ namespace MovieTheater.Controllers
             return CreatedAtAction("GetById", new { id = seat.Id }, mapper.Map<SeatDetailsDTO>(seat));
         }
 
+
+        /// <summary>
+        /// Create a Seats that fill a projection. 
+        /// </summary>
+        /// <param name="hallId"></param>
+        /// <returns>Seat/</returns>
+        /// <remarks>
+        /// Sample request:
+        ///     POST /CreateSeatsByHallCapacity/:id
+        /// </remarks>
+        /// <response code="201">Returns Created Seat</response>
+        /// <response code="400">If Request is Bad</response>
+        /// <response code="403">If Requesting user isn't a "Admin"</response>
         [HttpPost]
         [Route("CreateSeatsByHallCapacity")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> CreateSeatsByHallCapacity([FromQuery] int hallId)
 
 
@@ -57,8 +92,19 @@ namespace MovieTheater.Controllers
             return RedirectToAction("GetAll");
 
         }
-
+        /// <summary>
+        /// Returns all Seats. 
+        /// </summary>
+        /// <returns>Seat</returns>
+        /// <remarks>
+        /// Sample request:
+        ///     Get / GetAll
+        /// </remarks>
+        /// <response code="201">Returns Created Seat</response>
+        /// <response code="400">If Request is Bad</response>
+        /// <response code="403">If Requesting user isn't a "Admin"</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var seatModels = await seatRepository.GetAllAsync();
@@ -67,8 +113,22 @@ namespace MovieTheater.Controllers
             return Ok(mapper.Map<List<SeatDetailsDTO>>(seatModels));
         }
 
+        /// <summary>
+        /// Returns Seats by Projection Id. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List<Seats></returns>
+        /// <remarks>
+        /// Sample request:
+        ///   GET /GetSeatsByProjectionId/:id
+        /// </remarks>
+        /// <response code="200">Returns Created Seat</response>
+        /// <response code="404">If No Seats Are FOund</response>
         [HttpGet]
         [Route("GetSeatsByProjectionId")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public async Task<IActionResult> GetSeatsByProjectionId(int id)
 
 

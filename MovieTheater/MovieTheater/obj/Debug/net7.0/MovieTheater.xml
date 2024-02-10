@@ -180,7 +180,7 @@
         </member>
         <member name="M:MovieTheater.Controllers.MovieTicketController.GetTicketByUserId">
             <summary>
-            Searches for Movie Tickets that contain the user id that is searching for it. 
+            Searches for Movie Tickets that contain the user id that is using the URL. 
             </summary>
             <returns>MovieTickets</returns>
             <response code="200">Returns Movie Tickets</response>
@@ -211,6 +211,162 @@
             <response code="204">Returns No content</response>
             <response code="404">No tickets found.</response>
         </member>
+        <member name="M:MovieTheater.Controllers.ProjectionController.Create(MovieTheater.Models.DTO.RequestDTOs.CreateProjectionDTO)">
+            <summary>
+            Creates a Projection and coresponding seats for the projection hall size. 
+            </summary>
+            <param name="createProjectionDTO">createProjectionDTO</param>
+            <returns>Projeciton</returns>
+            <remarks>
+            Sample request:
+                Post /Create
+                {
+                "MovieId":int,
+                "projectionHallId":int,
+                "projectionTypeId":int,
+                "price":decimal
+                
+                       }
+                
+            </remarks>
+            <response code="201">Returns Created Projection</response>
+            <response code="400">Bad Request.</response>
+            <response code="403">Forbiden if users role isn't "Admin".</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ProjectionController.GetAll">
+            <summary>
+            Creates a Projection and coresponding seats for the projection hall size. 
+            </summary>
+            <returns>Projeciton</returns>
+            <remarks>
+            Sample request:
+                Get /GetAll
+                
+            </remarks>
+            <response code="200">Returns Projections</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ProjectionController.GetById(System.Int32)">
+            <summary>
+            Searches for a projection for a coresponding Id. 
+            </summary>
+            <param name="id">cId</param>
+            <returns>Projeciton</returns>
+            <remarks>
+            Sample request:
+                Get /GetById/:id
+            </remarks>
+            <response code="200">Returns  Projection</response>
+            <response code="404">If there are no projections with that Id.</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ProjectionController.GetByMovieId(System.Int32)">
+            <summary>
+            Searches for a projection with the movie ID. 
+            </summary>
+            <param name="id">cId</param>
+            <returns>Projecitons</returns>
+            <remarks>
+            Sample request:
+                Get /GetByMovieId/:id
+            </remarks>
+            <response code="200">Returns  Projections</response>
+            <response code="404">If there are no projections with that movie Id .</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ProjectionHallController.GetAll">
+            <summary>
+            Searches for existing projection halls. 
+            </summary>
+            <returns>Projection Halls</returns>
+            <remarks>
+            Sample request:
+                Get /GetAll
+                
+            </remarks>
+            <response code="200">Returns Ok Projection Hall List</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ProjectionTypeController.Create(MovieTheater.Models.DTO.RequestDTOs.CreateProjectionTypeDTO)">
+            <summary>
+            Create a A Projection Type. 
+            </summary>
+            <param name="createProjectionTypeDto"></param>
+            <returns>MProjeciton Type.</returns>
+            <remarks>
+            Sample request:
+                POST /Create
+            </remarks>
+            <response code="201">Returns the Created Movie Tick</response>
+            <response code="403">Returns Forbidden if requesting user isn't a "Admin"</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ProjectionTypeController.GetAll">
+            <summary>
+            Returns a list of Projection Types.
+            </summary>
+            <returns>MProjeciton Type.</returns>
+            <remarks>
+            Sample request:
+                Get /GetAll
+            </remarks>
+            <response code="200">Returns the Projection Type List</response>
+            <response code="403">Returns Forbidden if requesting user isn't a "Admin"</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ProjectionTypeController.GetById(System.Int32)">
+            <summary>
+            Create a A Projection Type. 
+            </summary>
+            <param name="id"></param>
+            <returns>MProjeciton Type.</returns>
+            <remarks>
+            Sample request:
+                Get / GetById/:id
+            </remarks>
+            <response code="200">Returns a Projection Type</response>
+            <response code="403">Returns Forbidden if requesting user isn't a "Admin"</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.SeatController.Create(MovieTheater.Models.Seat)">
+            <summary>
+            Create a Seat. 
+            </summary>
+            <param name="seat"></param>
+            <returns>Seat/</returns>
+            <remarks>
+            Sample request:
+                POST /Create
+                {
+                 "Reserverd":false,
+                 "Location":int,
+                 "ProjectionId":int
+                }
+            </remarks>
+            <response code="201">Returns Created Seat</response>
+            <response code="400">If Request is Bad</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.SeatController.CreateSeatsByHallCapacity(System.Int32)">
+            <summary>
+            Create a Seats that fill a projection. 
+            </summary>
+            <param name="hallId"></param>
+            <returns>Seat/</returns>
+            <remarks>
+            Sample request:
+                POST /CreateSeatsByHallCapacity/:id
+            </remarks>
+            <response code="201">Returns Created Seat</response>
+            <response code="400">If Request is Bad</response>
+            <response code="403">If Requesting user isn't a "Admin"</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.SeatController.GetAll">
+            <summary>
+            Returns all Seats. 
+            </summary>
+            <returns>Seat</returns>
+            <remarks>
+            Sample request:
+                Get / GetAll
+            </remarks>
+            <response code="201">Returns Created Seat</response>
+            <response code="400">If Request is Bad</response>
+            <response code="403">If Requesting user isn't a "Admin"</response>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MovieTheater.Controllers.SeatController.GetSeatsByProjectionId(System.Int32)" -->
         <member name="T:MovieTheater.Migrations.init">
             <inheritdoc />
         </member>

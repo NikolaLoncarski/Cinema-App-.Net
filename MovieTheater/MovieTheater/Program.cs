@@ -49,7 +49,7 @@ builder.Services.AddOpenApiDocument(options =>
             Contact = new OpenApiContact
             {
                 Email = "nidzafrom023@gmail.com"
-            
+
             },
             License = new OpenApiLicense
             {
