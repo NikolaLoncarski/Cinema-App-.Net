@@ -6,13 +6,13 @@ namespace MovieTheater.Models
     {
         public int Id { get; set; }
         public string Username { get; set; }
- 
+
         public string Password { get; set; }
-     
+
         [NotMapped]
         public List<string> Roles { get; set; }
 
-      
+
         public List<UserRole> UserRoles { get; set; }
     }
 }

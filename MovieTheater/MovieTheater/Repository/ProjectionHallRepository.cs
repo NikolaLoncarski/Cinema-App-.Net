@@ -4,9 +4,6 @@ using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
 
-using MovieTheater.Models.DTO;
-using System;
-
 namespace MovieTheater.Repository
 {
     public class ProjectionHallRepository : IProjectionHallRepository
@@ -22,8 +19,8 @@ namespace MovieTheater.Repository
 
         public async Task<List<ProjectionHall>> GetAllAsync()
         {
-            return await dbContext.ProjectionHalls.Include(p=>p.ProjectionTypes).ToListAsync();
+            return await dbContext.ProjectionHalls.Include(p => p.ProjectionTypes).ToListAsync();
         }
     }
-    
+
 }

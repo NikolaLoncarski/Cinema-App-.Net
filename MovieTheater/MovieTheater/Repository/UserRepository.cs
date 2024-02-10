@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
-using System.Security.Claims;
 
 namespace MovieTheater.Repository
 {
@@ -46,6 +44,6 @@ namespace MovieTheater.Repository
             return user;
         }
 
-    
+
     }
 }

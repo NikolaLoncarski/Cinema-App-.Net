@@ -8,7 +8,7 @@
         public Guid SeatId { get; set; }
 
         public DateTime? DateAndTimeOfPurchase { get; set; }
-        public bool Action {  get; set; }
+        public bool Action { get; set; }
         public Guid? UserId { get; set; }
     }
 }

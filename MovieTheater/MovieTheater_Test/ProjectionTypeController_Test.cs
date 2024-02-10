@@ -5,8 +5,6 @@ using MovieTheater.Controllers;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
 using MovieTheater.Models.DTO;
-using System;
-using System.Diagnostics.Metrics;
 
 namespace MovieTheater_Test
 {
@@ -15,7 +13,7 @@ namespace MovieTheater_Test
         [Fact]
         public async Task GetById_ValidId_ReturnsObjectAsync()
         {
-        
+
             ProjectionType projectionType = new ProjectionType()
             {
                 Id = 1,
@@ -41,10 +39,10 @@ namespace MovieTheater_Test
 
             var controller = new ProjectionTypeController(mapper, mockRepository.Object);
 
-     
+
             var actionResult = await controller.GetById(1) as OkObjectResult;
 
-   
+
             Assert.NotNull(actionResult);
             Assert.NotNull(actionResult.Value);
 
@@ -69,13 +67,13 @@ namespace MovieTheater_Test
 
             var actionResult = await controller.GetById(12) as NotFoundResult;
 
-    
+
             Assert.NotNull(actionResult);
         }
         [Fact]
         public async void GetAllAsync_ReturnsCollection()
         {
-    
+
             List<ProjectionType> pt = new List<ProjectionType>() {
                 new ProjectionType()
             {
@@ -99,7 +97,7 @@ namespace MovieTheater_Test
             var mapperConfiguration = new MapperConfiguration(cfg => cfg.AddProfile(new Profiles()));
             IMapper mapper = new Mapper(mapperConfiguration);
 
-            var controller = new ProjectionTypeController(mapper,mockRepository.Object);
+            var controller = new ProjectionTypeController(mapper, mockRepository.Object);
 
             // Act
             var actionResult = await controller.GetAll() as OkObjectResult;
@@ -147,10 +145,10 @@ namespace MovieTheater_Test
 
             var controller = new ProjectionTypeController(mapper, mockRepository.Object);
 
-          
+
             var actionResult = await controller.Create(projectionType) as CreatedAtActionResult;
 
-     
+
             Assert.NotNull(actionResult);
             Assert.NotNull(actionResult.Value);
             Assert.Equal("GetById", actionResult.ActionName);

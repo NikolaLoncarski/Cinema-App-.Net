@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
-using System.Globalization;
 
 namespace MovieTheater.Repository
 {
@@ -20,7 +19,7 @@ namespace MovieTheater.Repository
 
         public async Task<Projection?> CheckProjectionForDateAndHall(int projectionHallId, DateTime dateTime)
         {
-            var projection = await dbContext.Projections.Where(p=>p.ProjectionHallId == projectionHallId && p.DateAndTimeOfProjecton == dateTime).FirstOrDefaultAsync();
+            var projection = await dbContext.Projections.Where(p => p.ProjectionHallId == projectionHallId && p.DateAndTimeOfProjecton == dateTime).FirstOrDefaultAsync();
             return projection;
         }
 
@@ -47,10 +46,10 @@ namespace MovieTheater.Repository
 
         public async Task<List<Projection>> GetAllAsync()
         {
-            var projections = dbContext.Projections.Include(i => i.Movie).ThenInclude(i=>i.Image).Include(p=>p.ProjectionHall).Include(p=>p.ProjectionType).AsQueryable();
+            var projections = dbContext.Projections.Include(i => i.Movie).ThenInclude(i => i.Image).Include(p => p.ProjectionHall).Include(p => p.ProjectionType).AsQueryable();
 
 
-       
+
 
             return await projections.ToListAsync();
         }
@@ -62,7 +61,7 @@ namespace MovieTheater.Repository
 
         public async Task<List<Projection?>> GetByMovieIdAsync(int id)
         {
-            return await dbContext.Projections.Where(x=>x.MovieId==id).Include(i => i.Movie).ThenInclude(i => i.Image).Include(p => p.ProjectionHall).Include(p => p.ProjectionType).AsQueryable().ToListAsync();
+            return await dbContext.Projections.Where(x => x.MovieId == id).Include(i => i.Movie).ThenInclude(i => i.Image).Include(p => p.ProjectionHall).Include(p => p.ProjectionType).AsQueryable().ToListAsync();
         }
 
         public Task<Projection?> UpdateAsync(int id, Projection projection)

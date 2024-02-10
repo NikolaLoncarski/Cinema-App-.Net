@@ -2,7 +2,6 @@
 using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
-using System.Globalization;
 
 namespace MovieTheater.Repository
 {
@@ -30,12 +29,12 @@ namespace MovieTheater.Repository
         {
             return await dbContext.Images.FirstOrDefaultAsync(x => x.Id == id);
 
-        } 
+        }
 
         public async Task<List<Image>> GetImage(string name)
         {
             return await dbContext.Images.Where(n => n.FileName.Contains(name)).ToListAsync();
-          
+
 
 
         }
@@ -45,18 +44,18 @@ namespace MovieTheater.Repository
             var localFilePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images",
                    $"{image.FileName}{image.FileExtension}");
 
-  
+
             using var stream = new FileStream(localFilePath, FileMode.Create);
             await image.File.CopyToAsync(stream);
 
-         
+
 
             var urlFilePath = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}{httpContextAccessor.HttpContext.Request.PathBase}/Images/{image.FileName}{image.FileExtension}";
 
             image.FilePath = urlFilePath;
 
 
-    
+
             await dbContext.Images.AddAsync(image);
             await dbContext.SaveChangesAsync();
 

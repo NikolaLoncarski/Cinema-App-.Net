@@ -2,7 +2,6 @@
 using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
-using MovieTheater.Models.DTO;
 
 namespace MovieTheater.Repository
 {
@@ -14,9 +13,9 @@ namespace MovieTheater.Repository
         {
             this.dbContext = dbContext;
         }
-       
 
-      
+
+
 
         public async Task<MovieTicket> CreateAsync(MovieTicket movieTicket)
         {
@@ -59,16 +58,16 @@ namespace MovieTheater.Repository
                 .Include(i => i.Projection).ThenInclude(p => p.ProjectionHall)
                 .Include(i => i.Projection).ThenInclude(p => p.ProjectionType)
                 .Include(i => i.Projection).ThenInclude(p => p.Movie).ThenInclude(p => p.Image)
-      
-                .Include(s=>s.Seat).FirstOrDefaultAsync(x => x.Id == id);
-            
+
+                .Include(s => s.Seat).FirstOrDefaultAsync(x => x.Id == id);
+
         }
 
-   
+
 
         public async Task<List<MovieTicket>> GetTicketByUserId(Guid userId)
         {
-            return await dbContext.MovieTickets.Where(u=>u.UserId==userId)
+            return await dbContext.MovieTickets.Where(u => u.UserId == userId)
                     .Include(i => i.Projection).ThenInclude(p => p.ProjectionHall)
                     .Include(i => i.Projection).ThenInclude(p => p.ProjectionType)
                     .Include(i => i.Projection).ThenInclude(p => p.Movie).ThenInclude(p => p.Image)

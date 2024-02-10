@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace MovieTheater.Models.DTO
@@ -20,7 +19,7 @@ namespace MovieTheater.Models.DTO
         public int YearOfRelease { get; set; }
         public string? Description { get; set; }
         public int ImageId { get; set; }
-        public string ImageFileName{ get; set; }
+        public string ImageFileName { get; set; }
         public string ImageFilePath { get; set; }
     }
 }

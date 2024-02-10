@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
-using MovieTheater.Models.DTO;
 using MovieTheater.Models;
-using MovieTheater.Repository;
-using Microsoft.AspNetCore.Authorization;
+using MovieTheater.Models.DTO;
 using MovieTheater.Models.DTO.RequestDTOs;
-using System.Security.Claims;
 
 namespace MovieTheater.Controllers
 {
@@ -21,7 +18,7 @@ namespace MovieTheater.Controllers
         public ProjectionController(IMapper mapper, IProjectionRepository projectionRepository)
         {
             this.mapper = mapper;
-            this.projectionRepository= projectionRepository;
+            this.projectionRepository = projectionRepository;
         }
 
         [HttpPost]
@@ -32,14 +29,14 @@ namespace MovieTheater.Controllers
 
             var existingProje = await projectionRepository.CheckProjectionForDateAndHall(createProjectionDTO.ProjectionHallId, createProjectionDTO.DateAndTimeOfProjecton);
 
-            if(existingProje == null )
+            if (existingProje == null)
             {
 
-            var proj = mapper.Map<Projection>(createProjectionDTO);
-         
-                
+                var proj = mapper.Map<Projection>(createProjectionDTO);
+
+
                 var newProjection = await projectionRepository.CreateAsync(proj);
-       
+
                 return RedirectToAction("GetById", new { id = newProjection.Id });
             }
 
@@ -70,7 +67,7 @@ namespace MovieTheater.Controllers
             }
 
 
-            return Ok(mapper.Map < ProjectionDetailsDTO >(projections));
+            return Ok(mapper.Map<ProjectionDetailsDTO>(projections));
         }
         [HttpGet]
         [Route("GetByMovieId")]

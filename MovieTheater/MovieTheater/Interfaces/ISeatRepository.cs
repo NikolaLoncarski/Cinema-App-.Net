@@ -12,7 +12,7 @@ namespace MovieTheater.Interfaces
         Task<List<Seat>> GetSeatsByProjectionId(int id);
         Task<List<Seat>> CreateSeatByProjectionCapacity(int hallId);
 
-        Task<Seat> CheckIfSeatIsReserved(Guid seatId ,bool action);
+        Task<Seat> CheckIfSeatIsReserved(Guid seatId, bool action);
         Task<Seat> ClearSeatReservation(Guid seatId, bool action);
 
     }

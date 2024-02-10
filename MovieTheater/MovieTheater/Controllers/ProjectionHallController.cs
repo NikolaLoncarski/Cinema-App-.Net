@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
 
@@ -23,7 +22,7 @@ namespace MovieTheater.Controllers
 
 
         [HttpGet]
-        public async Task< IActionResult> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var projectionHalls = await _projectionHallRepository.GetAllAsync();
 

@@ -1,5 +1,4 @@
 ﻿using MovieTheater.Models;
-using MovieTheater.Models.DTO;
 
 namespace MovieTheater.Interfaces
 {

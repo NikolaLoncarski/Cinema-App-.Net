@@ -4,7 +4,6 @@ using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
 using MovieTheater.Models.DTO;
-using System.Globalization;
 
 namespace MovieTheater.Repository
 {
@@ -39,20 +38,20 @@ namespace MovieTheater.Repository
             return existingMovie;
         }
 
-        public async Task<List<Movie>> GetAllAsync(string? name = null,  string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 10)
+        public async Task<List<Movie>> GetAllAsync(string? name = null, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 10)
         {
-            var movies = dbContext.Movies.Include(i=>i.Image).AsQueryable();
+            var movies = dbContext.Movies.Include(i => i.Image).AsQueryable();
 
-       
-            if ( string.IsNullOrWhiteSpace(name) == false)
+
+            if (string.IsNullOrWhiteSpace(name) == false)
             {
-     
-               
-                    movies = movies.Where(x => x.Name.Contains(name));
-            
+
+
+                movies = movies.Where(x => x.Name.Contains(name));
+
             }
 
-  
+
             if (string.IsNullOrWhiteSpace(sortBy) == false)
             {
                 if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
@@ -69,12 +68,12 @@ namespace MovieTheater.Repository
                 }
 
             }
-   
-      
+
+
             var skipResults = (pageNumber - 1) * pageSize;
 
             return await movies.Skip(skipResults).Take(pageSize).ToListAsync();
-        
+
         }
 
         public async Task<List<MovieStatisticsDTO>> GetAllStatisticsAsync(string? name = null, string? sortBy = null, bool isAscending = true, int pageNumber = 1, int pageSize = 10)
@@ -110,7 +109,7 @@ namespace MovieTheater.Repository
                 ).AsQueryable();
 
 
-                if (string.IsNullOrWhiteSpace(name) == false)
+            if (string.IsNullOrWhiteSpace(name) == false)
             {
 
 
@@ -122,7 +121,7 @@ namespace MovieTheater.Repository
             {
                 if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
                 {
-                   stats = isAscending ? stats.OrderBy(x => x.MovieName) : stats.OrderByDescending(x => x.MovieName);
+                    stats = isAscending ? stats.OrderBy(x => x.MovieName) : stats.OrderByDescending(x => x.MovieName);
                 }
                 else if (sortBy.Equals("TotalEarned", StringComparison.OrdinalIgnoreCase))
                 {
@@ -130,7 +129,7 @@ namespace MovieTheater.Repository
                 }
                 else if (sortBy.Equals("NumberOdProjections", StringComparison.OrdinalIgnoreCase))
                 {
-                   stats = isAscending ? stats.OrderBy(x => x.NumberOfProjections) : stats.OrderByDescending(x => x.NumberOfProjections);
+                    stats = isAscending ? stats.OrderBy(x => x.NumberOfProjections) : stats.OrderByDescending(x => x.NumberOfProjections);
                 }
 
             }
@@ -151,7 +150,7 @@ namespace MovieTheater.Repository
 
         public async Task<int> OcupiedSeatsById(int id)
         {
-            return await dbContext.Seats.CountAsync(m=>m.Projection.MovieId == id && m.Reserved ==false );
+            return await dbContext.Seats.CountAsync(m => m.Projection.MovieId == id && m.Reserved == false);
         }
 
         public async Task<Movie?> UpdateAsync(int id, Movie movie)
@@ -173,7 +172,7 @@ namespace MovieTheater.Repository
             existingMovie.CountryOfOrigin = movie.CountryOfOrigin;
             existingMovie.YearOfRelease = movie.YearOfRelease;
             existingMovie.Description = movie.Description;
-            existingMovie.ImageId=movie.ImageId;
+            existingMovie.ImageId = movie.ImageId;
 
             await dbContext.SaveChangesAsync();
 

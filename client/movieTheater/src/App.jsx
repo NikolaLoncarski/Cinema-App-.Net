@@ -3,14 +3,7 @@ import LoginForm from "./Pages/Auth/LoginForm";
 import RegisterForm from "./Pages/Auth/RegisterForm";
 import { useState, useCallback, useEffect } from "react";
 import AuthService from "./utils/authServices";
-import {
-  Routes,
-  Route,
-  Navigate,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Movies from "./Pages/Movie/Movies";
 import RootLayout from "./Pages/Home/RootLayout";

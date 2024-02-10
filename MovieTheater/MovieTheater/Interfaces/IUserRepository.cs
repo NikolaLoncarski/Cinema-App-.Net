@@ -1,6 +1,4 @@
-﻿using MovieTheater.Models;
-
-namespace MovieTheater.Interfaces
+﻿namespace MovieTheater.Interfaces
 {
     public interface IUserRepository
     {

@@ -5,7 +5,7 @@ namespace MovieTheater.Models.DTO
     public class MovieTicketDetailsDTO
     {
         public int Id { get; set; }
-       
+
         public int ProjectionId { get; set; }
         [JsonPropertyName("movie_id")]
         public int ProjectionMovieId { get; set; }

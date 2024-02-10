@@ -7,7 +7,7 @@ namespace MovieTheater.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(30,MinimumLength =2,ErrorMessage ="A movie must have a name!")]
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "A movie must have a name!")]
         public string Name { get; set; }
 
         [Required]
@@ -42,7 +42,7 @@ namespace MovieTheater.Models
         [StringLength(250, MinimumLength = 2, ErrorMessage = "A movie must have a description!")]
         public string Description { get; set; }
 
-        [Required (ErrorMessage = "Image id Required!")]
+        [Required(ErrorMessage = "Image id Required!")]
         public int ImageId { get; set; }
         public Image Image { get; set; }
     }

@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
 using MovieTheater.Models.DTO;
-using MovieTheater.Repository;
-using System;
-using System.Globalization;
 
 namespace MovieTheater.Controllers
 {
@@ -21,11 +17,11 @@ namespace MovieTheater.Controllers
         public SeatController(IMapper mapper, ISeatRepository seatRepository)
         {
             this.mapper = mapper;
-            this.seatRepository= seatRepository;
+            this.seatRepository = seatRepository;
         }
 
 
-     
+
         [HttpPost]
 
         public async Task<IActionResult> Create([FromBody] Seat seat)
@@ -36,7 +32,7 @@ namespace MovieTheater.Controllers
                 return BadRequest(ModelState);
             }
 
-           await  seatRepository.CreateAsync(seat);
+            await seatRepository.CreateAsync(seat);
             return CreatedAtAction("GetById", new { id = seat.Id }, mapper.Map<SeatDetailsDTO>(seat));
         }
 
@@ -48,18 +44,18 @@ namespace MovieTheater.Controllers
 
 
         {
-            
-           var existingSeats = await seatRepository.GetSeatsByProjectionId(hallId);
-            if (existingSeats == null )
+
+            var existingSeats = await seatRepository.GetSeatsByProjectionId(hallId);
+            if (existingSeats == null)
             {
 
-            return BadRequest("This projection allready has seats");
+                return BadRequest("This projection allready has seats");
 
             }
             await seatRepository.CreateSeatByProjectionCapacity(hallId);
 
             return RedirectToAction("GetAll");
-          
+
         }
 
         [HttpGet]
@@ -77,11 +73,11 @@ namespace MovieTheater.Controllers
 
 
         {
-      
-                var seatModels = await seatRepository.GetSeatsByProjectionId(id);
+
+            var seatModels = await seatRepository.GetSeatsByProjectionId(id);
 
 
-                return Ok(mapper.Map<List<SeatDetailsDTO>>(seatModels)); 
+            return Ok(mapper.Map<List<SeatDetailsDTO>>(seatModels));
         }
 
 
@@ -101,10 +97,10 @@ namespace MovieTheater.Controllers
             return Ok(mapper.Map<SeatDetailsDTO>(seat));
         }
 
-     
+
         [HttpPut]
         [Route("{id:Guid}")]
-   
+
         public async Task<IActionResult> Update([FromRoute] Guid id, Seat seat)
         {
 
@@ -120,7 +116,7 @@ namespace MovieTheater.Controllers
 
             try
             {
-              await  seatRepository.UpdateAsync(id, seat);
+                await seatRepository.UpdateAsync(id, seat);
             }
             catch
             {
@@ -131,7 +127,7 @@ namespace MovieTheater.Controllers
         }
 
 
-  
+
         [HttpDelete]
         [Route("{id:Guid}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
@@ -146,6 +142,6 @@ namespace MovieTheater.Controllers
             // Map Domain Model to DTO
             return Ok(mapper.Map<SeatDetailsDTO>(seatDomainModel));
         }
-   
+
     }
 }

@@ -4,6 +4,6 @@ namespace MovieTheater.Interfaces
 {
     public interface IProjectionHallRepository
     {
-     Task<List<ProjectionHall>> GetAllAsync();
+        Task<List<ProjectionHall>> GetAllAsync();
     }
 }

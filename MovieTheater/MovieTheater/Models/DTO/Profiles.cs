@@ -5,11 +5,12 @@ namespace MovieTheater.Models.DTO
 {
     public class Profiles : Profile
     {
-       public Profiles() {
+        public Profiles()
+        {
             CreateMap<ProjectionType, ProjectionTypeDTO>();
             CreateMap<Seat, SeatDetailsDTO>();
             CreateMap<Movie, MovieDetailsDTO>();
-            CreateMap<Projection,ProjectionDetailsDTO>();
+            CreateMap<Projection, ProjectionDetailsDTO>();
             CreateMap<MovieTicket, MovieTicketDetailsDTO>();
             CreateMap<MovieTicketRequestDTO, MovieTicket>().ReverseMap();
             CreateMap<CreateMovieDTO, Movie>().ReverseMap();

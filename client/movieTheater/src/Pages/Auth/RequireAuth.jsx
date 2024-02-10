@@ -1,12 +1,10 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import { useGlobalContext } from "../../context/Context";
 
-const RequireAuth = ({ allowedRoles, currentUser }) => {
+const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useGlobalContext();
   const location = useLocation();
-  console.log("a");
-  console.log(localStorage.getItem("token"));
-  console.log(auth.roles);
+
   return auth?.roles?.find((role) => allowedRoles?.includes(role)) ? (
     <Outlet />
   ) : auth?.user ? (

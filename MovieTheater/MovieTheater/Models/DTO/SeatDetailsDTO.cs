@@ -4,7 +4,7 @@ namespace MovieTheater.Models.DTO
 {
     public class SeatDetailsDTO
     {
-        public  Guid Id { get; set; }
+        public Guid Id { get; set; }
 
 
         public bool Reserved { get; set; }

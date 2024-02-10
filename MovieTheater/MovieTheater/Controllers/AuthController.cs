@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
-using MovieTheater.Models;
 using MovieTheater.Models.DTO;
-using MovieTheater.Models.DTO.RequestDTOs;
-using MovieTheater.Repository;
 using System.Security.Claims;
 
 namespace MovieTheater.Controllers
@@ -19,7 +14,8 @@ namespace MovieTheater.Controllers
         private readonly UserManager<IdentityUser> userManager;
 
         private readonly ITokenRepository tokenRepository;
-        public AuthController(UserManager<IdentityUser> _userManager, ITokenRepository tokenRepository) {
+        public AuthController(UserManager<IdentityUser> _userManager, ITokenRepository tokenRepository)
+        {
             userManager = _userManager;
             this.tokenRepository = tokenRepository;
 
@@ -41,7 +37,7 @@ namespace MovieTheater.Controllers
 
             if (identityResult.Succeeded)
             {
-             
+
                 if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
                 {
                     identityResult = await userManager.AddToRolesAsync(identityUser, registerRequestDto.Roles);
@@ -56,36 +52,37 @@ namespace MovieTheater.Controllers
             return BadRequest("Something went wrong");
         }
 
-      
+
 
         [HttpPost]
 
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
         {
-          
+
             var user = await userManager.FindByNameAsync(loginRequestDto.Username);
 
-            if (user != null  )
+            if (user != null)
             {
                 var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
 
                 if (checkPasswordResult)
                 {
-         
+
                     var roles = await userManager.GetRolesAsync(user);
 
                     if (roles != null)
                     {
-                
+
 
                         var jwtToken = tokenRepository.CreateJWTToken(user, roles.ToList());
 
                         var response = new LoginResponseDTO
-                        {  id = Guid.Parse(user.Id),
+                        {
+                            id = Guid.Parse(user.Id),
                             JwtToken = jwtToken,
-                           Username = loginRequestDto.Username,
-                            Roles= roles.FirstOrDefault(),
+                            Username = loginRequestDto.Username,
+                            Roles = roles.FirstOrDefault(),
 
                         };
 
@@ -98,11 +95,12 @@ namespace MovieTheater.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="User")]
+        [Authorize(Roles = "User")]
         [Route("GetCurrentUserId")]
-        public async Task<IActionResult> GetCurrentUserId() {
+        public async Task<IActionResult> GetCurrentUserId()
+        {
 
-    
+
 
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

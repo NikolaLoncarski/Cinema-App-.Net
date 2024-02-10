@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
@@ -30,25 +28,25 @@ namespace MovieTheater.Controllers
 
             if (ModelState.IsValid)
             {
-          
+
                 var imageDomainModel = new Image
                 {
                     File = request.File,
                     FileExtension = Path.GetExtension(request.File.FileName),
                     FileSizeInBytes = request.File.Length,
                     FileName = request.FileName,
-                 
+
                 };
 
 
-        
+
                 await imageRepository.Upload(imageDomainModel);
 
-         
+
                 return RedirectToAction("GetById", new { id = imageDomainModel.Id });
-             
-       
- 
+
+
+
 
             }
             return BadRequest(ModelState);
@@ -75,7 +73,7 @@ namespace MovieTheater.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetImageByName([FromQuery] string name)
         {
-            return Ok( await imageRepository.GetImage(name));
+            return Ok(await imageRepository.GetImage(name));
         }
 
         [HttpGet]
@@ -89,9 +87,9 @@ namespace MovieTheater.Controllers
         [Route("GetById")]
         [Authorize(Roles = "Admin")]
 
-        public async Task<IActionResult> GetById( int id)
+        public async Task<IActionResult> GetById(int id)
         {
-    
+
             var Image = await imageRepository.GetByIdAsync(id);
 
             if (Image == null)

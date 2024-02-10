@@ -5,10 +5,10 @@ namespace MovieTheater.Models.DTO
     public class RegisterRequestDTO
     {
         [Required]
- 
+
         public string UserName { get; set; }
 
- 
+
 
         [Required]
         [DataType(DataType.Password)]

@@ -15,7 +15,7 @@ namespace MovieTheater.Models
         public long FileSizeInBytes { get; set; }
         public string FilePath { get; set; }
 
-        
+
 
     }
 }

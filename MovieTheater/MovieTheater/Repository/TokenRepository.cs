@@ -10,18 +10,18 @@ namespace MovieTheater.Repository
     public class TokenRepository : ITokenRepository
     {
         public readonly IConfiguration configuration;
-        public TokenRepository(IConfiguration configuration) 
-        { 
-        this.configuration = configuration;
+        public TokenRepository(IConfiguration configuration)
+        {
+            this.configuration = configuration;
         }
         public string CreateJWTToken(IdentityUser user, List<string> roles)
         {
-        var claims =new List<Claim>();
+            var claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
             foreach (var role in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role,role));
+                claims.Add(new Claim(ClaimTypes.Role, role));
             }
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -35,8 +35,8 @@ namespace MovieTheater.Repository
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-      
 
-    
+
+
     }
 }

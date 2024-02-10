@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using Castle.Components.DictionaryAdapter;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
 using MovieTheater.Models.DTO;
 using MovieTheater.Models.DTO.RequestDTOs;
-using MovieTheater.Repository;
 
 namespace MovieTheater.Controllers
 {
@@ -25,9 +22,9 @@ namespace MovieTheater.Controllers
         }
 
 
- 
+
         [HttpPost]
-      //  [Authorize(Roles = "Admin")]
+        //  [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] CreateProjectionTypeDTO createProjectionTypeDto)
         {
 
@@ -38,20 +35,20 @@ namespace MovieTheater.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAll( )
+        public async Task<IActionResult> GetAll()
         {
             var projectionTypeDto = await projectionTypeRepository.GetAllAsync();
-    
+
             return Ok(mapper.Map<List<ProjectionTypeDTO>>(projectionTypeDto));
         }
 
-    
+
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [Route("GetById")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var projectionType =  await projectionTypeRepository.GetByIdAsync(id);
+            var projectionType = await projectionTypeRepository.GetByIdAsync(id);
             if (projectionType == null)
             {
                 return NotFound();
@@ -60,10 +57,10 @@ namespace MovieTheater.Controllers
             return Ok(mapper.Map<ProjectionTypeDTO>(projectionType));
         }
 
-    
 
 
 
-    
+
+
     }
 }

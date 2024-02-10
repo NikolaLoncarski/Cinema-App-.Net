@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MovieTheater</name>
+    </assembly>
+    <members>
+        <member name="M:MovieTheater.Controllers.MovieController.Create(MovieTheater.Models.DTO.RequestDTOs.CreateMovieDTO)">
+             <summary>
+             Creates a TodoItem.
+             </summary>
+             <param name="MovieDTO"></param>
+             <returns>Creates a New Movie</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /Create
+                 {
+                   "name": "string",
+                    "director": "string",
+                    "leadActor": "string",
+            "genre": "string",
+            "duration": 0,
+            "distributer": "string",
+            "countryOfOrigin": "string",
+            "yearOfRelease": 0,
+            "description": "string",
+            "imageId": 0
+                 }
+            
+             </remarks>
+             <response code="201">Returns the newly created Movie</response>
+             <response code="400">If the Request is bad</response>
+        </member>
+        <member name="T:MovieTheater.Migrations.init">
+            <inheritdoc />
+        </member>
+        <member name="M:MovieTheater.Migrations.init.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MovieTheater.Migrations.init.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MovieTheater.Migrations.init.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

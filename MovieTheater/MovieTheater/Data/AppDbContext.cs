@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using MovieTheater.Models;
-using System.Reflection.Metadata;
 
 
 namespace MovieTheater.Data
 {
-    public class AppDbContext:IdentityDbContext
+    public class AppDbContext : IdentityDbContext
     {
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
@@ -24,13 +22,13 @@ namespace MovieTheater.Data
 
         public DbSet<Image> Images { get; set; }
 
-         public DbSet<MovieTicket> MovieTickets { get; set; }
+        public DbSet<MovieTicket> MovieTickets { get; set; }
 
 
         public DbSet<User> Users { get; set; }
-          public DbSet<Role> Roles { get; set; }
-          public DbSet<UserRole> UsersRoles { get; set; }
-          public DbSet<Projection>Projections { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UsersRoles { get; set; }
+        public DbSet<Projection> Projections { get; set; }
 
 
 
@@ -38,7 +36,7 @@ namespace MovieTheater.Data
 
         {
 
-      
+
 
 
 
@@ -67,7 +65,7 @@ namespace MovieTheater.Data
 
             modelBuilder.Entity<IdentityRole>().HasData(roles);
 
-       
+
 
             modelBuilder.Entity<UserRole>()
                   .HasOne(x => x.Role)
@@ -104,16 +102,16 @@ namespace MovieTheater.Data
                 .HasForeignKey(p => p.ProjectionHallId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-             modelBuilder.Entity<Seat>()
-             .HasOne(p => p.Projection)
-             .WithMany()
-             .HasForeignKey(p => p.ProjectionId)
-             .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Seat>()
+            .HasOne(p => p.Projection)
+            .WithMany()
+            .HasForeignKey(p => p.ProjectionId)
+            .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<ProjectionHall>().HasData(
-                new ProjectionHall() { Id = 1, Name = "Hall 14 XXL",Capacity=30 },
-                new ProjectionHall() { Id = 2, Name = "Hall 1 Crystal",Capacity=40 }
+                new ProjectionHall() { Id = 1, Name = "Hall 14 XXL", Capacity = 30 },
+                new ProjectionHall() { Id = 2, Name = "Hall 1 Crystal", Capacity = 40 }
 
             );
             modelBuilder.Entity<ProjectionType>().HasData(
@@ -151,22 +149,22 @@ namespace MovieTheater.Data
                     FilePath = "http://localhost:5139/Images/TheReturnOfTheKing.jpg"
                 }
 
-             
-  
+
+
            );
 
-      
-
-      
-           
 
 
 
-      
 
 
 
-            
+
+
+
+
+
+
             modelBuilder.Entity<Movie>().HasData(
                 new Movie()
                 {
@@ -180,9 +178,9 @@ namespace MovieTheater.Data
                     CountryOfOrigin = "USA",
                     YearOfRelease = 1994,
                     Description = "Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.",
-                    ImageId=2
-             
-             
+                    ImageId = 2
+
+
                 },
                   new Movie()
                   {
@@ -196,8 +194,8 @@ namespace MovieTheater.Data
                       CountryOfOrigin = "USA",
                       YearOfRelease = 2003,
                       Description = "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
-                      ImageId=3
-                
+                      ImageId = 3
+
 
                   },
                       new Movie()
@@ -212,9 +210,9 @@ namespace MovieTheater.Data
                           CountryOfOrigin = "USA",
                           YearOfRelease = 1994,
                           Description = "The history of the United States from the 1950s to the '70s unfolds from the perspective of an Alabama man with an IQ of 75, who yearns to be reunited with his childhood sweetheart.",
-                          ImageId=1
+                          ImageId = 1
 
-                 
+
 
                       }
 
@@ -283,27 +281,27 @@ namespace MovieTheater.Data
 
         );
 
-/*
+            /*
 
-            modelBuilder.Entity<Seat>().HasData(
-                new Seat() { Id = 1, Reserved = true, AvailableSeatsId = 1, ProjectionId = 1 },
-                new Seat() { Id = 2, Reserved = true, AvailableSeatsId = 2, ProjectionId = 1 },
-                new Seat() { Id = 3, Reserved = true, AvailableSeatsId = 3, ProjectionId = 1 },
-                new Seat() { Id = 4, Reserved =true, AvailableSeatsId = 4, ProjectionId = 1 },
-                new Seat() { Id = 5, Reserved = true, AvailableSeatsId = 5, ProjectionId = 1 },
-                new Seat() { Id = 6, Reserved = true, AvailableSeatsId = 6, ProjectionId = 1 },
-                new Seat() { Id = 7, Reserved = true, AvailableSeatsId = 7, ProjectionId = 1 },
-                new Seat() { Id = 8, Reserved = true, AvailableSeatsId = 8, ProjectionId = 1 },
-                new Seat() { Id = 9, Reserved = true, AvailableSeatsId = 9, ProjectionId = 1 },
-                new Seat() { Id = 10, Reserved = true, AvailableSeatsId = 10, ProjectionId = 1 }
-                );
-*/
+                        modelBuilder.Entity<Seat>().HasData(
+                            new Seat() { Id = 1, Reserved = true, AvailableSeatsId = 1, ProjectionId = 1 },
+                            new Seat() { Id = 2, Reserved = true, AvailableSeatsId = 2, ProjectionId = 1 },
+                            new Seat() { Id = 3, Reserved = true, AvailableSeatsId = 3, ProjectionId = 1 },
+                            new Seat() { Id = 4, Reserved =true, AvailableSeatsId = 4, ProjectionId = 1 },
+                            new Seat() { Id = 5, Reserved = true, AvailableSeatsId = 5, ProjectionId = 1 },
+                            new Seat() { Id = 6, Reserved = true, AvailableSeatsId = 6, ProjectionId = 1 },
+                            new Seat() { Id = 7, Reserved = true, AvailableSeatsId = 7, ProjectionId = 1 },
+                            new Seat() { Id = 8, Reserved = true, AvailableSeatsId = 8, ProjectionId = 1 },
+                            new Seat() { Id = 9, Reserved = true, AvailableSeatsId = 9, ProjectionId = 1 },
+                            new Seat() { Id = 10, Reserved = true, AvailableSeatsId = 10, ProjectionId = 1 }
+                            );
+            */
 
             modelBuilder.Entity<Projection>().Property(o => o.Price).HasPrecision(18, 4);
 
-          
-         
-    base.OnModelCreating(modelBuilder);
+
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

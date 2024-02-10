@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MovieTheater.Interfaces;
-using MovieTheater.Models.DTO;
 using MovieTheater.Models;
-using MovieTheater.Repository;
+using MovieTheater.Models.DTO;
 using MovieTheater.Models.DTO.RequestDTOs;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using System;
-using System.Text.Json;
 
 namespace MovieTheater.Controllers
 {
@@ -125,12 +121,12 @@ namespace MovieTheater.Controllers
             }
 
             var seatId = Guid.Parse(deleteMovieTicketDTO.SeatId);
-             await seatRepository.ClearSeatReservation(seatId, deleteMovieTicketDTO.Action);
+            await seatRepository.ClearSeatReservation(seatId, deleteMovieTicketDTO.Action);
 
 
             return NoContent();
         }
 
-  
+
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MovieTheater.Models.DTO.RequestDTOs
+﻿namespace MovieTheater.Models.DTO.RequestDTOs
 {
     public class CreateMovieDTO
     {
@@ -16,7 +14,7 @@ namespace MovieTheater.Models.DTO.RequestDTOs
         public int YearOfRelease { get; set; }
         public string? Description { get; set; }
         public int ImageId { get; set; }
-     
+
 
     }
 }

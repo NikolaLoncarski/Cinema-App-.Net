@@ -1,7 +1,7 @@
-﻿using MovieTheater.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieTheater.Data;
 using MovieTheater.Interfaces;
 using MovieTheater.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace MovieTheater.Repository
 {
@@ -21,18 +21,18 @@ namespace MovieTheater.Repository
             return projectionType;
         }
 
-  
+
 
         public async Task<List<ProjectionType>> GetAllAsync()
         {
-            return await dbContext.ProjectionTypes.Include(p=>p.ProjectionHall).OrderBy(p => p.Id).ToListAsync();
+            return await dbContext.ProjectionTypes.Include(p => p.ProjectionHall).OrderBy(p => p.Id).ToListAsync();
         }
 
         public async Task<ProjectionType> GetByIdAsync(int id)
         {
-            return await dbContext.ProjectionTypes.FirstOrDefaultAsync(x => x.Id==id);
+            return await dbContext.ProjectionTypes.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-    
+
     }
 }
