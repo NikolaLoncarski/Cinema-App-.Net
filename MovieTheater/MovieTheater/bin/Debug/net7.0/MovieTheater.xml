@@ -4,9 +4,115 @@
         <name>MovieTheater</name>
     </assembly>
     <members>
+        <member name="M:MovieTheater.Controllers.AuthController.Register(MovieTheater.Models.DTO.RegisterRequestDTO)">
+             <summary>
+             Register a User
+             </summary>
+             <param name="RegisterRequestDTO"></param>
+             <returns>Registered User</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /Create
+                 {"userName":string,
+                 "password":string,
+                 "roles":[
+                   role:"user"
+                    ]
+                 
+                 }
+            
+             </remarks>
+             <response code="201">Returns Ok if Registration is successfull</response>
+             <response code="400">If the Request is bad</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.AuthController.Login(MovieTheater.Models.DTO.LoginRequestDTO)">
+             <summary>
+             Login a user.
+             </summary>
+             <param name="loginRequestDto"></param>
+             <returns>Registered User</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /Create
+                 {"userName":string,
+                 "password":string,
+                 }
+            
+             </remarks>
+             <response code="200">Returns Ok if Registration is successfull</response>
+             <response code="400">If the Request is bad</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ImageController.Upload(MovieTheater.Models.DTO.ImageUploadRequestDTO)">
+             <summary>
+             Upload an Image
+             </summary>
+             <param name="request"></param>
+             <returns>Uploaded Image</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /Upload
+                 {File:"file",
+                  FileName:"fileName"
+                 }
+            
+             </remarks>
+             <response code="201">Returns Created if Upload is successfull</response>
+             <response code="400">If the Request is bad</response>
+             <response code="403">Returns Foribiden if user role isnt "Admin"</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ImageController.GetImageByName(System.String)">
+             <summary>
+            Get Image By Image Name
+             </summary>
+             <param name="name"></param>
+             <returns>Image</returns>
+             <remarks>
+             Sample request:
+            
+                 Get /GetImageByName?name="imageName"
+            
+             </remarks>
+             <response code="200">Returns Image</response>
+             <response code="400">If the Request is bad</response>
+             <response code="403">Returns Foribiden if user role isnt "Admin"</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ImageController.GetImages">
+             <summary>
+            Get Image By Image Name
+             </summary>
+             <returns>Images</returns>
+             <remarks>
+             Sample request:
+            
+                 Get /GetImages
+            
+             </remarks>
+             <response code="200">Returns Image</response>
+             <response code="400">If the Request is bad</response>
+             <response code="403">Returns Foribiden if user role isnt "Admin"</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.ImageController.GetById(System.Int32)">
+             <summary>
+            Get Image By Image Id
+             </summary>
+             <param name="id"></param>
+             <returns>Image</returns>
+             <remarks>
+             Sample request:
+            
+                 Get /GetById:id
+            
+             </remarks>
+             <response code="200">Returns Image</response>
+             <response code="400">If the Request is bad</response>
+             <response code="403">Returns Foribiden if user role isnt "Admin"</response>
+        </member>
         <member name="M:MovieTheater.Controllers.MovieController.Create(MovieTheater.Models.DTO.RequestDTOs.CreateMovieDTO)">
              <summary>
-             Creates a TodoItem.
+             Creates a New Movie.
              </summary>
              <param name="MovieDTO"></param>
              <returns>Creates a New Movie</returns>
@@ -30,6 +136,20 @@
              </remarks>
              <response code="201">Returns the newly created Movie</response>
              <response code="400">If the Request is bad</response>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MovieTheater.Controllers.MovieController.GetAll(System.String,System.String,System.Nullable{System.Boolean},System.Int32,System.Int32)" -->
+        <member name="M:MovieTheater.Controllers.MovieController.GetById(System.Int32)">
+            <summary>
+            Gets a Movie By Movie Id.
+            </summary>
+            <param name="MovieDTO"></param>
+            <returns>Creates a New Movie.</returns>
+            <remarks>
+            Sample request:
+                POST /GetById/:Id
+            </remarks>
+            <response code="201">Returns the newly created Movie</response>
+            <response code="400">If the Request is bad</response>
         </member>
         <member name="T:MovieTheater.Migrations.init">
             <inheritdoc />

@@ -25,7 +25,7 @@ namespace MovieTheater.Controllers
         }
 
         /// <summary>
-        /// Creates a TodoItem.
+        /// Creates a New Movie.
         /// </summary>
         /// <param name="MovieDTO"></param>
         /// <returns>Creates a New Movie</returns>
@@ -67,33 +67,19 @@ namespace MovieTheater.Controllers
 
 
 
-        [HttpGet]
-
         /// <summary>
-        /// Creates a TodoItem.
+        /// Searches for an existing movie.
         /// </summary>
-        /// <param name="MovieDTO"></param>
-        /// <returns>Creates a New Movie</returns>
+        /// <returns>An Existing movie.</returns>
         /// <remarks>
         /// Sample request:
-        ///
-        ///     POST /Create
-        ///     {
-        ///       "name": "string",
-        ///        "director": "string",
-        ///        "leadActor": "string",
-        ///"genre": "string",
-        ///"duration": 0,
-        ///"distributer": "string",
-        ///"countryOfOrigin": "string",
-        ///"yearOfRelease": 0,
-        ///"description": "string",
-        ///"imageId": 0
-        ///     }
-        ///
+        ///    get/Movie?name=lord&sortBy=name&isAscending=true&pageNumber=1&pageSize=10
         /// </remarks>
-        /// <response code="201">Returns the newly created Movie</response>
-        /// <response code="400">If the Request is bad</response>
+        /// <response code="200">Returns a movie if it exists in the database</response>
+        /// <response code="404">If movie is not found</response>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAll([FromQuery] string? name,
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
@@ -106,7 +92,17 @@ namespace MovieTheater.Controllers
 
         }
 
-
+        /// <summary>
+        /// Gets a Movie By Movie Id.
+        /// </summary>
+        /// <param name="MovieDTO"></param>
+        /// <returns>Creates a New Movie.</returns>
+        /// <remarks>
+        /// Sample request:
+        ///     POST /GetById/:Id
+        /// </remarks>
+        /// <response code="201">Returns the newly created Movie</response>
+        /// <response code="400">If the Request is bad</response>
         [HttpGet]
         [Route("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)

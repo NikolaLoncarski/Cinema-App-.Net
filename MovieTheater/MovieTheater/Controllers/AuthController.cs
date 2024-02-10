@@ -21,8 +21,31 @@ namespace MovieTheater.Controllers
 
         }
 
+
+        /// <summary>
+        /// Register a User
+        /// </summary>
+        /// <param name="RegisterRequestDTO"></param>
+        /// <returns>Registered User</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Create
+        ///     {"userName":string,
+        ///     "password":string,
+        ///     "roles":[
+        ///       role:"user"
+        ///        ]
+        ///     
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns Ok if Registration is successfull</response>
+        /// <response code="400">If the Request is bad</response>
         [HttpPost]
         [Route("Register")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDTO registerRequestDto)
         {
             var identityUser = new IdentityUser
@@ -53,10 +76,26 @@ namespace MovieTheater.Controllers
         }
 
 
-
+        /// <summary>
+        /// Login a user.
+        /// </summary>
+        /// <param name="loginRequestDto"></param>
+        /// <returns>Registered User</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Create
+        ///     {"userName":string,
+        ///     "password":string,
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Returns Ok if Registration is successfull</response>
+        /// <response code="400">If the Request is bad</response>
         [HttpPost]
-
         [Route("Login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
         {
 

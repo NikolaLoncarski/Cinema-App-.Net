@@ -19,9 +19,30 @@ namespace MovieTheater.Controllers
 
 
 
+
+        /// <summary>
+        /// Upload an Image
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>Uploaded Image</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Upload
+        ///     {File:"file",
+        ///      FileName:"fileName"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns Created if Upload is successfull</response>
+        /// <response code="400">If the Request is bad</response>
+        /// <response code="403">Returns Foribiden if user role isnt "Admin"</response>
         [HttpPost]
         [Route("Upload")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDTO request)
         {
             ValidateFileUpload(request);
@@ -68,25 +89,77 @@ namespace MovieTheater.Controllers
             }
         }
 
+
+
+        /// <summary>
+        ///Get Image By Image Name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>Image</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get /GetImageByName?name="imageName"
+        ///
+        /// </remarks>
+        /// <response code="200">Returns Image</response>
+        /// <response code="400">If the Request is bad</response>
+        /// <response code="403">Returns Foribiden if user role isnt "Admin"</response>
         [HttpGet]
         [Route("/api/GetImageByName")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> GetImageByName([FromQuery] string name)
         {
             return Ok(await imageRepository.GetImage(name));
         }
 
+        /// <summary>
+        ///Get Image By Image Name
+        /// </summary>
+        /// <returns>Images</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get /GetImages
+        ///
+        /// </remarks>
+        /// <response code="200">Returns Image</response>
+        /// <response code="400">If the Request is bad</response>
+        /// <response code="403">Returns Foribiden if user role isnt "Admin"</response>
         [HttpGet]
         [Route("/api/GetImages")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> GetImages()
         {
             return Ok(await imageRepository.GetAll());
         }
+
+        /// <summary>
+        ///Get Image By Image Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Image</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Get /GetById:id
+        ///
+        /// </remarks>
+        /// <response code="200">Returns Image</response>
+        /// <response code="400">If the Request is bad</response>
+        /// <response code="403">Returns Foribiden if user role isnt "Admin"</response>
         [HttpGet]
         [Route("GetById")]
         [Authorize(Roles = "Admin")]
-
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> GetById(int id)
         {
 
