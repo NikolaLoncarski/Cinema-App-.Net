@@ -43,18 +43,17 @@ builder.Services.AddOpenApiDocument(options =>
         document.Info = new OpenApiInfo
         {
             Version = "v1",
-            Title = "ToDo API",
-            Description = "An ASP.NET Core Web API for managing ToDo items",
-            TermsOfService = "https://example.com/terms",
+            Title = "MovieTheater API",
+            Description = "An ASP.NET Core Web API for a Movi Theater",
+
             Contact = new OpenApiContact
             {
-                Name = "Example Contact",
-                Url = "https://example.com/contact"
+                Email = "nidzafrom023@gmail.com"
+            
             },
             License = new OpenApiLicense
             {
-                Name = "Example License",
-                Url = "https://example.com/license"
+                Name = "MIT",
             }
         };
     };

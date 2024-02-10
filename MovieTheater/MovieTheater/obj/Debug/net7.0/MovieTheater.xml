@@ -142,14 +142,74 @@
             <summary>
             Gets a Movie By Movie Id.
             </summary>
-            <param name="MovieDTO"></param>
-            <returns>Creates a New Movie.</returns>
+            <param name="id"></param>
+            <returns>Movie.</returns>
             <remarks>
             Sample request:
                 POST /GetById/:Id
             </remarks>
-            <response code="201">Returns the newly created Movie</response>
-            <response code="400">If the Request is bad</response>
+            <response code="200">Returns the newly created Movie</response>
+            <response code="404">If No Movie Exists with that Id</response>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MovieTheater.Controllers.MovieController.GetMovieStatistics(System.String,System.String,System.Nullable{System.Boolean},System.Int32,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:MovieTheater.Controllers.MovieController.Update(System.Int32,MovieTheater.Models.Movie)" -->
+        <!-- Badly formed XML comment ignored for member "M:MovieTheater.Controllers.MovieController.Delete(System.Int32)" -->
+        <member name="M:MovieTheater.Controllers.MovieTicketController.Create(MovieTheater.Models.DTO.RequestDTOs.MovieTicketRequestDTO)">
+            <summary>
+            Create a Movie Ticket. 
+            </summary>
+            <param name="movieTicketRequestDTO"></param>
+            <returns>MovieTickets.</returns>
+            <remarks>
+            Sample request:
+                POST /Create
+            </remarks>
+            <response code="200">Returns the Created Movie Ticket</response>
+            <response code="400">If Request is Bad</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.MovieTicketController.GetAll">
+            <summary>
+            Gets All MovieTickets
+            </summary>
+            <returns>MovieTickets</returns>
+            <remarks>
+            Sample request:
+               Get /GetAll
+            </remarks>
+            <response code="200">Returns All Movie Ticket</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.MovieTicketController.GetTicketByUserId">
+            <summary>
+            Searches for Movie Tickets that contain the user id that is searching for it. 
+            </summary>
+            <returns>MovieTickets</returns>
+            <response code="200">Returns Movie Tickets</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.MovieTicketController.GetById(System.Int32)">
+            <summary>
+            Searches for Movie Ticket by movieTicketID. 
+            </summary>
+            <param name="id">Id</param>
+            <returns>MovieTickets</returns>
+            <remarks>
+            Sample request:
+                Get /GetById/:id
+            </remarks>
+            <response code="200">Returns Movie Tickets</response>
+            <response code="404">No tickets found.</response>
+        </member>
+        <member name="M:MovieTheater.Controllers.MovieTicketController.DeleteTicket(MovieTheater.Models.DTO.RequestDTOs.DeleteMovieTicketDTO)">
+            <summary>
+            Searches for Movie Ticket by movieTicketID. 
+            </summary>
+            <param name="id">Id</param>
+            <returns>MovieTickets</returns>
+            <remarks>
+            Sample request:
+                Put /DeleteTicket
+            </remarks>
+            <response code="204">Returns No content</response>
+            <response code="404">No tickets found.</response>
         </member>
         <member name="T:MovieTheater.Migrations.init">
             <inheritdoc />

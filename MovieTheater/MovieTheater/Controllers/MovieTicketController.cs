@@ -31,9 +31,22 @@ namespace MovieTheater.Controllers
         }
 
 
+        /// <summary>
+        /// Create a Movie Ticket. 
+        /// </summary>
+        /// <param name="movieTicketRequestDTO"></param>
+        /// <returns>MovieTickets.</returns>
+        /// <remarks>
+        /// Sample request:
+        ///     POST /Create
+        /// </remarks>
+        /// <response code="200">Returns the Created Movie Ticket</response>
+        /// <response code="400">If Request is Bad</response>
         [HttpPost]
         [Route("Create")]
         [Authorize(Roles = "User, Admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] MovieTicketRequestDTO movieTicketRequestDTO)
         {
 
@@ -61,8 +74,17 @@ namespace MovieTheater.Controllers
 
         }
 
-
+        /// <summary>
+        /// Gets All MovieTickets
+        /// </summary>
+        /// <returns>MovieTickets</returns>
+        /// <remarks>
+        /// Sample request:
+        ///    Get /GetAll
+        /// </remarks>
+        /// <response code="200">Returns All Movie Ticket</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var tickets = await movieTicketRepository.GetAllAsync();
@@ -72,9 +94,17 @@ namespace MovieTheater.Controllers
 
         }
 
+
+        /// <summary>
+        /// Searches for Movie Tickets that contain the user id that is searching for it. 
+        /// </summary>
+        /// <returns>MovieTickets</returns>
+        /// <response code="200">Returns Movie Tickets</response>
         [HttpGet]
         [Route("GetTicketByUserId")]
         [Authorize(Roles = "Admin,User")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
         public async Task<IActionResult> GetTicketByUserId()
 
 
@@ -90,9 +120,22 @@ namespace MovieTheater.Controllers
         }
 
 
+        /// <summary>
+        /// Searches for Movie Ticket by movieTicketID. 
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <returns>MovieTickets</returns>
+        /// <remarks>
+        /// Sample request:
+        ///     Get /GetById/:id
+        /// </remarks>
+        /// <response code="200">Returns Movie Tickets</response>
+        /// <response code="404">No tickets found.</response>
         [HttpGet]
         [Route("GetById")]
         [Authorize(Roles = "Admin,User")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
             var movieTicket = await movieTicketRepository.GetByIdAsync(id);
@@ -106,9 +149,21 @@ namespace MovieTheater.Controllers
             return Ok(mapper.Map<MovieTicketDetailsDTO>(movieTicket));
         }
 
-        [HttpPut]
+        /// <summary>
+        /// Searches for Movie Ticket by movieTicketID. 
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <returns>MovieTickets</returns>
+        /// <remarks>
+        /// Sample request:
+        ///     Put /DeleteTicket
+        /// </remarks>
+        /// <response code="204">Returns No content</response>
+        /// <response code="404">No tickets found.</response>
+        [HttpDelete]
         [Route("DeleteTicket")]
-
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> DeleteTicket([FromBody] DeleteMovieTicketDTO deleteMovieTicketDTO)
         {

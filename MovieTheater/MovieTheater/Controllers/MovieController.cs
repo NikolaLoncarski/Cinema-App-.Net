@@ -95,16 +95,18 @@ namespace MovieTheater.Controllers
         /// <summary>
         /// Gets a Movie By Movie Id.
         /// </summary>
-        /// <param name="MovieDTO"></param>
-        /// <returns>Creates a New Movie.</returns>
+        /// <param name="id"></param>
+        /// <returns>Movie.</returns>
         /// <remarks>
         /// Sample request:
         ///     POST /GetById/:Id
         /// </remarks>
-        /// <response code="201">Returns the newly created Movie</response>
-        /// <response code="400">If the Request is bad</response>
+        /// <response code="200">Returns the newly created Movie</response>
+        /// <response code="404">If No Movie Exists with that Id</response>
         [HttpGet]
         [Route("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var movie = await movieRepository.GetByIdAsync(id);
@@ -130,9 +132,17 @@ namespace MovieTheater.Controllers
             return Ok(users);
         }
 
+
+        /// <summary>
+        /// Movie Statistics
+        /// </summary>
+        /// <returns>Statistics</returns>
+        /// <remarks>
+        /// <response code="200">Returns the newly created Movie</response>
+        /// <response code="404">If No Movie Exists with that Id</response>
         [HttpGet]
         [Route("Statistics")]
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMovieStatistics([FromQuery] string? name,
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
@@ -147,10 +157,19 @@ namespace MovieTheater.Controllers
         }
 
 
-
+        /// <summary>
+        /// Get Movie By Id
+        /// </summary>
+        /// <returns>Movie</returns>
+        /// Sample request:
+        ///     POST /Update/:Id
+        /// </remarks>
+        /// <response code="202">Returns Accepted if movie is successfully updated</response>
+        /// <response code="404">If No Movie Exists with that Id</response>
         [HttpPut]
         [Route("{id:int}")]
-
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update([FromRoute] int id, Movie movie)
         {
 
@@ -165,13 +184,23 @@ namespace MovieTheater.Controllers
             }
 
 
-            return Ok(movieModel);
+            return Accepted(movieModel);
         }
 
 
-
+        /// <summary>
+        /// Get Movie By Id
+        /// </summary>
+        /// <returns>Movie</returns>
+        /// Sample request:
+        ///     POST /Delete/:Id
+        /// </remarks>
+        /// <response code="202">Returns Accepted if movie is successfully Deleted</response>
+        /// <response code="404">If No Movie Exists with that Id</response>
         [HttpDelete]
         [Route("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var movieModel = await movieRepository.DeleteAsync(id);
@@ -182,7 +211,7 @@ namespace MovieTheater.Controllers
             }
 
 
-            return Ok(movieModel);
+            return Accepted(movieModel);
         }
     }
 }
