@@ -5,6 +5,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using MovieTheater.Data;
 using MovieTheater.Interfaces;
+using MovieTheater.Middlewares;
 using MovieTheater.Models.DTO;
 using MovieTheater.Repository;
 using NSwag;
@@ -119,6 +120,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         IssuerSigningKey = new SymmetricSecurityKey(
     Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     });
+builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
 
 var app = builder.Build();
 
@@ -141,6 +143,7 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMiddleware<GlobalExeptionHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();
